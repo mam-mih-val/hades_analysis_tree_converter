@@ -195,7 +195,7 @@ void HadesInterface::ReadFw()
 
 	Float_t wallHitBeta, wallHitX, wallHitY, wallHitZ;
     ushort wallModuleIndex, ring, nWallHitsTot;
-    float wallHitCharge, wallHitTime, wallHitDistance, wallChargeTot = 0.;
+    float wallHitCharge, wallHitTime, wallHitDistance;
     short wallHitChargeZ;
 	HWallHitSim* wallHit = 0;
 
@@ -231,9 +231,9 @@ void HadesInterface::ReadVertexTracks()
 	const int iChi2 = 		fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("chi2");
 	const int iVtx_ch2 = 	fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("vtx_chi2");
 	const int idEdx = 		fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("dEdx");
-	const int iDcax = 		fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId({"dcax", "dcay", "dcaz"});
+	const int iDcax = 		fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("dcax");
 	const int iQ = 			fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("q");
-	const int iNhits = 		fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId( {"nhits_0","nhits_1","nhits_2"} );
+	const int iNhits = 		fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("nhits_0");
 	const int iPid = 		fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("pid");
 	const int iPt = 		fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("pt");
 	const int iPhi = 		fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("phi")
