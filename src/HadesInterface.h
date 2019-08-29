@@ -40,7 +40,7 @@ class CbmVertex;
 namespace Analysis
 {
 
-class HadesInterface : public FairTask
+class HadesInterface
 {
     
 public:
@@ -48,9 +48,9 @@ public:
     HadesInterface();
     ~HadesInterface();
     
-    virtual InitStatus Init();
-    virtual void Exec(Option_t* opt);
-    virtual void Finish();
+    void Init();
+    void Exec(Option_t* opt);
+    void Finish();
 
     void SetOutputFile(const TString filename) { fOutputFileName = filename; }
     void SetInputFile(const TString filename) { fInputFileName = filename; }
