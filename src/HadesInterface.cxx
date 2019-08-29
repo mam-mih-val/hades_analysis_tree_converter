@@ -32,7 +32,7 @@ HadesInterface::~HadesInterface()
 {
 }
 
-InitStatus HadesInterface::Init()
+void HadesInterface::Init()
 {
 	InitInput();
 	InitOutput();
