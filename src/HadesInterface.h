@@ -57,7 +57,7 @@ public:
     ~HadesInterface();
     
     void Init();
-    void Exec(Option_t* opt);
+    void Exec();
     void Finish();
 
     void SetOutputFile(std::string filename) { fOutputFileName = filename; }

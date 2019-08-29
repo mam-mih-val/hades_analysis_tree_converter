@@ -126,7 +126,7 @@ void HadesInterface::InitOutput()
 	fConfig.Write("Configuration");
 }
 
-void HadesInterface::Exec(Option_t * opt)
+void HadesInterface::Exec()
 {
 	cout << "HadesInterface::Exec" << endl;
 	ReadEvent();
