@@ -242,7 +242,7 @@ void HadesInterface::ReadVertexTracks()
 	HParticleCand* cand = 0;
 	Int_t itr, pid;
 	TLorentzVector trackPar;
-	const Float_t D2R = TMath::DegToRad()
+	const Float_t D2R = TMath::DegToRad();
 	float p, theta, pt, eta, phi, mass;
 
 	for(Int_t j = 0; j < size; j++)
