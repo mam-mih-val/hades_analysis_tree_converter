@@ -236,7 +236,7 @@ void HadesInterface::ReadVertexTracks()
 	const int iNhits = 		fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("nhits_0");
 	const int iPid = 		fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("pid");
 	const int iPt = 		fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("pt");
-	const int iPhi = 		fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("phi")
+	const int iPhi = 		fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("phi");
 
 	if(!candCat)
 		continue;
@@ -250,11 +250,7 @@ void HadesInterface::ReadVertexTracks()
 	{
 		cand = HCategoryManager::getObject(cand, candCat, j);
 		if(!cand)
-		continue;
-		if(!loop.goodSector(cand->getSector()))
-		{
-			continue; // skip inactive sectors
-		}
+			continue;
 		if(!cand->isFlagBit(kIsUsed))
 			continue;
 		if(cand->getMomentum() == cand->getMomentumOrg())
