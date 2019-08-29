@@ -1,1 +1,1 @@
-add_subdirectory (CbmInterface)
+add_subdirectory (src)
