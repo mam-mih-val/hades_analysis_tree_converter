@@ -280,9 +280,9 @@ void HadesInterface::ReadVertexTracks()
 		Track->Init( fConfig.GetBranchConfig( fVtxTracks->GetId() ) );
 		Track->SetField( int(cand->getCharge()), iQ);
 		Track->SetField( float(cand->getChi2()), iChi2);
-		Track->SetField( float(trackParamFirst->GetX()-fPrimVtx->GetX()), iDcax); 
-		Track->SetField( float(trackParamFirst->GetY()-fPrimVtx->GetY()), iDcax+1);
-		Track->SetField( float(trackParamFirst->GetZ()-fPrimVtx->GetZ()), iDcax+2);
+		Track->SetField( float(cand->getR()), iDcax); 
+		Track->SetField( float(cand->getR()), iDcax+1);
+		Track->SetField( float(cand->getZ() - vertexReco.getZ()), iDcax+2);
 		Track->SetField( float( cand->getMdcdEdx() ), idEdx);
 		Track->SetField( int( pid ), iPid );
 		Track->SetField( int( cand->getNLayer(0) ), iNhits);
