@@ -168,6 +168,7 @@ void HadesInterface::ReadEvent()
 	}
 
 	HEventHeader* header = gHades->getCurrentEvent()->getHeader();
+	HVertex vertexReco = header->getVertexReco();
 
 	fEventHeader->SetVertexX(vertexReco.getX());
 	fEventHeader->SetVertexY(vertexReco.getY());
