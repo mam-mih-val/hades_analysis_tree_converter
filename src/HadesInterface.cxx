@@ -238,14 +238,14 @@ void HadesInterface::ReadVertexTracks()
 	const int iPt = 		fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("pt");
 	const int iPhi = 		fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("phi");
 
-	Int_t size = candCat->getEntries();
+	int size = candCat->getEntries();
 	HParticleCand* cand = 0;
-	Int_t itr, pid;
+	int pid;
 	TLorentzVector trackPar;
 	const Float_t D2R = TMath::DegToRad();
 	float p, theta, pt, eta, phi, mass;
 
-	for(Int_t j = 0; j < size; j++)
+	for(Int_t j = 0; j<size; j++)
 	{
 		cand = HCategoryManager::getObject(cand, candCat, j);
 		if(!cand)
@@ -307,6 +307,7 @@ void HadesInterface::ReadTof()
 	const int iSqr_mass = fConfig.GetBranchConfig(fTofHits->GetId()).GetFieldId("sqr_mass");
 	const int iSqr_mass_error = fConfig.GetBranchConfig(fTofHits->GetId()).GetFieldId("sqr_mass_error");
 
+	int size = candCat->getEntries();
 	for(Int_t j = 0; j < size; j++)
 	{
 		cand = HCategoryManager::getObject(cand, candCat, j);
