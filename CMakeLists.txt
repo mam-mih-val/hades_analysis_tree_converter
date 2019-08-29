@@ -8,8 +8,6 @@ list(APPEND CMAKE_PREFIX_PATH $ENV{ROOTSYS})
 list(APPEND CMAKE_PREFIX_PATH $ENV{AnalysisTree_HOME})
 list(APPEND CMAKE_PREFIX_PATH ${AnalysisTree_HOME})
 
-message(${AnalysisTree_LIBRARY_DIR})
-message(${AnalysisTree_INCLUDE_DIR})
 
 find_package(ROOT REQUIRED COMPONENTS RIO Tree)
 find_package(AnalysisTree REQUIRED)
