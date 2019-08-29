@@ -113,7 +113,7 @@ void HadesInterface::InitOutput()
 	}
 	fConfig.AddBranchConfig(EventHeaderBranch);
 	fEventHeader = new AnalysisTree::EventHeader(fConfig.GetLastId());
-	fEventHeader->Init(RecEventHeaderBranch);
+	fEventHeader->Init(EventHeaderBranch);
 
 	//  ***** List of Branches *******
 	fTreeFile = TFile::Open(fOutputFileName.data(), "RECREATE");
