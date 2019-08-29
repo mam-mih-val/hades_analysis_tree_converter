@@ -11,7 +11,7 @@
 #include "TROOT.h"
 #include "TString.h"
 #include "TSystem.h"
-#include "TTree.h"s
+#include "TTree.h"
 
 #include "hades.h"
 #include "hcategory.h"

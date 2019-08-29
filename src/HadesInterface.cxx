@@ -23,9 +23,9 @@ ClassImp(Analysis::HadesInterface)
 {
 
 HadesInterface::HadesInterface() :
-	candCat = (HCategory*)HCategoryManager::getCategory(catParticleCand),
-	evtInfoCat = (HCategory*)HCategoryManager::getCategory(catParticleEvtInfo),
-	wallCat = (HCategory*)HCategoryManager::getCategory(catWallHit)
+	candCat((HCategory*)HCategoryManager::getCategory(catParticleCand)),
+	evtInfoCat((HCategory*)HCategoryManager::getCategory(catParticleEvtInfo)),
+	wallCat((HCategory*)HCategoryManager::getCategory(catWallHit))
 {
 }
 HadesInterface::~HadesInterface()
