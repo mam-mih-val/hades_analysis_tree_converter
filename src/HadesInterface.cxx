@@ -121,7 +121,7 @@ void HadesInterface::InitOutput()
 	fATree = new TTree("aTree", "Analysis Tree, HADES data");
 	fATree->Branch("VtxTracks", "AnalysisTree::TrackDetector", &fVtxTracks);
 	fATree->Branch("EventHeader", "AnalysisTree::EventHeader", &fEventHeader);
-	fATree->Branch("FwModules", "AnalysisTree::ModuleDetector", &fFwModules);
+	fATree->Branch("FwModules", "AnalysisTree::HitDetector", &fFwModules);
 	fATree->Branch("TofHits", "AnalysisTree::HitDetector", &fTofHits);
 	fConfig.Write("Configuration");
 }
