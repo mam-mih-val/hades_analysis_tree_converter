@@ -60,8 +60,8 @@ public:
     void Exec(Option_t* opt);
     void Finish();
 
-    void SetOutputFile(const TString filename) { fOutputFileName = filename; }
-    void SetEvtCharaParameterFile(std::string fileName="../evtchara07/centrality_epcorr_apr12_gen8_2019_02_pass30.root") { fParameterFile = filename; }
+    void SetOutputFile(const TString filename) { fOutputFileName = fileame; }
+    void SetEvtCharaParameterFile(std::string fileName="../evtchara07/centrality_epcorr_apr12_gen8_2019_02_pass30.root") { fParameterFile = fileName; }
 
 private:
 
