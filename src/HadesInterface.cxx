@@ -307,6 +307,7 @@ void HadesInterface::ReadTof()
 	const int iSqr_mass = fConfig.GetBranchConfig(fTofHits->GetId()).GetFieldId("sqr_mass");
 	const int iSqr_mass_error = fConfig.GetBranchConfig(fTofHits->GetId()).GetFieldId("sqr_mass_error");
 
+	HParticleCand* cand = 0;
 	int size = candCat->getEntries();
 	for(Int_t j = 0; j < size; j++)
 	{
@@ -315,14 +316,14 @@ void HadesInterface::ReadTof()
 		Hit->Init( fConfig.GetBranchConfig( fTofHits->GetId() ) );
 
 		if(cand->getSystem() == 0)
-			Hit.SetField(HADES_constants::kRPC, iStat);
+			Hit->SetField(HADES_constants::kRPC, iStat);
 		else
-			Hit.SetField(HADES_constants::kTOF, iStat);
-		Hit.SetField( float(cand->getDistanceToMetaHit() / cand->getBeta() / 299.792458), iTime);
-		Hit.SetField( float(cand->getDistanceToMetaHit()), iPath);
-		Hit.SetField( float(cand->getMetaMatchRadius()), iMatch); // META match qa - NOT POSITION!!!
-		Hit.SetField( int(cand->getCharge()), iCharge);
-		Hit.SetField( float(cand->getMass2()), iSqr_mass);
-		Hit.SetField( float(cand->getMetaMatchQuality()), iSqr_mass_error);
+			Hit->SetField(HADES_constants::kTOF, iStat);
+		Hit->SetField( float(cand->getDistanceToMetaHit() / cand->getBeta() / 299.792458), iTime);
+		Hit->SetField( float(cand->getDistanceToMetaHit()), iPath);
+		Hit->SetField( float(cand->getMetaMatchRadius()), iMatch); // META match qa - NOT POSITION!!!
+		Hit->SetField( int(cand->getCharge()), iCharge);
+		Hit->SetField( float(cand->getMass2()), iSqr_mass);
+		Hit->SetField( float(cand->getMetaMatchQuality()), iSqr_mass_error);
 	}
 } // namespace Analysis
