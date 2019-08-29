@@ -73,6 +73,13 @@ set (SOURCES
 		src/main.cxx
 )
 
+If(UNIX AND NOT APPLE)
+  Set(_AnalysisTree_LIB  AnalysisTreeBase.so)
+  Else()
+  Set(_AnalysisTree_LIB  AnalysisTreeBase.dylib)
+EndIf()
+
+
 set (DICT_FILE_NAME G__EvtCharaBK)
 ROOT_GENERATE_DICTIONARY(${DICT_FILE_NAME}
         evtchara07/hparticleevtcharaBK.h
