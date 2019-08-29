@@ -288,7 +288,7 @@ void HadesInterface::ReadVertexTracks()
 		Track->SetField( int( cand->getNLayer(0) ), iNhits);
 		Track->SetField( int( cand->getNLayer(1) ), iNhits+1);
 		Track->SetField( int( cand->getNLayer(2) ), iNhits+2);
-		Track->SetField( float(vChiToPrimVtx.at(0)), iVtx_ch2);
+		// Track->SetField( float(vChiToPrimVtx.at(0)), iVtx_ch2);
 		Track->SetField( float(pt), iPt);
 		Track->SetField( float(phi), iPhi);
 	}
