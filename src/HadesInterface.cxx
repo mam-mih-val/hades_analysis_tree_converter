@@ -34,12 +34,9 @@ HadesInterface::~HadesInterface()
 
 void HadesInterface::Init()
 {
-	InitInput();
-	InitOutput();
-
-	ReadStaticInfo();
-
-	return kSUCCESS;
+	this->InitInput();
+	this->InitOutput();
+	this->ReadStaticInfo();
 }
 // //----------------------------------
 void HadesInterface::InitInput()
