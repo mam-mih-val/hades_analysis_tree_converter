@@ -5,11 +5,11 @@ project(HTree_TO_AT)
 set(CMAKE_BUILD_TYPE debug)
 
 list(APPEND CMAKE_PREFIX_PATH $ENV{ROOTSYS})
-list(APPEND CMAKE_PREFIX_PATH $ENV{AnanlysisTree_HOME})
-list(APPEND CMAKE_PREFIX_PATH ${AnanlysisTree_HOME})
+list(APPEND CMAKE_PREFIX_PATH $ENV{AnalysisTree_HOME})
+list(APPEND CMAKE_PREFIX_PATH ${AnalysisTree_HOME})
 
 find_package(ROOT REQUIRED COMPONENTS RIO Tree)
-find_package(AnanlysisTree REQUIRED)
+find_package(AnalysisTree REQUIRED)
 
 set(CMAKE_CXX_FLAGS "-Wall")
 
@@ -21,13 +21,13 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/src
     ${CMAKE_SOURCE_DIR}/evtchara07
     ${ROOT_INCLUDE_DIRS}
-    ${AnanlysisTree_INCLUDE_DIR}
+    ${AnalysisTree_INCLUDE_DIR}
     )
 		
 link_directories(
     $ENV{HADDIR}/lib
     ${CMAKE_SOURCE_DIR}
-    ${AnanlysisTree_LIBRARY_DIR}
+    ${AnalysisTree_LIBRARY_DIR}
     )
 set (HADES_LIBS
 		libAlignment.so     
@@ -81,4 +81,4 @@ add_library(EvtCharaBK SHARED evtchara07/hparticleevtcharaBK.cc ${DICT_FILE_NAME
 target_link_libraries(EvtCharaBK ${ROOT_LIBRARIES} ${HADES_LIBS})
 
 add_executable(HTree_to_DT ${HEADERS} ${SOURCES})
-target_link_libraries(HTree_to_DT ${ROOT_LIBRARIES} ${HADES_LIBS} AnanlysisTree EvtCharaBK)
+target_link_libraries(HTree_to_DT ${ROOT_LIBRARIES} ${HADES_LIBS} AnalysisTree EvtCharaBK)
