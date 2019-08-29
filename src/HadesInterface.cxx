@@ -303,7 +303,7 @@ void HadesInterface::ReadTof()
 	const int iTime = fConfig.GetBranchConfig(fTofHits->GetId()).GetFieldId("time");
 	const int iPath = fConfig.GetBranchConfig(fTofHits->GetId()).GetFieldId("path");
 	const int iMatch = fConfig.GetBranchConfig(fTofHits->GetId()).GetFieldId("meta_mdc_match");
-	const int iCharhe = fConfig.GetBranchConfig(fTofHits->GetId()).GetFieldId("charge");
+	const int iCharge = fConfig.GetBranchConfig(fTofHits->GetId()).GetFieldId("charge");
 	const int iSqr_mass = fConfig.GetBranchConfig(fTofHits->GetId()).GetFieldId("sqr_mass");
 	const int iSqr_mass_error = fConfig.GetBranchConfig(fTofHits->GetId()).GetFieldId("sqr_mass_error");
 
@@ -326,4 +326,5 @@ void HadesInterface::ReadTof()
 		Hit->SetField( float(cand->getMass2()), iSqr_mass);
 		Hit->SetField( float(cand->getMetaMatchQuality()), iSqr_mass_error);
 	}
-} // namespace Analysis
+} 
+}// namespace Analysis
