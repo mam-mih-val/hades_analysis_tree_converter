@@ -17,7 +17,9 @@ using std::cout;
 using std::endl;
 using std::vector;
 
-namespace Analysis
+ClassImp(Analysis::HadesInterface)
+
+	namespace Analysis
 {
 
 HadesInterface::HadesInterface() :
