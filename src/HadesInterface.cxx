@@ -34,6 +34,7 @@ HadesInterface::~HadesInterface()
 
 void HadesInterface::Init()
 {
+	this->SetSetEvtCharaParameterFile();
 	this->InitInput();
 	this->InitOutput();
 	this->ReadStaticInfo();
@@ -41,7 +42,7 @@ void HadesInterface::Init()
 // //----------------------------------
 void HadesInterface::InitInput()
 {
-	fEvtChara.setParameterFile(parameterFile);
+	fEvtChara.setParameterFile(fParameterFile.data());
 	fEvtChara.init();
 	dEdxCorr.setDefaultPar("apr12");
 	candCat = (HCategory*)HCategoryManager::getCategory(catParticleCand);

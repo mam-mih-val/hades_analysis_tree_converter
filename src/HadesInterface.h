@@ -61,7 +61,7 @@ public:
     void Finish();
 
     void SetOutputFile(const TString filename) { fOutputFileName = filename; }
-    void SetInputFile(const TString filename) { fInputFileName = filename; }
+    void SetEvtCharaParameterFile(std::string fileName="../evtchara07/centrality_epcorr_apr12_gen8_2019_02_pass30.root") { fParameterFile = filename; }
 
 private:
 
@@ -127,6 +127,7 @@ private:
 	MHWallDivider* divider; 
 	HParticleEvtInfo* evtInfo;
 	HEventHeader* fHeader;
+	std::string fParameterFile;
 
 	
                             
