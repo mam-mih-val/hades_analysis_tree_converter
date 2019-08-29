@@ -69,6 +69,7 @@ set (HEADERS
 
 set (SOURCES
 		src/HadesInterface.cxx
+		src/main.cxx
 )
 
 set (DICT_FILE_NAME G__EvtCharaBK)
