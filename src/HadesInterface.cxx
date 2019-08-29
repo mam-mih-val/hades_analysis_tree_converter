@@ -184,7 +184,7 @@ void HadesInterface::ReadEvent()
 void HadesInterface::ReadFw()
 {
 	std::cout << "ReadFw" << std::endl;
-	fFwModules->ClearChannels();
+	fFwHits->ClearChannels();
 
 	const int iAdc = 		fConfig.GetBranchConfig( fFwHits->GetId() ).GetFieldId("adc");
 	const int iCharge = 	fConfig.GetBranchConfig( fFwHits->GetId() ).GetFieldId("charge");
