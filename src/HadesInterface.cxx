@@ -176,8 +176,8 @@ void HadesInterface::ReadEvent()
 
 	for( int i=0; i<fCEmapBK.size(); i++ )
 	{
-		fEventHeader->SetField( int(evtChara.getCentralityEstimator(fCEmapBK.at(i).second), fConfig.GetBranchConfig(fEventHeader->GetId()).GetFieldId( fCEmapNames.second ) ) );
-		fEventHeader->SetField( float(evtChara.getCentralityPercentile(fCEmapBK.at(i).second), fConfig.GetBranchConfig(fRecEventHeader->GetId()).GetFieldId("centrality_"+fCEmapNames.second)));
+		fEventHeader->SetField( int(fEvtChara.getCentralityEstimator(fCEmapBK.at(i).second), fConfig.GetBranchConfig(fEventHeader->GetId()).GetFieldId( fCEmapNames.second ) ) );
+		fEventHeader->SetField( float(fEvtChara.getCentralityPercentile(fCEmapBK.at(i).second), fConfig.GetBranchConfig(fRecEventHeader->GetId()).GetFieldId("centrality_"+fCEmapNames.second)));
 	}
 }
 
