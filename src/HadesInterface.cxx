@@ -213,7 +213,7 @@ void HadesInterface::ReadFw()
 		ring = divider->GetRing(wallModuleIndex);
 		
 		auto Hit = fFwHits->AddChannel();
-		Hit->Init( fConfig.GetBranchConfig( fFwHits->GetId() ) )
+		Hit->Init( fConfig.GetBranchConfig( fFwHits->GetId() ) );
 		Hit->SetPosition( wallHitX, wallHitY, wallHitZ );
 		Hit->SetField( float(wallHitCharge), iAdc);
 		Hit->SetField( float(wallHitChargeZ), iCharge);
