@@ -174,11 +174,11 @@ void HadesInterface::ReadEvent()
 	fEventHeader->SetVertexY(vertexReco.getY());
 	fEventHeader->SetVertexZ(vertexReco.getZ());
 
-	for( int i=0; i<fCEmapBK.size(); i++ )
-	{
-		fEventHeader->SetField( int(fEvtChara.getCentralityEstimator(fCEmapBK.at(i).second), fConfig.GetBranchConfig(fEventHeader->GetId()).GetFieldId( fCEmapNames.second ) ) );
-		fEventHeader->SetField( float(fEvtChara.getCentralityPercentile(fCEmapBK.at(i).second), fConfig.GetBranchConfig(fRecEventHeader->GetId()).GetFieldId("centrality_"+fCEmapNames.second)));
-	}
+	// for( int i=0; i<fCEmapBK.size(); i++ )
+	// {
+	// 	fEventHeader->SetField( int(fEvtChara.getCentralityEstimator(fCEmapBK.at(i).second), fConfig.GetBranchConfig(fEventHeader->GetId()).GetFieldId( fCEmapNames.second ) ) );
+	// 	fEventHeader->SetField( float(fEvtChara.getCentralityPercentile(fCEmapBK.at(i).second), fConfig.GetBranchConfig(fRecEventHeader->GetId()).GetFieldId("centrality_"+fCEmapNames.second)));
+	// }
 }
 
 void HadesInterface::ReadFw()
