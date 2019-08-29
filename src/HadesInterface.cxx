@@ -34,7 +34,7 @@ HadesInterface::~HadesInterface()
 
 void HadesInterface::Init()
 {
-	this->SetSetEvtCharaParameterFile();
+	this->SetEvtCharaParameterFile();
 	this->InitInput();
 	this->InitOutput();
 	this->ReadStaticInfo();
