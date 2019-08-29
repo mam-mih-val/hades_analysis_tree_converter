@@ -1,5 +1,5 @@
 #include "HadesInterface.h"
-#include "HLoop.h"
+#include "hloop.h"
 
 int main(int argv, char** argc)
 {
