@@ -11,8 +11,6 @@
 #include "TROOT.h"
 #include "TDirectory.h"
 
-#include "HADES_constants.h"
-
 #include "AnalysisTree/Constants.h"
 
 using std::cout;
