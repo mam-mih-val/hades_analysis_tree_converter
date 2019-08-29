@@ -5,9 +5,13 @@
 #include <memory>
 #include <map>
 
-#include "TClonesArray.h"
 #include "TFile.h"
-#include "TTree.h"
+#include "TLorentzVector.h"
+#include "TMath.h"
+#include "TROOT.h"
+#include "TString.h"
+#include "TSystem.h"
+#include "TTree.h"s
 
 #include "hades.h"
 #include "hcategory.h"
@@ -27,7 +31,6 @@
 #include "htime.h"
 #include "hwallhit.h"
 #include "walldef.h"
-#include "mhwalldivider.h"
 
 #include "AnalysisTree/Detector.h"
 #include "AnalysisTree/EventHeader.h"
@@ -35,11 +38,9 @@
 #include "AnalysisTree/StaticInfo.h"
 #include "AnalysisTree/Configuration.h"
 
-#include "DataTreeEvent.h"
 #include "HADES_constants.h"
 #include "hparticleevtcharaBK.h"
 #include "mhwalldivider.h"
-
 
 class TClonesArray;
 class CbmVertex;
