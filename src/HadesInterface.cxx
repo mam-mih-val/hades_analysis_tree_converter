@@ -209,7 +209,7 @@ void HadesInterface::ReadFw()
 		wallHitDistance = wallHit->getDistance();
 		wallHitBeta = wallHitDistance / wallHitTime / 299.792458;
 		wallHitCharge = wallHit->getCharge();
-		wallHitChargeZ = evtChara.getFWCharge(wallHit);
+		wallHitChargeZ = fEvtChara.getFWCharge(wallHit);
 		ring = divider->GetRing(wallModuleIndex);
 		
 		auto Hit = fFwHits->AddChannel();
