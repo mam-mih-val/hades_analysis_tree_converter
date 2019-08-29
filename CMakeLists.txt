@@ -82,7 +82,7 @@ ROOT_GENERATE_DICTIONARY(${DICT_FILE_NAME}
         OPTIONS -s libEvtCharaBK -I${HADES_INCLUDE_DIR} -I${CMAKE_CURRENT_SOURCE_DIR}
         )
 add_library(EvtCharaBK SHARED evtchara07/hparticleevtcharaBK.cc ${DICT_FILE_NAME}.cxx)
-target_link_libraries(EvtCharaBK ${ROOT_LIBRARIES} ${HADES_LIBS} ${_AnalysisTree_LIB})
+target_link_libraries(EvtCharaBK ${ROOT_LIBRARIES} ${HADES_LIBS})
 
-add_executable(HTree_to_DT ${HEADERS} ${SOURCES})
-target_link_libraries(HTree_to_DT ${ROOT_LIBRARIES} ${HADES_LIBS} EvtCharaBK ${_AnalysisTree_LIB})
+add_executable(HTree_to_AT ${HEADERS} ${SOURCES})
+target_link_libraries(HTree_to_AT ${ROOT_LIBRARIES} ${HADES_LIBS} AnalysisTree EvtCharaBK)
