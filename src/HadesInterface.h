@@ -71,6 +71,7 @@ private:
     
     void ReadVertexTracks();
     void ReadFw();
+	void ReadStaticInfo();
     void ReadEventInfo();
     void ReadTof();
         
