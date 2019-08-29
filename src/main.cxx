@@ -12,7 +12,7 @@ int main(int argv, char** argc)
 	if(argv==1)
 	{
 		inFile=std::string(argc[1]);
-		outFile="ATreeOut.root"
+		outFile="ATreeOut.root";
 	}
 	if(argv==2)
 	{
