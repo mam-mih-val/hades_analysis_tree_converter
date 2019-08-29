@@ -89,7 +89,7 @@ private:
     AnalysisTree::EventHeader *fEventHeader {nullptr};
     AnalysisTree::TrackDetector *fVtxTracks {nullptr};
     AnalysisTree::HitDetector *fTofHits {nullptr};
-    AnalysisTree::ModuleDetector *fFwHits {nullptr};
+    AnalysisTree::HitDetector *fFwHits {nullptr};
     
     AnalysisTree::Matching *fVtx2Tof{nullptr};
 
