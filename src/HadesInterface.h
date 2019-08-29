@@ -27,6 +27,7 @@
 #include "htime.h"
 #include "hwallhit.h"
 #include "walldef.h"
+#include "mhwalldivider.h"
 
 #include "AnalysisTree/Detector.h"
 #include "AnalysisTree/EventHeader.h"
