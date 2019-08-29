@@ -238,8 +238,6 @@ void HadesInterface::ReadVertexTracks()
 	const int iPt = 		fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("pt");
 	const int iPhi = 		fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("phi");
 
-	if(!candCat)
-		continue;
 	Int_t size = candCat->getEntries();
 	HParticleCand* cand = 0;
 	Int_t itr, pid;
