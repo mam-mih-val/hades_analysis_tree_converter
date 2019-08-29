@@ -282,7 +282,7 @@ void HadesInterface::ReadVertexTracks()
 		Track->SetField( float(cand->getChi2()), iChi2);
 		Track->SetField( float(cand->getR()), iDcax); 
 		Track->SetField( float(cand->getR()), iDcax+1);
-		Track->SetField( float(cand->getZ() - vertexReco.getZ()), iDcax+2);
+		// Track->SetField( float(cand->getZ() - vertexReco.getZ()), iDcax+2);
 		Track->SetField( float( cand->getMdcdEdx() ), idEdx);
 		Track->SetField( int( pid ), iPid );
 		Track->SetField( int( cand->getNLayer(0) ), iNhits);
