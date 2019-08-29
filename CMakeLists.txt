@@ -82,4 +82,4 @@ add_library(EvtCharaBK SHARED evtchara07/hparticleevtcharaBK.cc ${DICT_FILE_NAME
 target_link_libraries(EvtCharaBK ${ROOT_LIBRARIES} ${HADES_LIBS})
 
 add_executable(HTree_to_DT ${HEADERS} ${SOURCES})
-target_link_libraries(HTree_to_DT ${ROOT_LIBRARIES} ${HADES_LIBS} AnalysisTree EvtCharaBK)
+target_link_libraries(HTree_to_DT ${ROOT_LIBRARIES} ${HADES_LIBS} EvtCharaBK AnalysisTree)
