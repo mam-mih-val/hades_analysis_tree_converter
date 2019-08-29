@@ -197,6 +197,7 @@ void HadesInterface::ReadFw()
     ushort wallModuleIndex, ring, nWallHitsTot;
     float wallHitCharge, wallHitChargeSpec, wallHitTime, wallHitDistance, wallChargeTot = 0.;
     short wallHitChargeZ;
+	HWallHitSim* wallHit = 0;
 
 	for(Short_t j = 0; j < nWallHitsTot; j++)
 	{
