@@ -5,17 +5,17 @@
 int main(int argv, char** argc)
 {
 	std::string inFile{""}, outFile{""};
-	if(argv == 0 || argv > 2)
+	if(argv < 2 || argv > 3)
 	{
 		cout << "Error amount of arguments" << endl;
 		return 1;
 	}
-	if(argv==1)
+	if(argv==2)
 	{
 		inFile=std::string(argc[1]);
 		outFile="ATreeOut.root";
 	}
-	if(argv==2)
+	if(argv==3)
 	{
 		inFile=std::string(argc[1]);
 		outFile=std::string(argc[2]);
