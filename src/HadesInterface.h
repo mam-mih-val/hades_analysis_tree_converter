@@ -54,7 +54,7 @@ class HadesInterface
 public:
   
     HadesInterface();
-    ~HadesInterface();
+    ~HadesInterface(){};
     
     void Init();
     void Exec();

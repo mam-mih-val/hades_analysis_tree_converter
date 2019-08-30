@@ -28,9 +28,6 @@ HadesInterface::HadesInterface() :
 	wallCat((HCategory*)HCategoryManager::getCategory(catWallHit))
 {
 }
-HadesInterface::~HadesInterface()
-{
-}
 
 void HadesInterface::Init()
 {
