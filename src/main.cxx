@@ -23,7 +23,7 @@ int main(int argv, char** argc)
 	Analysis::HadesInterface* fInterface = new Analysis::HadesInterface();
 	auto loop = new HLoop(kTRUE);
 	loop->addFiles(inFile.data());
-	loop->setInput("-*,+HParticleCand,+HParticleEvtInfo,+HWallHit");
+	// loop->setInput("-*,+HParticleCand,+HParticleEvtInfo,+HWallHit");
 	
 	fInterface -> SetOutputFile(outFile);
 	// fInterface -> SetInputFile(InFileName);
