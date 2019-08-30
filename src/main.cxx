@@ -21,19 +21,19 @@ int main(int argv, char** argc)
 		outFile=std::string(argc[2]);
 	}
 	Analysis::HadesInterface* fInterface = new Analysis::HadesInterface();
-	HLoop loop(kTRUE);
-	loop.addFiles(inFile.data());
-	loop.setInput("-*,+HParticleCand,+HParticleEvtInfo,+HWallHit");
+	auto loop = new HLoop(kTRUE);
+	loop->addFiles(inFile.data());
+	loop->setInput("-*,+HParticleCand,+HParticleEvtInfo,+HWallHit");
 	
 	fInterface -> SetOutputFile(outFile);
 	// fInterface -> SetInputFile(InFileName);
-	fInterface->Init();
+	fInterface->Init(loop);
 
-	Int_t entries = loop.getEntries();
+	Int_t entries = loop->getEntries();
 	for(Int_t i = 1; i < entries; i++)
   	{
-		loop.printCategories();
-	    Int_t nbytes = loop.nextEvent(i);
+		loop->printCategories();
+	    Int_t nbytes = loop->nextEvent(i);
 		fInterface->Exec();
 	}
 	fInterface->Finish();
