@@ -32,6 +32,7 @@ int main(int argv, char** argc)
 	Int_t entries = loop.getEntries();
 	for(Int_t i = 1; i < entries; i++)
   	{
+		loop.printCategories();
 	    Int_t nbytes = loop.nextEvent(i);
 		fInterface->Exec();
 	}
