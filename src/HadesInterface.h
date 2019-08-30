@@ -53,7 +53,7 @@ public:
     HadesInterface();
     ~HadesInterface(){};
     
-    void Init();
+    void Init(HLoop* loop);
     void Exec();
     void Finish();
 
@@ -62,7 +62,7 @@ public:
 
 private:
 
-    void InitInput();
+    void InitInput(HLoop* loop);
     void InitOutput();
     void ReadEvent();
     
@@ -124,6 +124,7 @@ private:
 	MHWallDivider* divider; 
 	HParticleEvtInfo* evtInfo;
 	HEventHeader* fHeader;
+	HLoop* fLoop;
 	std::string fParameterFile;
 };
 

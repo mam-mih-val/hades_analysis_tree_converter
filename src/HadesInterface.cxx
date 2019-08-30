@@ -27,16 +27,17 @@ HadesInterface::HadesInterface() :
 {
 }
 
-void HadesInterface::Init()
+void HadesInterface::Init(HLoop* loop)
 {
 	this->SetEvtCharaParameterFile();
-	this->InitInput();
+	this->InitInput(loop);
 	this->InitOutput();
 	this->ReadStaticInfo();
 }
 // //----------------------------------
-void HadesInterface::InitInput()
+void HadesInterface::InitInput(HLoop* loop)
 {
+	fLoop = loop;
 	fEvtChara.setParameterFile(fParameterFile.data());
 	fEvtChara.init();
 	dEdxCorr.setDefaultPar("apr12");
