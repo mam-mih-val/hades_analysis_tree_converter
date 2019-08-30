@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.0)
 
+set(CMAKE_AUTOMOC ON)
+
 project(HTree_TO_AT)
 
 set(CMAKE_BUILD_TYPE debug)
