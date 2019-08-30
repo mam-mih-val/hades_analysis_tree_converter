@@ -4,7 +4,7 @@
 
 int main(int argv, char** argc)
 {
-	std::string inFile, outFile;
+	std::string inFile{""}, outFile{""};
 	if(argv == 0 || argv > 2)
 	{
 		cout << "Error amount of arguments" << endl;
