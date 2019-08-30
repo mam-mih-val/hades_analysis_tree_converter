@@ -1,6 +1,6 @@
-#ifndef HadesInterface_H
-#define HadesInterface_H 1
+#pragma once
 
+#include <iostream>
 #include <vector>
 #include <memory>
 #include <map>
@@ -41,9 +41,6 @@
 #include "HADES_constants.h"
 #include "hparticleevtcharaBK.h"
 #include "mhwalldivider.h"
-
-class TClonesArray;
-class CbmVertex;
 
 namespace Analysis
 {
@@ -128,11 +125,6 @@ private:
 	HParticleEvtInfo* evtInfo;
 	HEventHeader* fHeader;
 	std::string fParameterFile;
-
-	
-                            
-    ClassDef(HadesInterface, 1)
 };
 
 }
-#endif
