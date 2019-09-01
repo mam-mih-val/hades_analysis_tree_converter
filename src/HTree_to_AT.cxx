@@ -209,8 +209,6 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 	fEventHeader->Init(EventHeaderBranch);
 
 	//  ***** List of Branches *******
-	fTreeFile = TFile::Open(fOutputFileName.data(), "RECREATE");
-	fTreeFile->cd();
 	fATree = new TTree("aTree", "Analysis Tree, HADES data");
 	fATree->Branch("VtxTracks", "AnalysisTree::TrackDetector", &fVtxTracks);
 	fATree->Branch("EventHeader", "AnalysisTree::EventHeader", &fEventHeader);
