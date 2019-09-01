@@ -252,7 +252,6 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 		fEventHeader->SetVertexX(vertexReco.getX());
 		fEventHeader->SetVertexY(vertexReco.getY());
 		fEventHeader->SetVertexZ(vertexReco.getZ());
-		cout << "255 line" << endl;
 		// loop over FW hits
 		Float_t wallHitBeta, wallHitX, wallHitY, wallHitZ;
 		ushort wallModuleIndex, ring, nWallHitsTot;
@@ -307,6 +306,7 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 				Hit->SetField( float(wallHitBeta), iBeta);
 				Hit->SetField( int(ring), iRing);
 				Hit->SetField( float(wallHitTime), iTime);
+				cout << "309 line" << endl;
 		}
 		}
 		// loop over particle candidates in event
