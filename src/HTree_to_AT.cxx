@@ -224,9 +224,12 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 		Int_t nbytes = loop.nextEvent(i); // get next event. categories will be cleared before
 		if(nbytes <= 0)
 		{
+			cout << nbytes << endl; // last event reached
 			break;
 		}
 		if(i % 5000 == 0)
+			cout << "event " << i << endl;
+
 		Int_t g, day, hour, minute;
 		TString* be = new TString("be");
 
