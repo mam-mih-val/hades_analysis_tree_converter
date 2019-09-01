@@ -414,7 +414,7 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 	} // end eventloop
 
 	cout << endl;
-	fAtree->Write();
+	fATree->Write();
 	out->Close();
 
 	delete gHades;
