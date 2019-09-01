@@ -395,6 +395,8 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 			Track->SetField( float(pt), iPt);
 			Track->SetField( float(phi), iPhi);
 
+			auto* Hit = fTofHits->AddChannel();
+			Hit->Init( fConfig.GetBranchConfig( fTofHits->GetId() ) );
 			if(cand->getSystem() == 0)
 				Hit->SetField(HADES_constants::kRPC, iStat);
 			else
