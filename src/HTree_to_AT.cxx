@@ -331,6 +331,7 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 		const int iSqr_mass = fConfig.GetBranchConfig(fTofHits->GetId()).GetFieldId("sqr_mass");
 		const int iSqr_mass_error = fConfig.GetBranchConfig(fTofHits->GetId()).GetFieldId("sqr_mass_error");
 
+		cout << "334 line" << endl;
 		for(Int_t j = 0; j < size; j++)
 		{
 			cand = HCategoryManager::getObject(cand, candCat, j);
@@ -356,15 +357,11 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 				mass = cand->getMass(); // META mass
 				p = cand->getMomentum();
 			}
-
-			//						cout << pid << "\t" << cand->getMomentum() << "\t" <<
-			//cand->getMomentumOrg() << "\t" << p << endl;
-
 			theta = cand->getTheta() * D2R;
 			phi = cand->getPhi() * D2R;
 			pt = p * TMath::Sin(theta);
 			eta = -TMath::Log(TMath::Tan(theta / 2.));
-
+			cout << "364 line" << endl;
 			trackPar.SetPtEtaPhiM(0.001 * pt, eta, phi, 0.001 * mass); // MeV -> GeV
 			auto* Track = fVtxTracks->AddChannel();
 			Track->SetMomentum( trackPar );
