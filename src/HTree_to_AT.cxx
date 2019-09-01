@@ -301,8 +301,10 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 		}
 		}
 		// loop over particle candidates in event
+		cout << "304 line" << endl;
 		if(!candCat)
 			continue;
+		cout << "307 line" << endl;
 		Int_t size = candCat->getEntries();
 		HParticleCand* cand = 0;
 		Int_t pid;
@@ -310,7 +312,6 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 		float p, theta, pt, eta, phi, mass;
 
 		fVtxTracks->ClearChannels();
-
 		const int iChi2 = 		fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("chi2");
 		const int iVtx_ch2 = 	fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("vtx_chi2");
 		const int idEdx = 		fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("dEdx");
@@ -322,7 +323,6 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 		const int iPhi = 		fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("phi");
 
 		fTofHits->ClearChannels();
-
 		const int iStat = fConfig.GetBranchConfig(fTofHits->GetId()).GetFieldId("status");
 		const int iTime = fConfig.GetBranchConfig(fTofHits->GetId()).GetFieldId("time");
 		const int iPath = fConfig.GetBranchConfig(fTofHits->GetId()).GetFieldId("path");
@@ -331,7 +331,6 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 		const int iSqr_mass = fConfig.GetBranchConfig(fTofHits->GetId()).GetFieldId("sqr_mass");
 		const int iSqr_mass_error = fConfig.GetBranchConfig(fTofHits->GetId()).GetFieldId("sqr_mass_error");
 
-		cout << "334 line" << endl;
 		for(Int_t j = 0; j < size; j++)
 		{
 			cand = HCategoryManager::getObject(cand, candCat, j);
