@@ -262,6 +262,7 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 		HWallHitSim* wallHit = 0;
 
 		fFwHits->ClearChannels();
+		{
 		int iAdc = 		fConfig.GetBranchConfig( fFwHits->GetId() ).GetFieldId("adc");
 		int iCharge = 	fConfig.GetBranchConfig( fFwHits->GetId() ).GetFieldId("charge");
 		int iModule_id = 	fConfig.GetBranchConfig( fFwHits->GetId() ).GetFieldId("module_id");
@@ -307,7 +308,7 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 			Hit->SetField( int(ring), iRing);
 			Hit->SetField( float(wallHitTime), iTime);
 		}
-
+		}
 		// loop over particle candidates in event
 		if(!candCat)
 			continue;
