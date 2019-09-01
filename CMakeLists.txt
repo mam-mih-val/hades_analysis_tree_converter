@@ -70,7 +70,7 @@ set (HEADERS
 )
 
 set (SOURCES
-		src/HTree_TO_AT.cxx
+		src/HTree_to_AT.cxx
 )
 
 Set(_AnalysisTree_LIB  AnalysisTreeBase.so)
