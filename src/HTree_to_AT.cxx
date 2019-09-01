@@ -292,7 +292,7 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 				Hit->Init( fConfig.GetBranchConfig( fFwHits->GetId() ) );
 				Hit->SetPosition( wallHitX, wallHitY, wallHitZ );
 				Hit->SetField( float(wallHitCharge), iAdc);
-				Hit->SetField( float(wallHitChargeZ), iCharge);
+				Hit->SetField( int(wallHitChargeZ), iCharge);
 				Hit->SetField( int(wallModuleIndex), iModule_id);
 				Hit->SetField( float(wallHitBeta), iBeta);
 				Hit->SetField( int(ring), iRing);
