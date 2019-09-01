@@ -297,7 +297,7 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 				Hit->SetField( float(wallHitBeta), iBeta);
 				Hit->SetField( int(ring), iRing);
 				Hit->SetField( float(wallHitTime), iTime);
-				cout << "300 line" << endl;
+				// cout << "300 line" << endl;
 		}
 		}
 		// loop over particle candidates in event
@@ -305,7 +305,7 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 			continue;
 		Int_t size = candCat->getEntries();
 		HParticleCand* cand = 0;
-		Int_t itr, pid;
+		Int_t pid;
 		TLorentzVector trackPar;
 		float p, theta, pt, eta, phi, mass;
 
@@ -331,17 +331,14 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 		const int iSqr_mass = fConfig.GetBranchConfig(fTofHits->GetId()).GetFieldId("sqr_mass");
 		const int iSqr_mass_error = fConfig.GetBranchConfig(fTofHits->GetId()).GetFieldId("sqr_mass_error");
 
-
 		for(Int_t j = 0; j < size; j++)
 		{
 			cand = HCategoryManager::getObject(cand, candCat, j);
 			if(!cand)
-			continue;
+				continue;
 			if(!loop.goodSector(cand->getSector()))
-			{
 				continue; // skip inactive sectors
-			}
-				if(!cand->isFlagBit(kIsUsed))
+			if(!cand->isFlagBit(kIsUsed))
 				continue;
 			if(cand->getMomentum() == cand->getMomentumOrg())
 				continue; // skip tracks with too high pt ???
@@ -398,8 +395,6 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 			Hit->SetField( int(cand->getCharge()), iCharge);
 			Hit->SetField( float(cand->getMass2()), iSqr_mass);
 			Hit->SetField( float(cand->getMetaMatchQuality()), iSqr_mass_error);
-
-			itr++;
 		} // end cand loop
 		fATree->Fill();
 	} // end eventloop
