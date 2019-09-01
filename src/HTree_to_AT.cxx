@@ -140,9 +140,16 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 	// Time
 	//    Int_t time;
 
+	AnalysisTree::Configuration fConfig;    
+    AnalysisTree::StaticInfo fStaticInfo;
+    AnalysisTree::EventHeader *fEventHeader {nullptr};
+    AnalysisTree::TrackDetector *fVtxTracks {nullptr};
+    AnalysisTree::HitDetector *fTofHits {nullptr};
+    AnalysisTree::HitDetector *fFwHits {nullptr};
+
 	TFile* out = new TFile(outfile.Data(), "RECREATE");
 	out->cd();
-	auto ATree = new TTree("ATree", "Analysis Tree, HADES data");
+	auto fATree = new TTree("ATree", "Analysis Tree, HADES data");
 
 		AnalysisTree::BranchConfig VtxTracksBranch("VtxTracks");
 	VtxTracksBranch.SetType(AnalysisTree::DetType::kTrack);
