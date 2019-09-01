@@ -67,12 +67,10 @@ add_definitions(${ROOT_CXX_FLAGS})
 set (HEADERS
 		src/HADES_constants.h 
 		src/mhwalldivider.h
-		src/HadesInterface.h
 )
 
 set (SOURCES
-		src/HadesInterface.cxx
-		src/main.cxx
+		src/HTree_TO_AT.cxx
 )
 
 Set(_AnalysisTree_LIB  AnalysisTreeBase.so)
