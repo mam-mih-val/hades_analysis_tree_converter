@@ -160,8 +160,6 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 	VtxTracksBranch.AddIntegerField("q");
 	VtxTracksBranch.AddIntegerField( {"nhits_0","nhits_1","nhits_2"} );
 	VtxTracksBranch.AddIntegerField("pid");
-	VtxTracksBranch.AddFloatField("pt");
-	VtxTracksBranch.AddFloatField("phi");
 	fConfig.AddBranchConfig(VtxTracksBranch);
 	fVtxTracks = new AnalysisTree::TrackDetector(fConfig.GetLastId());
 
@@ -316,8 +314,6 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 		const int iQ = 			fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("q");
 		const int iNhits = 		fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("nhits_0");
 		const int iPid = 		fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("pid");
-		const int iPt = 		fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("pt");
-		const int iPhi = 		fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("phi");
 
 		fTofHits->ClearChannels();
 		const int iStat = fConfig.GetBranchConfig(fTofHits->GetId()).GetFieldId("status");
@@ -372,9 +368,6 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 			Track->SetField( int( cand->getNLayer(1) ), iNhits+1);
 			Track->SetField( int( cand->getNLayer(2) ), iNhits+2);
 			// Track->SetField( float(vChiToPrimVtx.at(0)), iVtx_ch2);
-			Track->SetField( float(pt), iPt);
-			cout << "iPhi=" << iPhi << endl;
-			Track->SetField( float(phi), iPhi);
 
 			auto* Hit = fTofHits->AddChannel();
 			Hit->Init( fConfig.GetBranchConfig( fTofHits->GetId() ) );
