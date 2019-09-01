@@ -267,6 +267,13 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 			int iRing = 		fConfig.GetBranchConfig( fFwHits->GetId() ).GetFieldId("ring");
 			int iTime = 		fConfig.GetBranchConfig( fFwHits->GetId() ).GetFieldId("time");
 
+			nWallHitsTot = wallCat->getEntries();
+			if(nWallHitsTot > 0)
+			{
+				wallHit = HCategoryManager::getObject(wallHit, wallCat, 0);
+				wallHit->getXYZLab(wallHitX, wallHitY, wallHitZ);
+				DTEvent->SetPsdPosition(0., 0., wallHitZ);
+			}
 			for(Short_t j = 0; j < nWallHitsTot; j++)
 			{ // loop over wall hits
 				wallHit = HCategoryManager::getObject(wallHit, wallCat, j);
