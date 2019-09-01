@@ -28,7 +28,12 @@
 #include <iostream>
 #include <map>
 
-#include "DataTreeEvent.h"
+#include "AnalysisTree/Detector.h"
+#include "AnalysisTree/EventHeader.h"
+#include "AnalysisTree/Track.h"
+#include "AnalysisTree/StaticInfo.h"
+#include "AnalysisTree/Configuration.h"
+
 #include "HADES_constants.h"
 #include "hparticleevtcharaBK.h"
 #include "mhwalldivider.h"
