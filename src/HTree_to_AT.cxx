@@ -359,6 +359,7 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 			eta = -TMath::Log(TMath::Tan(theta / 2.));
 			trackPar.SetPtEtaPhiM(0.001 * pt, eta, phi, 0.001 * mass); // MeV -> GeV
 			auto* Track = fVtxTracks->AddChannel();
+			cout << "track information fillin'" << endl;
 			Track->SetMomentum( trackPar );
 			Track->Init( fConfig.GetBranchConfig( fVtxTracks->GetId() ) );
 			Track->SetField( int(cand->getCharge()), iQ);
@@ -377,6 +378,7 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 
 			auto* Hit = fTofHits->AddChannel();
 			Hit->Init( fConfig.GetBranchConfig( fTofHits->GetId() ) );
+			cout << "tof information fillin'" << endl;
 			if(cand->getSystem() == 0)
 				Hit->SetField(int(HADES_constants::kRPC), iStat);
 			else
