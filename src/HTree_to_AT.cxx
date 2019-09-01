@@ -272,14 +272,14 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 			for(Short_t j = 0; j < nWallHitsTot; j++)
 			{ // loop over wall hits
 				wallHit = HCategoryManager::getObject(wallHit, wallCat, j);
+				if( !wallHit )
+					continue;
 				wallModuleIndex = wallHit->getCell();
 				wallHit->getXYZLab(wallHitX, wallHitY, wallHitZ);
 				wallHitTime = wallHit->getTime();
 				wallHitDistance = wallHit->getDistance();
 				wallHitBeta = wallHitDistance / wallHitTime / 299.792458;
 				wallHitCharge = wallHit->getCharge();
-				wallHitChargeSpec =
-					93. * pow(wallHitCharge, 0.46 - 0.006 * sqrt(wallHitCharge)); // parametrization from R.Holzmann
 				wallHitChargeZ = evtChara.getFWCharge(wallHit);
 
 				ring = divider->GetRing(wallModuleIndex);
