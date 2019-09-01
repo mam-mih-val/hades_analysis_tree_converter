@@ -160,8 +160,8 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 	VtxTracksBranch.AddIntegerField("q");
 	VtxTracksBranch.AddIntegerField( {"nhits_0","nhits_1","nhits_2"} );
 	VtxTracksBranch.AddIntegerField("pid");
-	VtxTracksBranch.AddIntegerField("pt");
-	VtxTracksBranch.AddIntegerField("phi");
+	VtxTracksBranch.AddFloatField("pt");
+	VtxTracksBranch.AddFloatField("phi");
 	fConfig.AddBranchConfig(VtxTracksBranch);
 	fVtxTracks = new AnalysisTree::TrackDetector(fConfig.GetLastId());
 
@@ -297,14 +297,11 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 				Hit->SetField( float(wallHitBeta), iBeta);
 				Hit->SetField( int(ring), iRing);
 				Hit->SetField( float(wallHitTime), iTime);
-				// cout << "300 line" << endl;
 		}
 		}
 		// loop over particle candidates in event
-		cout << "304 line" << endl;
 		if(!candCat)
 			continue;
-		cout << "307 line" << endl;
 		Int_t size = candCat->getEntries();
 		HParticleCand* cand = 0;
 		Int_t pid;
@@ -360,7 +357,6 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 			phi = cand->getPhi() * D2R;
 			pt = p * TMath::Sin(theta);
 			eta = -TMath::Log(TMath::Tan(theta / 2.));
-			cout << "364 line" << endl;
 			trackPar.SetPtEtaPhiM(0.001 * pt, eta, phi, 0.001 * mass); // MeV -> GeV
 			auto* Track = fVtxTracks->AddChannel();
 			Track->SetMomentum( trackPar );
@@ -382,9 +378,9 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 			auto* Hit = fTofHits->AddChannel();
 			Hit->Init( fConfig.GetBranchConfig( fTofHits->GetId() ) );
 			if(cand->getSystem() == 0)
-				Hit->SetField(HADES_constants::kRPC, iStat);
+				Hit->SetField(int(HADES_constants::kRPC), iStat);
 			else
-				Hit->SetField(HADES_constants::kTOF, iStat);
+				Hit->SetField(int(HADES_constants::kTOF), iStat);
 			Hit->SetField( float(cand->getDistanceToMetaHit() / cand->getBeta() / 299.792458), iTime);
 			Hit->SetField( float(cand->getDistanceToMetaHit()), iPath);
 			Hit->SetField( float(cand->getMetaMatchRadius()), iMatch); // META match qa - NOT POSITION!!!
