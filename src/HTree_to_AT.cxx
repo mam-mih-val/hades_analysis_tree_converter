@@ -338,8 +338,6 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 	Int_t size = candCat->getEntries();
 	HParticleCand* cand = 0;
 	Int_t itr, pid;
-	DataTreeTrack* track;
-	DataTreeTOFHit* hit;
 	TLorentzVector trackPar;
 	float p, theta, pt, eta, phi, mass;
 
