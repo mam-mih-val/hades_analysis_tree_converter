@@ -125,8 +125,8 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 	evtChara.init();
 
 	// read all categories
-	// loop.printCategories();
-	// loop.printChain();
+	loop.printCategories();
+	loop.printChain();
 
 	// parameters
 	HEnergyLossCorrPar dEdxCorr;
@@ -151,7 +151,7 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 	out->cd();
 	auto fATree = new TTree("ATree", "Analysis Tree, HADES data");
 
-		AnalysisTree::BranchConfig VtxTracksBranch("VtxTracks");
+	AnalysisTree::BranchConfig VtxTracksBranch("VtxTracks");
 	VtxTracksBranch.SetType(AnalysisTree::DetType::kTrack);
 	VtxTracksBranch.AddFloatField("chi2");
 	VtxTracksBranch.AddFloatField("vtx_chi2");
@@ -221,7 +221,7 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 	TString filename;
 	MHWallDivider* divider = new MHWallDivider();
 
-	for(Int_t i = 1; i < entries; i++)
+	for(Int_t i = 1; i < 3; i++)
 	{
 		Int_t nbytes = loop.nextEvent(i); // get next event. categories will be cleared before
 		if(nbytes <= 0)
@@ -252,7 +252,7 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 		fEventHeader->SetVertexX(vertexReco.getX());
 		fEventHeader->SetVertexY(vertexReco.getY());
 		fEventHeader->SetVertexZ(vertexReco.getZ());
-
+		cout << "255 line" << endl;
 		// loop over FW hits
 		Float_t wallHitBeta, wallHitX, wallHitY, wallHitZ;
 		ushort wallModuleIndex, ring, nWallHitsTot;
@@ -263,50 +263,50 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 
 		fFwHits->ClearChannels();
 		{
-		int iAdc = 		fConfig.GetBranchConfig( fFwHits->GetId() ).GetFieldId("adc");
-		int iCharge = 	fConfig.GetBranchConfig( fFwHits->GetId() ).GetFieldId("charge");
-		int iModule_id = 	fConfig.GetBranchConfig( fFwHits->GetId() ).GetFieldId("module_id");
-		int iBeta = 		fConfig.GetBranchConfig( fFwHits->GetId() ).GetFieldId("beta");
-		int iRing = 		fConfig.GetBranchConfig( fFwHits->GetId() ).GetFieldId("ring");
-		int iTime = 		fConfig.GetBranchConfig( fFwHits->GetId() ).GetFieldId("time");
+			int iAdc = 		fConfig.GetBranchConfig( fFwHits->GetId() ).GetFieldId("adc");
+			int iCharge = 	fConfig.GetBranchConfig( fFwHits->GetId() ).GetFieldId("charge");
+			int iModule_id = 	fConfig.GetBranchConfig( fFwHits->GetId() ).GetFieldId("module_id");
+			int iBeta = 		fConfig.GetBranchConfig( fFwHits->GetId() ).GetFieldId("beta");
+			int iRing = 		fConfig.GetBranchConfig( fFwHits->GetId() ).GetFieldId("ring");
+			int iTime = 		fConfig.GetBranchConfig( fFwHits->GetId() ).GetFieldId("time");
 
-		for(Short_t j = 0; j < nWallHitsTot; j++)
-		{ // loop over wall hits
-			wallHit = HCategoryManager::getObject(wallHit, wallCat, j);
-			wallModuleIndex = wallHit->getCell();
-			wallHit->getXYZLab(wallHitX, wallHitY, wallHitZ);
-			wallHitTime = wallHit->getTime();
-			wallHitDistance = wallHit->getDistance();
-			wallHitBeta = wallHitDistance / wallHitTime / 299.792458;
-			wallHitCharge = wallHit->getCharge();
-			wallHitChargeSpec =
-				93. * pow(wallHitCharge, 0.46 - 0.006 * sqrt(wallHitCharge)); // parametrization from R.Holzmann
-			wallHitChargeZ = evtChara.getFWCharge(wallHit);
+			for(Short_t j = 0; j < nWallHitsTot; j++)
+			{ // loop over wall hits
+				wallHit = HCategoryManager::getObject(wallHit, wallCat, j);
+				wallModuleIndex = wallHit->getCell();
+				wallHit->getXYZLab(wallHitX, wallHitY, wallHitZ);
+				wallHitTime = wallHit->getTime();
+				wallHitDistance = wallHit->getDistance();
+				wallHitBeta = wallHitDistance / wallHitTime / 299.792458;
+				wallHitCharge = wallHit->getCharge();
+				wallHitChargeSpec =
+					93. * pow(wallHitCharge, 0.46 - 0.006 * sqrt(wallHitCharge)); // parametrization from R.Holzmann
+				wallHitChargeZ = evtChara.getFWCharge(wallHit);
 
-			ring = divider->GetRing(wallModuleIndex);
-			if(ring == 0)
-			{
-			cerr << "Error in short MHWallDivider::GetRing(short i=" << wallModuleIndex << "): it returned 0" << endl;
-			return 2;
-			}
+				ring = divider->GetRing(wallModuleIndex);
+				if(ring == 0)
+				{
+				cerr << "Error in short MHWallDivider::GetRing(short i=" << wallModuleIndex << "): it returned 0" << endl;
+				return 2;
+				}
 
-			if(evtChara.PassesCutsFW(wallHit))
-			{
-			isWallHitOk = true;
-			wallChargeTot += wallHitChargeZ;
-			}
-			else
-			isWallHitOk = false;
+				if(evtChara.PassesCutsFW(wallHit))
+				{
+				isWallHitOk = true;
+				wallChargeTot += wallHitChargeZ;
+				}
+				else
+				isWallHitOk = false;
 
-			auto Hit = fFwHits->AddChannel();
-			Hit->Init( fConfig.GetBranchConfig( fFwHits->GetId() ) );
-			Hit->SetPosition( wallHitX, wallHitY, wallHitZ );
-			Hit->SetField( float(wallHitCharge), iAdc);
-			Hit->SetField( float(wallHitChargeZ), iCharge);
-			Hit->SetField( int(wallModuleIndex), iModule_id);
-			Hit->SetField( float(wallHitBeta), iBeta);
-			Hit->SetField( int(ring), iRing);
-			Hit->SetField( float(wallHitTime), iTime);
+				auto Hit = fFwHits->AddChannel();
+				Hit->Init( fConfig.GetBranchConfig( fFwHits->GetId() ) );
+				Hit->SetPosition( wallHitX, wallHitY, wallHitZ );
+				Hit->SetField( float(wallHitCharge), iAdc);
+				Hit->SetField( float(wallHitChargeZ), iCharge);
+				Hit->SetField( int(wallModuleIndex), iModule_id);
+				Hit->SetField( float(wallHitBeta), iBeta);
+				Hit->SetField( int(ring), iRing);
+				Hit->SetField( float(wallHitTime), iTime);
 		}
 		}
 		// loop over particle candidates in event
