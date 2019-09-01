@@ -219,7 +219,7 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 	TString filename;
 	MHWallDivider* divider = new MHWallDivider();
 
-	for(Int_t i = 1; i < 3; i++)
+	for(Int_t i = 1; i < entries; i++)
 	{
 		Int_t nbytes = loop.nextEvent(i); // get next event. categories will be cleared before
 		if(nbytes <= 0)
