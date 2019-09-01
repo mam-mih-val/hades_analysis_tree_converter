@@ -125,8 +125,8 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 	evtChara.init();
 
 	// read all categories
-	loop.printCategories();
-	loop.printChain();
+	// loop.printCategories();
+	// loop.printChain();
 
 	// parameters
 	HEnergyLossCorrPar dEdxCorr;
