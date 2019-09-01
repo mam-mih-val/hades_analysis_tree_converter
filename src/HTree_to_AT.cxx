@@ -209,7 +209,6 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 	fEventHeader->Init(EventHeaderBranch);
 
 	//  ***** List of Branches *******
-	fATree = new TTree("aTree", "Analysis Tree, HADES data");
 	fATree->Branch("VtxTracks", "AnalysisTree::TrackDetector", &fVtxTracks);
 	fATree->Branch("EventHeader", "AnalysisTree::EventHeader", &fEventHeader);
 	fATree->Branch("FwModules", "AnalysisTree::HitDetector", &fFwHits);
@@ -220,7 +219,6 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 	if(nEvents < entries && nEvents > 0)
 	entries = nEvents;
 	TString filename;
-	//    Int_t sectors [6];
 	MHWallDivider* divider = new MHWallDivider();
 
 	for(Int_t i = 1; i < entries; i++)
@@ -231,222 +229,185 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 			cout << nbytes << endl; // last event reached
 			break;
 		}
-		// if(i%5000 == 0) cout<<"\revent "<<i;
 		if(i % 5000 == 0)
 			cout << "event " << i << endl;
 
-		//        loop.getSectors(sectors); // fill sector array
 		Int_t g, day, hour, minute;
 		TString* be = new TString("be");
 
-	if(loop.isNewFile(filename))
-	{
-		if(!isSimulation)
-		filename = HTime::stripFileName(filename, kTRUE, kFALSE);
-		HTime::splitFileName(filename, *be, g, day, hour, minute, g, g, kFALSE);
-		//            time = day*24*60 + hour*24 + minute;
-	}
-	//-------------------------------------------------
-	// summary event info object
-	HParticleEvtInfo* evtInfo = 0;
-	evtInfo = HCategoryManager::getObject(evtInfo, evtInfoCat, 0);
-	// get type of trigger
-	HEventHeader* header = gHades->getCurrentEvent()->getHeader();
-	// for(Int_t k = 0; k < HADES_constants::kPT1; k++)
-	// {
-		// DTEvent->AddTrigger();
-		// DTEvent->GetTrigger(k)->SetIsFired(evtInfo->isGoodEvent(triggerMap.at(k)));
-	// }
-	// for(Int_t k = HADES_constants::kPT1; k < HADES_constants::kNtriggers; k++)
-	// {
-		// DTEvent->AddTrigger();
-		// if(header->isTBit(triggerMap.at(k)))
-		// DTEvent->GetTrigger(k)->SetIsFired(kTRUE);
-	}
-
-	// get Run number
-	// DTEvent->SetRunId(header->getEventRunNumber());
-	// DTEvent->SetEventId(header->getEventSeqNumber());
-	// DTEvent->SetEventTimestamp(header->getTime());
-
-	// get primary vertex
-	HVertex vertexReco = header->getVertexReco();
-	fEventHeader->SetVertexX(vertexReco.getX());
-	fEventHeader->SetVertexY(vertexReco.getY());
-	fEventHeader->SetVertexZ(vertexReco.getZ());
-
-	// centrality
-//	for( int i=0; i<fCEmapBK.size(); i++ )
-//	{
-//		fEventHeader->SetField( int(fEvtChara.getCentralityEstimator(fCEmapBK.at(i).second), fConfig.GetBranchConfig(fEventHeader->GetId()).GetFieldId( fCEmapNames.second ) ) );
-//		fEventHeader->SetField( float(fEvtChara.getCentralityPercentile(fCEmapBK.at(i).second), fConfig.GetBranchConfig(fRecEventHeader->GetId()).GetFieldId("centrality_"+fCEmapNames.second)));
-//	}
-
-	// loop over FW hits
-	Float_t wallHitBeta, wallHitX, wallHitY, wallHitZ;
-	ushort wallModuleIndex, ring, nWallHitsTot;
-	float wallHitCharge, wallHitChargeSpec, wallHitTime, wallHitDistance, wallChargeTot = 0.;
-	short wallHitChargeZ;
-	bool isWallHitOk;
-	HWallHitSim* wallHit = 0;
-
-	fFwHits->ClearChannels();
-	int iAdc = 		fConfig.GetBranchConfig( fFwHits->GetId() ).GetFieldId("adc");
-	int iCharge = 	fConfig.GetBranchConfig( fFwHits->GetId() ).GetFieldId("charge");
-	int iModule_id = 	fConfig.GetBranchConfig( fFwHits->GetId() ).GetFieldId("module_id");
-	int iBeta = 		fConfig.GetBranchConfig( fFwHits->GetId() ).GetFieldId("beta");
-	int iRing = 		fConfig.GetBranchConfig( fFwHits->GetId() ).GetFieldId("ring");
-	int iTime = 		fConfig.GetBranchConfig( fFwHits->GetId() ).GetFieldId("time");
-
-	for(Short_t j = 0; j < nWallHitsTot; j++)
-	{ // loop over wall hits
-		wallHit = HCategoryManager::getObject(wallHit, wallCat, j);
-		wallModuleIndex = wallHit->getCell();
-		wallHit->getXYZLab(wallHitX, wallHitY, wallHitZ);
-		wallHitTime = wallHit->getTime();
-		wallHitDistance = wallHit->getDistance();
-		wallHitBeta = wallHitDistance / wallHitTime / 299.792458;
-		wallHitCharge = wallHit->getCharge();
-		wallHitChargeSpec =
-			93. * pow(wallHitCharge, 0.46 - 0.006 * sqrt(wallHitCharge)); // parametrization from R.Holzmann
-		wallHitChargeZ = evtChara.getFWCharge(wallHit);
-
-		ring = divider->GetRing(wallModuleIndex);
-		if(ring == 0)
+		if(loop.isNewFile(filename))
 		{
-		cerr << "Error in short MHWallDivider::GetRing(short i=" << wallModuleIndex << "): it returned 0" << endl;
-		return 2;
+			filename = HTime::stripFileName(filename, kTRUE, kFALSE);
+			HTime::splitFileName(filename, *be, g, day, hour, minute, g, g, kFALSE);
+		}
+		//-------------------------------------------------
+		// summary event info object
+		HParticleEvtInfo* evtInfo = 0;
+		evtInfo = HCategoryManager::getObject(evtInfo, evtInfoCat, 0);
+		// get type of trigger
+		HEventHeader* header = gHades->getCurrentEvent()->getHeader();
+
+		// get primary vertex
+		HVertex vertexReco = header->getVertexReco();
+		fEventHeader->SetVertexX(vertexReco.getX());
+		fEventHeader->SetVertexY(vertexReco.getY());
+		fEventHeader->SetVertexZ(vertexReco.getZ());
+
+		// loop over FW hits
+		Float_t wallHitBeta, wallHitX, wallHitY, wallHitZ;
+		ushort wallModuleIndex, ring, nWallHitsTot;
+		float wallHitCharge, wallHitChargeSpec, wallHitTime, wallHitDistance, wallChargeTot = 0.;
+		short wallHitChargeZ;
+		bool isWallHitOk;
+		HWallHitSim* wallHit = 0;
+
+		fFwHits->ClearChannels();
+		int iAdc = 		fConfig.GetBranchConfig( fFwHits->GetId() ).GetFieldId("adc");
+		int iCharge = 	fConfig.GetBranchConfig( fFwHits->GetId() ).GetFieldId("charge");
+		int iModule_id = 	fConfig.GetBranchConfig( fFwHits->GetId() ).GetFieldId("module_id");
+		int iBeta = 		fConfig.GetBranchConfig( fFwHits->GetId() ).GetFieldId("beta");
+		int iRing = 		fConfig.GetBranchConfig( fFwHits->GetId() ).GetFieldId("ring");
+		int iTime = 		fConfig.GetBranchConfig( fFwHits->GetId() ).GetFieldId("time");
+
+		for(Short_t j = 0; j < nWallHitsTot; j++)
+		{ // loop over wall hits
+			wallHit = HCategoryManager::getObject(wallHit, wallCat, j);
+			wallModuleIndex = wallHit->getCell();
+			wallHit->getXYZLab(wallHitX, wallHitY, wallHitZ);
+			wallHitTime = wallHit->getTime();
+			wallHitDistance = wallHit->getDistance();
+			wallHitBeta = wallHitDistance / wallHitTime / 299.792458;
+			wallHitCharge = wallHit->getCharge();
+			wallHitChargeSpec =
+				93. * pow(wallHitCharge, 0.46 - 0.006 * sqrt(wallHitCharge)); // parametrization from R.Holzmann
+			wallHitChargeZ = evtChara.getFWCharge(wallHit);
+
+			ring = divider->GetRing(wallModuleIndex);
+			if(ring == 0)
+			{
+			cerr << "Error in short MHWallDivider::GetRing(short i=" << wallModuleIndex << "): it returned 0" << endl;
+			return 2;
+			}
+
+			if(evtChara.PassesCutsFW(wallHit))
+			{
+			isWallHitOk = true;
+			wallChargeTot += wallHitChargeZ;
+			}
+			else
+			isWallHitOk = false;
+
+			auto Hit = fFwHits->AddChannel();
+			Hit->Init( fConfig.GetBranchConfig( fFwHits->GetId() ) );
+			Hit->SetPosition( wallHitX, wallHitY, wallHitZ );
+			Hit->SetField( float(wallHitCharge), iAdc);
+			Hit->SetField( float(wallHitChargeZ), iCharge);
+			Hit->SetField( int(wallModuleIndex), iModule_id);
+			Hit->SetField( float(wallHitBeta), iBeta);
+			Hit->SetField( int(ring), iRing);
+			Hit->SetField( float(wallHitTime), iTime);
 		}
 
-		if(evtChara.PassesCutsFW(wallHit))
+		// loop over particle candidates in event
+		if(!candCat)
+			continue;
+		Int_t size = candCat->getEntries();
+		HParticleCand* cand = 0;
+		Int_t itr, pid;
+		TLorentzVector trackPar;
+		float p, theta, pt, eta, phi, mass;
+
+		fVtxTracks->ClearChannels();
+
+		const int iChi2 = 		fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("chi2");
+		const int iVtx_ch2 = 	fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("vtx_chi2");
+		const int idEdx = 		fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("dEdx");
+		const int iDcax = 		fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("dcax");
+		const int iQ = 			fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("q");
+		const int iNhits = 		fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("nhits_0");
+		const int iPid = 		fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("pid");
+		const int iPt = 		fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("pt");
+		const int iPhi = 		fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("phi");
+
+		fTofHits->ClearChannels();
+
+		const int iStat = fConfig.GetBranchConfig(fTofHits->GetId()).GetFieldId("status");
+		const int iTime = fConfig.GetBranchConfig(fTofHits->GetId()).GetFieldId("time");
+		const int iPath = fConfig.GetBranchConfig(fTofHits->GetId()).GetFieldId("path");
+		const int iMatch = fConfig.GetBranchConfig(fTofHits->GetId()).GetFieldId("meta_mdc_match");
+		const int iCharge = fConfig.GetBranchConfig(fTofHits->GetId()).GetFieldId("charge");
+		const int iSqr_mass = fConfig.GetBranchConfig(fTofHits->GetId()).GetFieldId("sqr_mass");
+		const int iSqr_mass_error = fConfig.GetBranchConfig(fTofHits->GetId()).GetFieldId("sqr_mass_error");
+
+
+		for(Int_t j = 0; j < size; j++)
 		{
-		isWallHitOk = true;
-		wallChargeTot += wallHitChargeZ;
-		}
-		else
-		isWallHitOk = false;
+			cand = HCategoryManager::getObject(cand, candCat, j);
+			if(!cand)
+			continue;
+			if(!loop.goodSector(cand->getSector()))
+			{
+				continue; // skip inactive sectors
+			}
+				if(!cand->isFlagBit(kIsUsed))
+				continue;
+			if(cand->getMomentum() == cand->getMomentumOrg())
+				continue; // skip tracks with too high pt ???
+			pid = cand->getPID();
 
-		auto Hit = fFwHits->AddChannel();
-		Hit->Init( fConfig.GetBranchConfig( fFwHits->GetId() ) );
-		Hit->SetPosition( wallHitX, wallHitY, wallHitZ );
-		Hit->SetField( float(wallHitCharge), iAdc);
-		Hit->SetField( float(wallHitChargeZ), iCharge);
-		Hit->SetField( int(wallModuleIndex), iModule_id);
-		Hit->SetField( float(wallHitBeta), iBeta);
-		Hit->SetField( int(ring), iRing);
-		Hit->SetField( float(wallHitTime), iTime);
-	}
+			if(pid >= 0)
+			{
+				mass = HPhysicsConstants::mass(pid);
+				p = cand->getCorrectedMomentumPID(pid); // retrieve corrected momentum
+				cand->setMomentum(p);                   // write it back
+				cand->calc4vectorProperties(mass);      // sync with lorentz vector
+			}
+			else
+			{
+				mass = cand->getMass(); // META mass
+				p = cand->getMomentum();
+			}
 
-	// loop over particle candidates in event
-	if(!candCat)
-		continue;
-	Int_t size = candCat->getEntries();
-	HParticleCand* cand = 0;
-	Int_t itr, pid;
-	TLorentzVector trackPar;
-	float p, theta, pt, eta, phi, mass;
+			//						cout << pid << "\t" << cand->getMomentum() << "\t" <<
+			//cand->getMomentumOrg() << "\t" << p << endl;
 
-	fVtxTracks->ClearChannels();
+			theta = cand->getTheta() * D2R;
+			phi = cand->getPhi() * D2R;
+			pt = p * TMath::Sin(theta);
+			eta = -TMath::Log(TMath::Tan(theta / 2.));
 
-	const int iChi2 = 		fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("chi2");
-	const int iVtx_ch2 = 	fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("vtx_chi2");
-	const int idEdx = 		fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("dEdx");
-	const int iDcax = 		fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("dcax");
-	const int iQ = 			fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("q");
-	const int iNhits = 		fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("nhits_0");
-	const int iPid = 		fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("pid");
-	const int iPt = 		fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("pt");
-	const int iPhi = 		fConfig.GetBranchConfig( fVtxTracks->GetId() ).GetFieldId("phi");
+			trackPar.SetPtEtaPhiM(0.001 * pt, eta, phi, 0.001 * mass); // MeV -> GeV
+			auto* Track = fVtxTracks->AddChannel();
+			Track->SetMomentum( trackPar );
+			Track->Init( fConfig.GetBranchConfig( fVtxTracks->GetId() ) );
+			Track->SetField( int(cand->getCharge()), iQ);
+			Track->SetField( float(cand->getChi2()), iChi2);
+			Track->SetField( float(cand->getR()), iDcax); 
+			Track->SetField( float(cand->getR()), iDcax+1);
+			// Track->SetField( float(cand->getZ() - vertexReco.getZ()), iDcax+2);
+			Track->SetField( float( cand->getMdcdEdx() ), idEdx);
+			Track->SetField( int( pid ), iPid );
+			Track->SetField( int( cand->getNLayer(0) ), iNhits);
+			Track->SetField( int( cand->getNLayer(1) ), iNhits+1);
+			Track->SetField( int( cand->getNLayer(2) ), iNhits+2);
+			// Track->SetField( float(vChiToPrimVtx.at(0)), iVtx_ch2);
+			Track->SetField( float(pt), iPt);
+			Track->SetField( float(phi), iPhi);
 
-	fTofHits->ClearChannels();
+			if(cand->getSystem() == 0)
+				Hit->SetField(HADES_constants::kRPC, iStat);
+			else
+				Hit->SetField(HADES_constants::kTOF, iStat);
+			Hit->SetField( float(cand->getDistanceToMetaHit() / cand->getBeta() / 299.792458), iTime);
+			Hit->SetField( float(cand->getDistanceToMetaHit()), iPath);
+			Hit->SetField( float(cand->getMetaMatchRadius()), iMatch); // META match qa - NOT POSITION!!!
+			Hit->SetField( int(cand->getCharge()), iCharge);
+			Hit->SetField( float(cand->getMass2()), iSqr_mass);
+			Hit->SetField( float(cand->getMetaMatchQuality()), iSqr_mass_error);
 
-	const int iStat = fConfig.GetBranchConfig(fTofHits->GetId()).GetFieldId("status");
-	const int iTime = fConfig.GetBranchConfig(fTofHits->GetId()).GetFieldId("time");
-	const int iPath = fConfig.GetBranchConfig(fTofHits->GetId()).GetFieldId("path");
-	const int iMatch = fConfig.GetBranchConfig(fTofHits->GetId()).GetFieldId("meta_mdc_match");
-	const int iCharge = fConfig.GetBranchConfig(fTofHits->GetId()).GetFieldId("charge");
-	const int iSqr_mass = fConfig.GetBranchConfig(fTofHits->GetId()).GetFieldId("sqr_mass");
-	const int iSqr_mass_error = fConfig.GetBranchConfig(fTofHits->GetId()).GetFieldId("sqr_mass_error");
-
-
-	for(Int_t j = 0; j < size; j++)
-	{
-		cand = HCategoryManager::getObject(cand, candCat, j);
-		if(!cand)
-		continue;
-		if(!loop.goodSector(cand->getSector()))
-		{
-		continue; // skip inactive sectors
-		}
-		if(!cand->isFlagBit(kIsUsed))
-		continue;
-		if(cand->getMomentum() == cand->getMomentumOrg())
-		continue; // skip tracks with too high pt ???
-		pid = cand->getPID();
-		//            chi2inner[itr] = cand->getInnerSegmentChi2();
-		//            chi2outer[itr] = cand->getOuterSegmentChi2();
-		//            mdcSecId[itr] = cand->getSector();
-
-		if(pid >= 0)
-		{
-		mass = HPhysicsConstants::mass(pid);
-		p = cand->getCorrectedMomentumPID(pid); // retrieve corrected momentum
-		cand->setMomentum(p);                   // write it back
-		cand->calc4vectorProperties(mass);      // sync with lorentz vector
-		}
-		else
-		{
-		mass = cand->getMass(); // META mass
-		p = cand->getMomentum();
-		}
-
-		//						cout << pid << "\t" << cand->getMomentum() << "\t" <<
-		//cand->getMomentumOrg() << "\t" << p << endl;
-
-		theta = cand->getTheta() * D2R;
-		phi = cand->getPhi() * D2R;
-		pt = p * TMath::Sin(theta);
-		eta = -TMath::Log(TMath::Tan(theta / 2.));
-
-		trackPar.SetPtEtaPhiM(0.001 * pt, eta, phi, 0.001 * mass); // MeV -> GeV
-		auto* Track = fVtxTracks->AddChannel();
-		Track->SetMomentum( trackPar );
-		Track->Init( fConfig.GetBranchConfig( fVtxTracks->GetId() ) );
-		Track->SetField( int(cand->getCharge()), iQ);
-		Track->SetField( float(cand->getChi2()), iChi2);
-		Track->SetField( float(cand->getR()), iDcax); 
-		Track->SetField( float(cand->getR()), iDcax+1);
-		// Track->SetField( float(cand->getZ() - vertexReco.getZ()), iDcax+2);
-		Track->SetField( float( cand->getMdcdEdx() ), idEdx);
-		Track->SetField( int( pid ), iPid );
-		Track->SetField( int( cand->getNLayer(0) ), iNhits);
-		Track->SetField( int( cand->getNLayer(1) ), iNhits+1);
-		Track->SetField( int( cand->getNLayer(2) ), iNhits+2);
-		// Track->SetField( float(vChiToPrimVtx.at(0)), iVtx_ch2);
-		Track->SetField( float(pt), iPt);
-		Track->SetField( float(phi), iPhi);
-
-		if(cand->getSystem() == 0)
-			Hit->SetField(HADES_constants::kRPC, iStat);
-		else
-			Hit->SetField(HADES_constants::kTOF, iStat);
-		Hit->SetField( float(cand->getDistanceToMetaHit() / cand->getBeta() / 299.792458), iTime);
-		Hit->SetField( float(cand->getDistanceToMetaHit()), iPath);
-		Hit->SetField( float(cand->getMetaMatchRadius()), iMatch); // META match qa - NOT POSITION!!!
-		Hit->SetField( int(cand->getCharge()), iCharge);
-		Hit->SetField( float(cand->getMass2()), iSqr_mass);
-		Hit->SetField( float(cand->getMetaMatchQuality()), iSqr_mass_error);
-
-		itr++;
-	} // end cand loop
-
-	//				cout << "sumTOFRPC = " << evtInfo -> getSumRpcMult() << "\tsumTOFRPCCut = " << evtInfo ->
-	//getSumRpcMultCut() << "\tnTOFHits = " << DTEvent -> GetNTOFHits () << endl;
-	//				cout << "nTracks = " << evtInfo -> getSumPrimaryParticleCandMult() << "\tnTracksSel = " << evtInfo ->
-	//getSumSelectedParticleCandMult () << "\tNVertexTracks = " << DTEvent -> GetNVertexTracks () << endl;
-
-	fATree->Fill();
-
+			itr++;
+		} // end cand loop
+		fATree->Fill();
 	} // end eventloop
 
 	cout << endl;
