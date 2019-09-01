@@ -359,22 +359,31 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 			eta = -TMath::Log(TMath::Tan(theta / 2.));
 			trackPar.SetPtEtaPhiM(0.001 * pt, eta, phi, 0.001 * mass); // MeV -> GeV
 			auto* Track = fVtxTracks->AddChannel();
+			Track->Init( fConfig.GetBranchConfig( fVtxTracks->GetId() ) );
 			cout << "track information fillin'" << endl;
 			Track->SetMomentum( trackPar );
-			Track->Init( fConfig.GetBranchConfig( fVtxTracks->GetId() ) );
+			cout << "momentum information fillin'" << endl;
 			Track->SetField( int(cand->getCharge()), iQ);
+			cout << "charge information fillin'" << endl;
 			Track->SetField( float(cand->getChi2()), iChi2);
+			cout << "chi2 information fillin'" << endl;
 			Track->SetField( float(cand->getR()), iDcax); 
 			Track->SetField( float(cand->getR()), iDcax+1);
+			cout << "DCA information fillin'" << endl;
 			// Track->SetField( float(cand->getZ() - vertexReco.getZ()), iDcax+2);
 			Track->SetField( float( cand->getMdcdEdx() ), idEdx);
+			cout << "dEdx information fillin'" << endl;
 			Track->SetField( int( pid ), iPid );
+			cout << "Pid information fillin'" << endl;
 			Track->SetField( int( cand->getNLayer(0) ), iNhits);
+			cout << "nhits information fillin'" << endl;
 			Track->SetField( int( cand->getNLayer(1) ), iNhits+1);
 			Track->SetField( int( cand->getNLayer(2) ), iNhits+2);
 			// Track->SetField( float(vChiToPrimVtx.at(0)), iVtx_ch2);
 			Track->SetField( float(pt), iPt);
+			cout << "pt information fillin'" << endl;
 			Track->SetField( float(phi), iPhi);
+			cout << "phi information fillin'" << endl;
 
 			auto* Hit = fTofHits->AddChannel();
 			Hit->Init( fConfig.GetBranchConfig( fTofHits->GetId() ) );
