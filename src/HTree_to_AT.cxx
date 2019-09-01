@@ -285,18 +285,10 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 				ring = divider->GetRing(wallModuleIndex);
 				if(ring == 0)
 				{
-				cerr << "Error in short MHWallDivider::GetRing(short i=" << wallModuleIndex << "): it returned 0" << endl;
-				return 2;
+					cerr << "Error in short MHWallDivider::GetRing(short i=" << wallModuleIndex << "): it returned 0" << endl;
+					return 2;
 				}
-
-				if(evtChara.PassesCutsFW(wallHit))
-				{
-				isWallHitOk = true;
-				wallChargeTot += wallHitChargeZ;
-				}
-				else
-				isWallHitOk = false;
-
+				cout << "291 line" << endl;
 				auto Hit = fFwHits->AddChannel();
 				Hit->Init( fConfig.GetBranchConfig( fFwHits->GetId() ) );
 				Hit->SetPosition( wallHitX, wallHitY, wallHitZ );
@@ -306,7 +298,6 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 				Hit->SetField( float(wallHitBeta), iBeta);
 				Hit->SetField( int(ring), iRing);
 				Hit->SetField( float(wallHitTime), iTime);
-				cout << "309 line" << endl;
 		}
 		}
 		// loop over particle candidates in event
