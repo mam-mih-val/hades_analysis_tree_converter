@@ -103,23 +103,23 @@ AnalysisTree::TrackDetector* ConfigureMdcTracks(AnalysisTree::Configuration &con
 	vtxTracksBranch.AddIntegerField("q");
 	vtxTracksBranch.AddIntegerField( {"nhits_0","nhits_1","nhits_2"} );
 	vtxTracksBranch.AddIntegerField("pid");
-	config.AddBranchConfig(VtxTracksBranch);
+	config.AddBranchConfig(vtxTracksBranch);
 	auto vtxTracks = new AnalysisTree::TrackDetector(config.GetLastId());
 	return vtxTracks;
 }
 
 AnalysisTree::HitDetector* ConfigureTofHits(AnalysisTree::Configuration &config, std::string branchName="Tof_Hits")
 {
-	AnalysisTree::BranchConfig TofHitsBranch(branchName);
-	TofHitsBranch.SetType(AnalysisTree::DetType::kHit);
-	TofHitsBranch.AddIntegerField("status");
-	TofHitsBranch.AddFloatField("time");
-	TofHitsBranch.AddFloatField("path");
-	TofHitsBranch.AddFloatField("meta_mdc_match");
-	TofHitsBranch.AddIntegerField("charge");
-	TofHitsBranch.AddFloatField("sqr_mass");
-	TofHitsBranch.AddFloatField("sqr_mass_error");
-	config.AddBranchConfig(TofHitsBranch);
+	AnalysisTree::BranchConfig tofHitsBranch(branchName);
+	tofHitsBranch.SetType(AnalysisTree::DetType::kHit);
+	tofHitsBranch.AddIntegerField("status");
+	tofHitsBranch.AddFloatField("time");
+	tofHitsBranch.AddFloatField("path");
+	tofHitsBranch.AddFloatField("meta_mdc_match");
+	tofHitsBranch.AddIntegerField("charge");
+	tofHitsBranch.AddFloatField("sqr_mass");
+	tofHitsBranch.AddFloatField("sqr_mass_error");
+	config.AddBranchConfig(tofHitsBranch);
 	auto tofHits = new AnalysisTree::HitDetector(config.GetLastId());
 	return tofHits;
 }
