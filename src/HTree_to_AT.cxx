@@ -180,7 +180,7 @@ void OpenHtreeFile(TString infileList, HLoop &loop)
 	if(ret == 0)
 	{
 		cerr << "READBACK: ERROR : cannot find inputfiles : " << infileList.Data() << endl;
-		return 1;
+		exit(1);
 	}	
 
 	if(!loop.setInput("-*,+HParticleCand,+HParticleEvtInfo,+HWallHit"))
