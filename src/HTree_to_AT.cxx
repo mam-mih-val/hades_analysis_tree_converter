@@ -306,7 +306,7 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 			{
 				fEventHeader->SetField( int(evtChara.getCentralityEstimator(estimator.second)), iTofHitsCE+i );
 				fEventHeader->SetField( float(evtChara.getCentralityPercentile(estimator.second)), iTofHitsCP+i );
-				i++
+				i++;
 			}
 			for(Int_t k = HADES_constants::kPT1; k < HADES_constants::kNtriggers; k++)
 			{
