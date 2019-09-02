@@ -92,6 +92,18 @@ const std::map<int, std::string> fCEmapNames = {
 
 const Float_t D2R = TMath::DegToRad();
 
+std::map<std::string, int> VectorToMap(vector<std::string> strVector)
+{
+	std::map<std::string, int> strMap;
+	int i=0;
+	for(auto vec : strVector)
+	{
+		strMap.insert( std::pair<std::string, int>(vec, i) );
+		i++;
+	}
+	return strMap;
+}
+
 AnalysisTree::TrackDetector* ConfigureMdcTracks(AnalysisTree::Configuration &config, std::string branchName="Mdc_Tracks")
 {
 	AnalysisTree::BranchConfig vtxTracksBranch(branchName);
@@ -157,15 +169,8 @@ AnalysisTree::EventHeader* ConfigureEventHeader(AnalysisTree::Configuration &con
 	return eventHeader;
 }
 
-int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/be1210816080601.hld_dst_apr12.root",
-	TString outfile = "output.root",
-	Int_t nEvents = -1,
-	TString parameterFile = "../evtchara07/centrality_epcorr_apr12_gen8_2019_02_pass30.root")
+void OpenHtreeFile(TString infileList, HLoop* loop)
 {
-	// create loop object and hades
-	HLoop loop(kTRUE);
-	// list of all files with working sectors
-	// reading input files and declaring containers
 	Bool_t ret = kFALSE;
 	if(infileList.Contains(","))
 		ret = loop.addMultFiles(infileList); // file1,file2,file3
@@ -183,7 +188,18 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 		cerr << "READBACK: ERROR : cannot read input !" << endl;
 		exit(1);
 	}
+}
 
+int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/be1210816080601.hld_dst_apr12.root",
+	TString outfile = "output.root",
+	Int_t nEvents = -1,
+	TString parameterFile = "../evtchara07/centrality_epcorr_apr12_gen8_2019_02_pass30.root")
+{
+	// create loop object and hades
+	HLoop loop(kTRUE);
+	// list of all files with working sectors
+	// reading input files and declaring containers
+	OpenHtreeFile(infileList, loop);
 	// configure event characterization class
 	HParticleEvtCharaBK evtChara;
 	evtChara.setParameterFile(parameterFile);
@@ -202,26 +218,16 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 	HCategory* evtInfoCat = (HCategory*)HCategoryManager::getCategory(catParticleEvtInfo);
 	HCategory* wallCat = (HCategory*)HCategoryManager::getCategory(catWallHit);
 
-	// Time
-	//    Int_t time;
-
 	AnalysisTree::Configuration fConfig;    
     AnalysisTree::StaticInfo fStaticInfo;
-    AnalysisTree::EventHeader *fEventHeader {nullptr};
-    AnalysisTree::TrackDetector *fVtxTracks {nullptr};
-    AnalysisTree::HitDetector *fTofHits {nullptr};
-    AnalysisTree::HitDetector *fFwHits {nullptr};
+    AnalysisTree::EventHeader *fEventHeader{ConfigureEventHeader(fConfig)};
+    AnalysisTree::TrackDetector *fVtxTracks{ConfigureMdcTracks(fConfig)};
+    AnalysisTree::HitDetector *fTofHits{ConfigureTofHits(fConfig)};
+    AnalysisTree::HitDetector *fFwHits{ConfigureFwHits(fConfig)};
 
 	TFile* out = new TFile(outfile.Data(), "RECREATE");
 	out->cd();
 	auto fATree = new TTree("ATree", "Analysis Tree, HADES data");
-
-	fEventHeader = ConfigureEventHeader(fConfig);
-	fVtxTracks = ConfigureMdcTracks(fConfig);
-	fTofHits = ConfigureTofHits(fConfig);
-	fFwHits = ConfigureFwHits(fConfig);
-
-	//  ***** List of Branches *******
 	fATree->Branch("VtxTracks", "AnalysisTree::TrackDetector", &fVtxTracks);
 	fATree->Branch("EventHeader", "AnalysisTree::EventHeader", &fEventHeader);
 	fATree->Branch("FwModules", "AnalysisTree::HitDetector", &fFwHits);
