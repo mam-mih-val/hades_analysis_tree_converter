@@ -104,7 +104,7 @@ AnalysisTree::TrackDetector* ConfigureMdcTracks(AnalysisTree::Configuration &con
 	vtxTracksBranch.AddIntegerField( {"nhits_0","nhits_1","nhits_2"} );
 	vtxTracksBranch.AddIntegerField("pid");
 	config.AddBranchConfig(VtxTracksBranch);
-	auto vtxTracks = new AnalysisTree::TrackDetector(fConfig.GetLastId());
+	auto vtxTracks = new AnalysisTree::TrackDetector(config.GetLastId());
 	return vtxTracks;
 }
 
@@ -120,7 +120,7 @@ AnalysisTree::HitDetector* ConfigureTofHits(AnalysisTree::Configuration &config,
 	TofHitsBranch.AddFloatField("sqr_mass");
 	TofHitsBranch.AddFloatField("sqr_mass_error");
 	config.AddBranchConfig(TofHitsBranch);
-	auto tofHits = new AnalysisTree::HitDetector(fConfig.GetLastId());
+	auto tofHits = new AnalysisTree::HitDetector(config.GetLastId());
 	return tofHits;
 }
 
@@ -134,8 +134,8 @@ AnalysisTree::HitDetector* ConfigureFwHits(AnalysisTree::Configuration &config, 
 	FwHitsBranch.AddFloatField("beta");
 	FwHitsBranch.AddIntegerField("ring");
 	FwHitsBranch.AddFloatField("time");
-	fConfig.AddBranchConfig(FwHitsBranch);
-	auto fwHits = new AnalysisTree::HitDetector(fConfig.GetLastId());
+	config.AddBranchConfig(FwHitsBranch);
+	auto fwHits = new AnalysisTree::HitDetector(config.GetLastId());
 	return fwHits;
 }
 
@@ -151,8 +151,8 @@ AnalysisTree::EventHeader* ConfigureEventHeader(AnalysisTree::Configuration &con
 		EventHeaderBranch.AddIntegerField( centEst.second ); // centrality estimator
 		EventHeaderBranch.AddFloatField( "centrality_"+centEst.second ); // centrality class
 	}
-	fConfig.AddBranchConfig(EventHeaderBranch);
-	auto eventHeader = new AnalysisTree::EventHeader(fConfig.GetLastId());
+	config.AddBranchConfig(EventHeaderBranch);
+	auto eventHeader = new AnalysisTree::EventHeader(config.GetLastId());
 	eventHeader->Init(EventHeaderBranch);
 	return eventHeader;
 }
