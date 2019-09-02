@@ -303,8 +303,8 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 			fEventHeader->SetVertexZ(vertexReco.getZ());
 			for(int i=0; i<fCEmapBK.size(); i++)
 			{
-				fEventHeader->SetField( int(evtChara.getCentralityEstimator(fCEmapBK.second)), iTofHitsCE+i );
-				fEventHeader->SetField( float(evtChara.getCentralityPercentile(fCEmapBK.second)), iTofHitsCP+i );
+				fEventHeader->SetField( int(evtChara.getCentralityEstimator(fCEmapBK.at(i).second)), iTofHitsCE+i );
+				fEventHeader->SetField( float(evtChara.getCentralityPercentile(fCEmapBK.at(i).second)), iTofHitsCP+i );
 			}
 			for(Int_t k = HADES_constants::kPT1; k < HADES_constants::kNtriggers; k++)
 			{
