@@ -301,7 +301,7 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 			fEventHeader->SetVertexX(vertexReco.getX());
 			fEventHeader->SetVertexY(vertexReco.getY());
 			fEventHeader->SetVertexZ(vertexReco.getZ());
-			int i=0
+			int i=0;
 			for(auto estimator : centralityEstimatorMap)
 			{
 				fEventHeader->SetField( int(evtChara.getCentralityEstimator(estimator.second)), iTofHitsCE+i );
