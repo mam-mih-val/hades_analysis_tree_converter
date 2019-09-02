@@ -53,6 +53,27 @@ const map<int, int> triggerMap = { { HADES_constants::kGoodVertexClust, Particle
 	{ HADES_constants::kGoodSTARTMETA, Particle::kGoodSTARTMETA }, { HADES_constants::kPT1, 11 },
 	{ HADES_constants::kPT2, 12 }, { HADES_constants::kPT3, 13 } };
 
+const map<int, std::string> triggerMapNames = { 
+	{ HADES_constants::kGoodVertexClust, "kGoodVertexClust" },
+	{ HADES_constants::kGoodVertexCand, "kGoodVertexCand" },
+	{ HADES_constants::kGoodSTART, "kGoodSTART" }, 
+	{ HADES_constants::kNoPileUpSTART, "kNoPileUpSTART" },
+	{ HADES_constants::kNoPileUpMETA, "kNoPileUpMETA" },
+	{ HADES_constants::kNoPileUpMDC, "kNoPileUpMDC" }, 
+	{ HADES_constants::kNoFlashMDC, "kNoFlashMDC" },
+	{ HADES_constants::kGoodMDCMult, "kGoodMDCMult" },
+	{ HADES_constants::kGoodMDCMIPSMult, "kGoodMDCMIPSMult" },
+	{ HADES_constants::kGoodLepMult, "kGoodLepMult" }, 
+	{ HADES_constants::kGoodTRIGGER, "kGoodTRIGGER" },
+	{ HADES_constants::kGoodSTART2, "kGoodSTART2" }, 
+	{ HADES_constants::kNoVETO, "kNoVETO" },
+	{ HADES_constants::kGoodSTARTVETO, "kGoodSTARTVETO" },
+	{ HADES_constants::kGoodSTARTMETA, "kGoodSTARTMETA" }, 
+	{ HADES_constants::kPT1, "kPT1" },
+	{ HADES_constants::kPT2, "kPT2" }, 
+	{ HADES_constants::kPT3, "kPT3" } 
+	};
+
 const map<int, int> centralityEstimatorMap = { { HADES_constants::kNhitsTOF, HParticleEvtCharaBK::kTOFtot },
 	{ HADES_constants::kNhitsTOF_cut, HParticleEvtCharaBK::kTOF },
 	{ HADES_constants::kNhitsRPC, HParticleEvtCharaBK::kRPCtot },
@@ -163,6 +184,8 @@ AnalysisTree::EventHeader* ConfigureEventHeader(AnalysisTree::Configuration &con
 		EventHeaderBranch.AddIntegerField( centEst.second ); // centrality estimator
 		EventHeaderBranch.AddFloatField( "centrality_"+centEst.second ); // centrality class
 	}
+	for( auto trigger : triggerMapNames )
+		EventHeaderBranch.AddIntegerField( trigger.second ); // trigger name
 	config.AddBranchConfig(EventHeaderBranch);
 	auto eventHeader = new AnalysisTree::EventHeader(config.GetLastId());
 	eventHeader->Init(EventHeaderBranch);
@@ -266,11 +289,32 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 		// get type of trigger
 		HEventHeader* header = gHades->getCurrentEvent()->getHeader();
 
-		// get primary vertex
-		HVertex vertexReco = header->getVertexReco();
-		fEventHeader->SetVertexX(vertexReco.getX());
-		fEventHeader->SetVertexY(vertexReco.getY());
-		fEventHeader->SetVertexZ(vertexReco.getZ());
+		{
+			int iVtxChi2 = 		fConfig.GetBranchConfig( fEventHeader->GetId() ).GetFieldId("vtx_chi2");
+			int iRunId = 		fConfig.GetBranchConfig( fEventHeader->GetId() ).GetFieldId("run_id");
+			int iEvtId = 		fConfig.GetBranchConfig( fEventHeader->GetId() ).GetFieldId("evt_id");
+			int iTofHitsCE =	fConfig.GetBranchConfig( fEventHeader->GetId() ).GetFieldId("tof_hits");
+			int iTofHitsCP =	fConfig.GetBranchConfig( fEventHeader->GetId() ).GetFieldId("centrality_tof_hits");
+			int ikGoodVertexClust =	fConfig.GetBranchConfig( fEventHeader->GetId() ).GetFieldId("kGoodVertexClust");
+			// get primary vertex
+			HVertex vertexReco = header->getVertexReco();
+			fEventHeader->SetVertexX(vertexReco.getX());
+			fEventHeader->SetVertexY(vertexReco.getY());
+			fEventHeader->SetVertexZ(vertexReco.getZ());
+			for(int i=0; i<fCEmapBK.size(); i++)
+			{
+				fEventHeader->SetField( int(evtChara.getCentralityEstimator(fCEmapBK.second)), iTofHitsCE+i );
+				fEventHeader->SetField( float(evtChara.getCentralityPercentile(fCEmapBK.second)), iTofHitsCP+i );
+			}
+			for(Int_t k = HADES_constants::kPT1; k < HADES_constants::kNtriggers; k++)
+			{
+				if(header->isTBit(triggerMap.at(i)))
+					fEventHeader->SetField( int(1), ikGoodVertexClust+i );
+				else
+					fEventHeader->SetField( int(0), ikGoodVertexClust+i );
+			}	
+		}
+
 		// loop over FW hits
 		Float_t wallHitBeta, wallHitX, wallHitY, wallHitZ;
 		ushort wallModuleIndex, ring, nWallHitsTot;
