@@ -92,6 +92,71 @@ const std::map<int, std::string> fCEmapNames = {
 
 const Float_t D2R = TMath::DegToRad();
 
+AnalysisTree::TrackDetector* ConfigureMdcTracks(AnalysisTree::Configuration &config, std::string branchName="Mdc_Tracks")
+{
+	AnalysisTree::BranchConfig vtxTracksBranch(branchName);
+	vtxTracksBranch.SetType(AnalysisTree::DetType::kTrack);
+	vtxTracksBranch.AddFloatField("chi2");
+	vtxTracksBranch.AddFloatField("vtx_chi2");
+	vtxTracksBranch.AddFloatField("dEdx");
+	vtxTracksBranch.AddFloatField({"dcax", "dcay", "dcaz"});
+	vtxTracksBranch.AddIntegerField("q");
+	vtxTracksBranch.AddIntegerField( {"nhits_0","nhits_1","nhits_2"} );
+	vtxTracksBranch.AddIntegerField("pid");
+	config.AddBranchConfig(VtxTracksBranch);
+	auto vtxTracks = new AnalysisTree::TrackDetector(fConfig.GetLastId());
+	return vtxTracks;
+}
+
+AnalysisTree::HitDetector* ConfigureTofHits(AnalysisTree::Configuration &config, std::string branchName="Tof_Hits")
+{
+	AnalysisTree::BranchConfig TofHitsBranch(branchName);
+	TofHitsBranch.SetType(AnalysisTree::DetType::kHit);
+	TofHitsBranch.AddIntegerField("status");
+	TofHitsBranch.AddFloatField("time");
+	TofHitsBranch.AddFloatField("path");
+	TofHitsBranch.AddFloatField("meta_mdc_match");
+	TofHitsBranch.AddIntegerField("charge");
+	TofHitsBranch.AddFloatField("sqr_mass");
+	TofHitsBranch.AddFloatField("sqr_mass_error");
+	config.AddBranchConfig(TofHitsBranch);
+	auto tofHits = new AnalysisTree::HitDetector(fConfig.GetLastId());
+	return tofHits;
+}
+
+AnalysisTree::HitDetector* ConfigureFwHits(AnalysisTree::Configuration &config, std::string branchName="Fw_Hits")
+{
+	AnalysisTree::BranchConfig FwHitsBranch(branchName);
+	FwHitsBranch.SetType(AnalysisTree::DetType::kHit);
+	FwHitsBranch.AddFloatField("adc");
+	FwHitsBranch.AddIntegerField("charge");
+	FwHitsBranch.AddIntegerField("module_id");
+	FwHitsBranch.AddFloatField("beta");
+	FwHitsBranch.AddIntegerField("ring");
+	FwHitsBranch.AddFloatField("time");
+	fConfig.AddBranchConfig(FwHitsBranch);
+	auto fwHits = new AnalysisTree::HitDetector(fConfig.GetLastId());
+	return fwHits;
+}
+
+AnalysisTree::EventHeader* ConfigureEventHeader(AnalysisTree::Configuration &config, std::string branchName="Event_Header")
+{
+	AnalysisTree::BranchConfig EventHeaderBranch(branchName);
+	EventHeaderBranch.SetType(AnalysisTree::DetType::kEventHeader);
+	EventHeaderBranch.AddFloatField("vtx_chi2");
+	EventHeaderBranch.AddIntegerField("run_id");
+	EventHeaderBranch.AddIntegerField("evt_id");
+	for(auto centEst : fCEmapNames)
+	{
+		EventHeaderBranch.AddIntegerField( centEst.second ); // centrality estimator
+		EventHeaderBranch.AddFloatField( "centrality_"+centEst.second ); // centrality class
+	}
+	fConfig.AddBranchConfig(EventHeaderBranch);
+	auto eventHeader = new AnalysisTree::EventHeader(fConfig.GetLastId());
+	eventHeader->Init(EventHeaderBranch);
+	return eventHeader;
+}
+
 int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/be1210816080601.hld_dst_apr12.root",
 	TString outfile = "output.root",
 	Int_t nEvents = -1,
@@ -151,60 +216,10 @@ int HTree_to_AT(TString infileList = "/lustre/nyx/hades/dst/apr12/gen8/108/root/
 	out->cd();
 	auto fATree = new TTree("ATree", "Analysis Tree, HADES data");
 
-	AnalysisTree::BranchConfig VtxTracksBranch("VtxTracks");
-	VtxTracksBranch.SetType(AnalysisTree::DetType::kTrack);
-	VtxTracksBranch.AddFloatField("chi2");
-	VtxTracksBranch.AddFloatField("vtx_chi2");
-	VtxTracksBranch.AddFloatField("dEdx");
-	VtxTracksBranch.AddFloatField({"dcax", "dcay", "dcaz"});
-	VtxTracksBranch.AddIntegerField("q");
-	VtxTracksBranch.AddIntegerField( {"nhits_0","nhits_1","nhits_2"} );
-	VtxTracksBranch.AddIntegerField("pid");
-	fConfig.AddBranchConfig(VtxTracksBranch);
-	fVtxTracks = new AnalysisTree::TrackDetector(fConfig.GetLastId());
-
-	//  ***** TOF Hits *******
-
-	AnalysisTree::BranchConfig TofHitsBranch("TofHits");
-	TofHitsBranch.SetType(AnalysisTree::DetType::kHit);
-	TofHitsBranch.AddIntegerField("status");
-	TofHitsBranch.AddFloatField("time");
-	TofHitsBranch.AddFloatField("path");
-	TofHitsBranch.AddFloatField("meta_mdc_match");
-	TofHitsBranch.AddIntegerField("charge");
-	TofHitsBranch.AddFloatField("sqr_mass");
-	TofHitsBranch.AddFloatField("sqr_mass_error");
-	fConfig.AddBranchConfig(TofHitsBranch);
-	fTofHits = new AnalysisTree::HitDetector(fConfig.GetLastId());
-
-	//  ***** Forvard Wall *******
-
-	AnalysisTree::BranchConfig FwHitsBranch("FwHits");
-	FwHitsBranch.SetType(AnalysisTree::DetType::kHit);
-	FwHitsBranch.AddFloatField("adc");
-	FwHitsBranch.AddIntegerField("charge");
-	FwHitsBranch.AddIntegerField("module_id");
-	FwHitsBranch.AddFloatField("beta");
-	FwHitsBranch.AddIntegerField("ring");
-	FwHitsBranch.AddFloatField("time");
-	fConfig.AddBranchConfig(FwHitsBranch);
-	fFwHits = new AnalysisTree::HitDetector(fConfig.GetLastId());
-
-	//  ***** EventHeader *******
-
-	AnalysisTree::BranchConfig EventHeaderBranch("EventHeader");
-	EventHeaderBranch.SetType(AnalysisTree::DetType::kEventHeader);
-	EventHeaderBranch.AddFloatField("vtx_chi2");
-	EventHeaderBranch.AddIntegerField("run_id");
-	EventHeaderBranch.AddIntegerField("evt_id");
-	for(auto centEst : fCEmapNames)
-	{
-		EventHeaderBranch.AddIntegerField( centEst.second ); // centrality estimator
-		EventHeaderBranch.AddFloatField( "centrality_"+centEst.second ); // centrality class
-	}
-	fConfig.AddBranchConfig(EventHeaderBranch);
-	fEventHeader = new AnalysisTree::EventHeader(fConfig.GetLastId());
-	fEventHeader->Init(EventHeaderBranch);
+	fEventHeader = ConfigureEventHeader(fConfig);
+	fVtxTracks = ConfigureMdcTracks(fConfig);
+	fTofHits = ConfigureTofHits(fConfig);
+	fFwHits = ConfigureFwHits(fConfig);
 
 	//  ***** List of Branches *******
 	fATree->Branch("VtxTracks", "AnalysisTree::TrackDetector", &fVtxTracks);
