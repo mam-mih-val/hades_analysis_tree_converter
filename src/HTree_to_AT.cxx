@@ -169,7 +169,7 @@ AnalysisTree::EventHeader* ConfigureEventHeader(AnalysisTree::Configuration &con
 	return eventHeader;
 }
 
-void OpenHtreeFile(TString infileList, HLoop* loop)
+void OpenHtreeFile(TString infileList, HLoop &loop)
 {
 	Bool_t ret = kFALSE;
 	if(infileList.Contains(","))
