@@ -66,9 +66,9 @@ class HadesEventReader {
     return position_ >= n_events_;
   }
   void ReadEvent(){
-    event_info_ = HCategoryManager::getObject(evtent_info_, event_info_category_, 0);
-    header_ = gHades->getCurrentEvent()->getHeader();
-    HVertex vertex_reco = header_->getVertexReco();
+    event_info_ = HCategoryManager::getObject(event_info_, event_info_category_, 0);
+    event_header_ = gHades->getCurrentEvent()->getHeader();
+    HVertex vertex_reco = event_header_->getVertexReco();
   }
 
 private:
