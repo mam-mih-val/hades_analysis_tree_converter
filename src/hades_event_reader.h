@@ -78,9 +78,9 @@ private:
   long long position_{0};
   HParticleEvtCharaBK evt_chara_bk_;
   HEnergyLossCorrPar dE_dx_corr_;
-  HCategory* particle_category_{nullptr};
-  HCategory* event_info_category_{nullptr};
-  HCategory* wall_category_{nullptr};
+  HCategory* particle_category_;
+  HCategory* event_info_category_;
+  HCategory* wall_category_;
 
   HParticleEvtInfo* event_info_{nullptr};
   HEventHeader* event_header_{nullptr};
