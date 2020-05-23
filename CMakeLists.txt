@@ -9,7 +9,7 @@ list(APPEND CMAKE_PREFIX_PATH $ENV{AnalysisTree_HOME})
 list(APPEND CMAKE_PREFIX_PATH ${AnalysisTree_HOME})
 
 find_package(ROOT REQUIRED COMPONENTS RIO Tree)
-find_package( AnalysisTreeBase REQUIRED)
+find_package( AnalysisTree REQUIRED)
 
 set(CMAKE_CXX_FLAGS "-Wall")
 
@@ -21,7 +21,7 @@ include_directories(
 		${CMAKE_SOURCE_DIR}/src
 		${CMAKE_SOURCE_DIR}/evtchara07
 		${ROOT_INCLUDE_DIRS}
-		${ AnalysisTreeBase_INCLUDE_DIR}
+		${AnalysisTree_INCLUDE_DIR}
 )
 
 link_directories(
