@@ -74,7 +74,7 @@ public:
   }
 
 private:
-  HLoop loop_(kTRUE);
+  HLoop loop_(true);
   long long n_events_{0};
   long long position_{0};
   HParticleEvtCharaBK evt_chara_bk_;
