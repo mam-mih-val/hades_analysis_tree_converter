@@ -47,10 +47,10 @@ public:
     loop_.printCategories();
     loop_.printChain();
     dE_dx_corr_.setDefaultPar("apr12");
-    particle_category_ = new HCategory;
+    std::cout << HCategoryManager::getCategory(catParticleCand) << std::cout;
     particle_category_ = (HCategory*)HCategoryManager::getCategory(catParticleCand);
-    event_info_category_ = (HCategory*)HCategoryManager::getCategory(catParticleEvtInfo);
-    wall_category_ = (HCategory*)HCategoryManager::getCategory(catWallHit);
+//    event_info_category_ = (HCategory*)HCategoryManager::getCategory(catParticleEvtInfo);
+//    wall_category_ = (HCategory*)HCategoryManager::getCategory(catWallHit);
 
     n_events_=loop_.getEntries();
   }
@@ -78,9 +78,9 @@ private:
   long long position_{0};
   HParticleEvtCharaBK evt_chara_bk_;
   HEnergyLossCorrPar dE_dx_corr_;
-  HCategory* particle_category_;
-  HCategory* event_info_category_;
-  HCategory* wall_category_;
+  HCategory* particle_category_{nullptr};
+  HCategory* event_info_category_{nullptr};
+  HCategory* wall_category_{nullptr};
 
   HParticleEvtInfo* event_info_{nullptr};
   HEventHeader* event_header_{nullptr};
