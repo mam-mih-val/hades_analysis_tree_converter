@@ -27,6 +27,7 @@
 #include "hparticleevtcharaBK.h"
 
 class HadesEventReader {
+public:
   HadesEventReader() = default;
   ~HadesEventReader() = default;
   void Init(std::string file_list){
