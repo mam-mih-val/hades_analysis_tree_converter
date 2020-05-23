@@ -24,6 +24,8 @@
 #include "hwallhit.h"
 #include "walldef.h"
 
+#include "hparticleevtcharaBK.h"
+
 class HadesEventReader {
   HadesEventReader() = default;
   ~HadesEventReader() = default;
@@ -32,7 +34,7 @@ class HadesEventReader {
     std::string file{};
     if( !file_list.empty() ){
       while(std::getline(list,file,',')){
-        loop_->AddFiles( file.data() );
+        loop_.AddFiles( file.data() );
         std::cout << file << " has been added to sequence" << std::endl;
       }
     }
@@ -64,9 +66,9 @@ class HadesEventReader {
     return position_ >= n_events_;
   }
   void ReadEvent(){
-    event_info_ = HCategoryManager::getObject(evtInfo, evtInfoCat, 0);
-    header = gHades->getCurrentEvent()->getHeader();
-    HVertex vertex_reco = header->getVertexReco();
+    event_info_ = HCategoryManager::getObject(evtent_info_, event_info_category_, 0);
+    header_ = gHades->getCurrentEvent()->getHeader();
+    HVertex vertex_reco = header_->getVertexReco();
   }
 
 private:
