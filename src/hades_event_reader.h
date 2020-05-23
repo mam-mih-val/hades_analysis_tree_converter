@@ -26,6 +26,8 @@
 
 #include "hparticleevtcharaBK.h"
 
+#include <iostream>
+
 class HadesEventReader {
 public:
   HadesEventReader() = default;
