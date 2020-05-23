@@ -34,7 +34,7 @@ class HadesEventReader {
     std::string file{};
     if( !file_list.empty() ){
       while(std::getline(list,file,',')){
-        loop_.AddFiles( file.data() );
+        loop_.addFiles( file.data() );
         std::cout << file << " has been added to sequence" << std::endl;
       }
     }
