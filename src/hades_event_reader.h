@@ -48,8 +48,7 @@ public:
     }
     loop_.printCategories();
     loop_.printChain();
-    dE_dx_corr_.setDefaultPar("apr12");
-    std::cout << HCategoryManager::getCategory(catParticleCand) << std::cout;
+//    dE_dx_corr_.setDefaultPar("apr12");
     particle_category_ = (HCategory*)HCategoryManager::getCategory(catParticleCand);
 //    event_info_category_ = (HCategory*)HCategoryManager::getCategory(catParticleEvtInfo);
 //    wall_category_ = (HCategory*)HCategoryManager::getCategory(catWallHit);
@@ -75,7 +74,7 @@ public:
   }
 
 private:
-  HLoop loop_;
+  HLoop loop_(kTRUE);
   long long n_events_{0};
   long long position_{0};
   HParticleEvtCharaBK evt_chara_bk_;
