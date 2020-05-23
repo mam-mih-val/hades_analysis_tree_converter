@@ -151,7 +151,7 @@ ConfigureMdcTracks(AnalysisTree::Configuration &config,
 
 AnalysisTree::HitDetector *
 ConfigureTofHits(AnalysisTree::Configuration &config,
-                 std::string branchName = "Tof_Hits") {
+                 std::string branchName = "tof_hits") {
   AnalysisTree::BranchConfig tofHitsBranch(branchName);
   tofHitsBranch.SetType(AnalysisTree::DetType::kHit);
   tofHitsBranch.AddIntegerField("status");
@@ -167,7 +167,7 @@ ConfigureTofHits(AnalysisTree::Configuration &config,
 }
 
 AnalysisTree::HitDetector *ConfigureFwHits(AnalysisTree::Configuration &config,
-                                           std::string branchName = "Fw_Hits") {
+                                           std::string branchName = "fw_hits") {
   AnalysisTree::BranchConfig FwHitsBranch(branchName);
   FwHitsBranch.SetType(AnalysisTree::DetType::kHit);
   FwHitsBranch.AddFloatField("adc");
@@ -183,7 +183,7 @@ AnalysisTree::HitDetector *ConfigureFwHits(AnalysisTree::Configuration &config,
 
 AnalysisTree::EventHeader *
 ConfigureEventHeader(AnalysisTree::Configuration &config,
-                     std::string branchName = "Event_Header") {
+                     std::string branchName = "event_header") {
   AnalysisTree::BranchConfig EventHeaderBranch(branchName);
   EventHeaderBranch.SetType(AnalysisTree::DetType::kEventHeader);
   EventHeaderBranch.AddFloatField("vtx_chi2");
