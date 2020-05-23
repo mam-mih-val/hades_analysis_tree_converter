@@ -47,7 +47,7 @@ public:
     loop_.printCategories();
     loop_.printChain();
     dE_dx_corr_.setDefaultPar("apr12");
-
+    particle_category_ = new HCategory;
     particle_category_ = (HCategory*)HCategoryManager::getCategory(catParticleCand);
     event_info_category_ = (HCategory*)HCategoryManager::getCategory(catParticleEvtInfo);
     wall_category_ = (HCategory*)HCategoryManager::getCategory(catWallHit);
