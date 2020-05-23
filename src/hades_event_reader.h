@@ -30,7 +30,8 @@
 
 class HadesEventReader {
 public:
-  HadesEventReader() = default;
+  HadesEventReader() :
+                       loop_(true){};
   ~HadesEventReader() = default;
   void Init(std::string file_list){
     std::stringstream list{file_list};
@@ -74,7 +75,7 @@ public:
   }
 
 private:
-  HLoop loop_(true);
+  HLoop loop_;
   long long n_events_{0};
   long long position_{0};
   HParticleEvtCharaBK evt_chara_bk_;
