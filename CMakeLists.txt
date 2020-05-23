@@ -5,8 +5,8 @@ project(HT2AT)
 set(CMAKE_BUILD_TYPE debug)
 
 list(APPEND CMAKE_PREFIX_PATH $ENV{ROOTSYS})
-list(APPEND CMAKE_PREFIX_PATH $ENV{AnalysisTreeBase_HOME})
-list(APPEND CMAKE_PREFIX_PATH ${AnalysisTreeBase_HOME})
+list(APPEND CMAKE_PREFIX_PATH $ENV{AnalysisTree_HOME})
+list(APPEND CMAKE_PREFIX_PATH ${AnalysisTree_HOME})
 
 find_package(ROOT REQUIRED COMPONENTS RIO Tree)
 find_package( AnalysisTreeBase REQUIRED)
