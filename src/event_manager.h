@@ -84,8 +84,6 @@ public:
       event_header_branch.AddField<bool>(trigger.second); // trigger name
       fields_bool_.insert( std::make_pair( trigger.first,
                                             event_header_branch.GetFieldId( trigger.second ) ) );
-      std::cout << trigger.second << " " <<
-          trigger.first << " " << event_header_branch.GetFieldId( trigger.second ) << std::endl;
      }
 
     event_header_branch.AddField<float>("vtx_chi2");
