@@ -37,24 +37,24 @@ public:
     fields_bool_.clear();
 
     const std::map<int, std::string> triggers_names{
-        {Particle::kGoodVertexClust, "good_vertex_cluster"},
-        {Particle::kGoodVertexCand, "good_vertex_candidate"},
-        {Particle::kGoodSTART, "good_start"},
-        {Particle::kNoPileUpSTART, "no_pile_up_start"},
-        {Particle::kNoPileUpMETA, "no_pile_up_meta"},
-        {Particle::kNoPileUpMDC, "no_pile_up_mdc"},
-        {Particle::kNoFlashMDC, "no_flash_mdc"},
-        {Particle::kGoodMDCMult, "good_mdc_multiplicity"},
-        {Particle::kGoodMDCMIPSMult, "good_mdc_mips_multiplicity"},
-        {Particle::kGoodLepMult, "good_lepton_multiplicity"},
-        {Particle::kGoodTRIGGER, "good_trigger"},
-        {Particle::kGoodSTART2, "good_start2"},
-        {Particle::kNoVETO, "no_veto"},
-        {Particle::kGoodSTARTVETO, "good_start_veto"},
-        {Particle::kGoodSTARTMETA, "good_start_meta"},
-        {11, "physical_trigger_1"}, // Physical Trigger 1
-        {12, "physical_trigger_2"}, // Physical Trigger 2
-        {13, "physical_trigger_3"}  // Physical Trigger 3
+      {Particle::kGoodVertexClust, "good_vertex_cluster"},
+      {Particle::kGoodVertexCand, "good_vertex_candidate"},
+      {Particle::kGoodSTART, "good_start"},
+      {Particle::kNoPileUpSTART, "no_pile_up_start"},
+      {Particle::kNoPileUpMETA, "no_pile_up_meta"},
+      {Particle::kNoPileUpMDC, "no_pile_up_mdc"},
+      {Particle::kNoFlashMDC, "no_flash_mdc"},
+      {Particle::kGoodMDCMult, "good_mdc_multiplicity"},
+      {Particle::kGoodMDCMIPSMult, "good_mdc_mips_multiplicity"},
+      {Particle::kGoodLepMult, "good_lepton_multiplicity"},
+      {Particle::kGoodTRIGGER, "good_trigger"},
+      {Particle::kGoodSTART2, "good_start2"},
+      {Particle::kNoVETO, "no_veto"},
+      {Particle::kGoodSTARTVETO, "good_start_veto"},
+      {Particle::kGoodSTARTMETA, "good_start_meta"},
+      {11, "physical_trigger_1"}, // Physical Trigger 1
+      {12, "physical_trigger_2"}, // Physical Trigger 2
+      {13, "physical_trigger_3"}  // Physical Trigger 3
     };
     const std::map<int, std::string> centrality_estimators_names{
       {HParticleEvtCharaBK::kTOFtot, "tof_hits"},
@@ -83,6 +83,8 @@ public:
       event_header_branch.AddField<bool>(trigger.second); // trigger name
       fields_bool_.insert( std::make_pair( trigger.first,
                                             event_header_branch.GetFieldId( trigger.second ) ) );
+      std::cout << trigger.second << " " <<
+          trigger.first << " " << event_header_branch.GetFieldId( trigger.second ) << std::endl;
      }
 
     event_header_branch.AddField<float>("vtx_chi2");
