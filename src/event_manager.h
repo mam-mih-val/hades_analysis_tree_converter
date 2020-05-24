@@ -15,7 +15,7 @@ class EventManager : public DetectorManager {
 public:
   static EventManager* Instance(){
     if( !instance_ )
-      instannce_ = new EventManager;
+      instance_ = new EventManager;
     return instance_;
   }
   enum FIELDS_FLOAT{
@@ -100,13 +100,13 @@ public:
   }
   AnalysisTree::EventHeader* GetEventHeader(){ return event_header_; }
 
-  explicit void SetField(int value, int idx){
+  void SetField(int value, int idx){
     event_header_.SetField( value, fields_int_.at(idx) );
   }
-  explicit void SetField(float value, int idx){
+  void SetField(float value, int idx){
     event_header_.SetField( value, fields_int_.at(idx) );
   }
-  explicit void SetField(bool value, int idx){
+  void SetField(bool value, int idx){
     event_header_.SetField( value, fields_int_.at(idx) );
   }
   void Clear(){
