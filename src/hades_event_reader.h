@@ -107,8 +107,10 @@ public:
 
     for(auto trigger : triggers)
       Analysis::EventManager::Instance()->SetField(event_info_->isGoodEvent(trigger), trigger);
+    std::cout << "all triggers are written" << std::endl;
     for(auto trigger : physical_triggers)
       Analysis::EventManager::Instance()->SetField(event_header_->isTBit(trigger), trigger);
+    std::cout << "all physical triggers are written" << std::endl;
     Analysis::EventManager::Instance()->GetEventHeader()->SetVertexX( vertex_reco.getX() );
     Analysis::EventManager::Instance()->GetEventHeader()->SetVertexY( vertex_reco.getY() );
     Analysis::EventManager::Instance()->GetEventHeader()->SetVertexZ( vertex_reco.getZ() );
@@ -116,6 +118,7 @@ public:
     for( auto estimator : centrality_estimators )
       Analysis::EventManager::Instance()->SetField(
           (float) evt_chara_bk_.getCentralityEstimator(estimator), estimator);
+    std::cout << "all centrality estimators are written" << std::endl;
     Analysis::TreeBuilder::Instance()->Fill();
   }
 
