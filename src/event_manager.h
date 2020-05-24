@@ -104,10 +104,10 @@ public:
     event_header_->SetField( value, fields_int_.at(idx) );
   }
   void SetField(float value, int idx){
-    event_header_->SetField( value, fields_int_.at(idx) );
+    event_header_->SetField( value, fields_float_.at(idx) );
   }
   void SetField(bool value, int idx){
-    event_header_->SetField( value, fields_int_.at(idx) );
+    event_header_->SetField( value, fields_bool_.at(idx) );
   }
 
 private:
