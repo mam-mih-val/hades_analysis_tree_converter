@@ -95,8 +95,9 @@ public:
     fields_int_.insert( std::make_pair( RUN_ID, event_header_branch.GetFieldId( "run_id" )  ) );
     fields_int_.insert( std::make_pair( EVENT_ID, event_header_branch.GetFieldId( "event_id" )  ) );
 
-    config.AddBranchConfig(std::move(event_header_branch));
+    config.AddBranchConfig(event_header_branch);
     event_header_ = new AnalysisTree::EventHeader(config.GetLastId());
+    event_header_->Init(event_header_branch);
     return event_header_;
   }
   AnalysisTree::EventHeader* GetEventHeader(){ return event_header_; }
