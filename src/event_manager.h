@@ -95,7 +95,6 @@ public:
 
     config.AddBranchConfig(std::move(event_header_branch));
     event_header_ = new AnalysisTree::EventHeader(config.GetLastId());
-    event_header_->Init(event_header_branch);
     return event_header_;
   }
   AnalysisTree::EventHeader* GetEventHeader(){ return event_header_; }
