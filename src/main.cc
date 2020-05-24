@@ -12,6 +12,6 @@ int main(int argv, char **argc) {
     reader.SwitchNextEvent();
     reader.ReadEvent();
   }
-  TreeBuilder::Instance()->Finalize();
+  Analysis::TreeBuilder::Instance()->Finalize();
   return 0;
 }
