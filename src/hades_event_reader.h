@@ -117,7 +117,7 @@ public:
     Analysis::EventManager::Instance()->SetField(vertex_reco.getChi2(), Analysis::EventManager::VTX_CHI2);
     for( auto estimator : centrality_estimators )
       Analysis::EventManager::Instance()->SetField(
-          (float) evt_chara_bk_.getCentralityEstimator(estimator), estimator);
+          (int) evt_chara_bk_.getCentralityEstimator(estimator), estimator);
     std::cout << "all centrality estimators are written" << std::endl;
     Analysis::TreeBuilder::Instance()->Fill();
   }
