@@ -82,7 +82,7 @@ public:
     for (auto trigger : triggers_names) {
       event_header_branch.AddField<bool>(trigger.second); // trigger name
       fields_bool_.insert( std::make_pair( trigger.first,
-                                            event_header_brach.GetFieldId( trigger.second ) ) );
+                                            event_header_branch.GetFieldId( trigger.second ) ) );
      }
 
     event_header_branch.AddField<float>("vtx_chi2");
@@ -108,9 +108,6 @@ public:
   }
   void SetField(bool value, int idx){
     event_header_->SetField( value, fields_int_.at(idx) );
-  }
-  void Clear(){
-    event_header_->Clear();
   }
 
 private:
