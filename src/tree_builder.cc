@@ -4,4 +4,6 @@
 
 #include "tree_builder.h"
 
-TreeBuilder* TreeBuilder::instance_ = nullptr;
+namespace Analysis {
+TreeBuilder *TreeBuilder::instance_ = nullptr;
+}
