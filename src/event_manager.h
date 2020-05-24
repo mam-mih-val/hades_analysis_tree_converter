@@ -7,8 +7,10 @@
 
 #include "HADES_constants.h"
 #include "hparticleevtcharaBK.h"
+#include "detector_manager.h"
 
 namespace Analysis {
+
 class EventManager : public DetectorManager {
 public:
   static EventManager* Instance(){
