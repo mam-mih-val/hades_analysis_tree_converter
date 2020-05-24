@@ -13,10 +13,6 @@
 
 namespace Analysis {
 class DetectorManager {
-public:
-  template<typename T>
-  virtual void FillDetectorFields(){}
-  virtual void CleanDetector(){}
 protected:
   DetectorManager() = default;
   ~DetectorManager() = default;
