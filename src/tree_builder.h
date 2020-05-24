@@ -23,9 +23,11 @@ class TreeBuilder {
   }
 
   void CreateTree(){
-    auto header = EventManager::Instance()->CreateEventHeader();
+    config_.SetName("HADES_data");
+    auto header = EventManager::Instance()->CreateEventHeader(config_);
     tree_ = new TTree( "hades_analysis_tree", "Analysis Tree, HADES data" );
     tree->Branch( "event_header", &header );
+    config_.Write("configuration");
   }
   void Fill(){ tree->Fill(); }
 
@@ -37,6 +39,7 @@ class TreeBuilder {
 
 private:
   static TreeBuilder* instance_;
+  AnalysisTree::Configuration config_;
   TreeBuilder() = default;
   ~TreeBuilder() = default;
 

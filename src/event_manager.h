@@ -29,8 +29,7 @@ public:
     NUM_FIELDS_BOOL=HADES_constants::kPT3+1
   };
   AnalysisTree::EventHeader *
-  CreateEventHeader(AnalysisTree::Configuration &config,
-                       std::string branchName = "hades_event") {
+  CreateEventHeader(AnalysisTree::Configuration &config) {
     fields_int_.clear();
     fields_float_.clear();
     fields_bool_.clear();
@@ -69,7 +68,7 @@ public:
     };
 
     AnalysisTree::BranchConfig event_header_branch(
-        branchName, AnalysisTree::DetType::kEventHeader);
+        "event_header", AnalysisTree::DetType::kEventHeader);
 
     for (auto centEst : fCEmapNames) {
       event_header_branch.AddField<int>(centrality_estimators.second); // centrality estimator
