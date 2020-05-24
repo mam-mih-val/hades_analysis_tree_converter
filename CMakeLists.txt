@@ -27,7 +27,7 @@ include_directories(
 link_directories(
 		$ENV{HADDIR}/lib
 		${CMAKE_SOURCE_DIR}
-		${ AnalysisTreeBase_LIBRARY_DIR}
+		${AnalysisTreeBase_LIBRARY_DIR}
 )
 set (HADES_LIBS
 		libAlignment.so
