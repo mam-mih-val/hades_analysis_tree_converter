@@ -113,7 +113,7 @@ public:
     Analysis::EventManager::Instance()->GetEventHeader()->SetVertexY( vertex_reco.getY() );
     Analysis::EventManager::Instance()->GetEventHeader()->SetVertexZ( vertex_reco.getZ() );
     Analysis::EventManager::Instance()->SetField(vertex_reco.getChi2(), Analysis::EventManager::VTX_CHI2);
-    for( auto estimator : estimators )
+    for( auto estimator : centrality_estimators )
       Analysis::EventManager::Instance()->SetField(
           (float) evt_chara_bk_.getCentralityEstimator(estimator), estimator);
     Analysis::TreeBuilder::Instance()->Fill();

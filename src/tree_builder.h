@@ -12,6 +12,7 @@
 
 namespace Analysis {
 class TreeBuilder {
+public:
   static TreeBuilder* Instance(){
     if( !instance_ )
       instance_ = new TreeBuilder;

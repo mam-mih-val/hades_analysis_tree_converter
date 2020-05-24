@@ -72,26 +72,26 @@ public:
     AnalysisTree::BranchConfig event_header_branch(
         "event_header", AnalysisTree::DetType::kEventHeader);
 
-    for (auto centEst : fCEmapNames) {
-      event_header_branch.AddField<int>(centrality_estimators.second); // centrality estimator
-      fields_float_.insert( std::make_pair( centrality_estimators.first,
-                                          event_header_brach.GetFieldId( centrality_estimators.second ) ) );
+    for (auto centrality_estimator : centrality_estimators_names) {
+      event_header_branch.AddField<int>(centrality_estimator.second); // centrality estimator
+      fields_float_.insert( std::make_pair( centrality_estimator.first,
+                                          event_header_branch.GetFieldId( centrality_estimator.second ) ) );
 //      event_header_branch.AddField<float>("centrality_" +
 //                                      centEst.second); // centrality class
     }
     for (auto trigger : triggers_names) {
-      event_header_branch.AddField<bool>(triggers_names.second); // trigger name
-      fields_bool_.insert( std::make_pair( triggers_names.first,
-                                            event_header_brach.GetFieldId( triggers_names.second ) ) );
+      event_header_branch.AddField<bool>(trigger.second); // trigger name
+      fields_bool_.insert( std::make_pair( trigger.first,
+                                            event_header_brach.GetFieldId( trigger.second ) ) );
      }
 
     event_header_branch.AddField<float>("vtx_chi2");
     event_header_branch.AddField<int>("run_id");
     event_header_branch.AddField<int>("event_id");
 
-    fields_float_.insert( std::make_pair( VTX_CHI2, event_header_brach.GetFieldId( "vtx_chi2" )  ) );
-    fields_int_.insert( std::make_pair( RUN_ID, event_header_brach.GetFieldId( "run_id" )  ) );
-    fields_int_.insert( std::make_pair( EVENT_ID, event_header_brach.GetFieldId( "event_id" )  ) );
+    fields_float_.insert( std::make_pair( VTX_CHI2, event_header_branch.GetFieldId( "vtx_chi2" )  ) );
+    fields_int_.insert( std::make_pair( RUN_ID, event_header_branch.GetFieldId( "run_id" )  ) );
+    fields_int_.insert( std::make_pair( EVENT_ID, event_header_branch.GetFieldId( "event_id" )  ) );
 
     config.AddBranchConfig(std::move(event_header_branch));
     event_header_ = new AnalysisTree::EventHeader(config.GetLastId());
@@ -101,13 +101,13 @@ public:
   AnalysisTree::EventHeader* GetEventHeader(){ return event_header_; }
 
   void SetField(int value, int idx){
-    event_header_.SetField( value, fields_int_.at(idx) );
+    event_header_->SetField( value, fields_int_.at(idx) );
   }
   void SetField(float value, int idx){
-    event_header_.SetField( value, fields_int_.at(idx) );
+    event_header_->SetField( value, fields_int_.at(idx) );
   }
   void SetField(bool value, int idx){
-    event_header_.SetField( value, fields_int_.at(idx) );
+    event_header_->SetField( value, fields_int_.at(idx) );
   }
   void Clear(){
     event_header_->Clear();
