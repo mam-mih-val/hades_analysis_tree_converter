@@ -6,64 +6,117 @@
 #define HTREE_TO_AT_SRC_EVENT_MANAGER_H_
 
 #include "HADES_constants.h"
+#include "hparticleevtcharaBK.h"
 
 namespace Analysis {
-class EventManager {
-  EventManager() = default;
-  ~EventManager() = default;
+class EventManager : public DetectorManager {
+public:
+  static EventManager* Instance(){
+    if( !instance_ )
+      instannce_ = new EventManager;
+    return instance_;
+  }
+  enum FIELDS_FLOAT{
+    VTX_CHI2=HParticleEvtCharaBK::kFWSumChargeZ+1, // Centrality estimators + corresponding centrality value;
+    NUM_FIELDS_FLOAT
+  };
+  enum FIELDS_INT{
+    RUN_ID,
+    EVENT_ID,
+    NUM_FIELDS_INT
+  };
+  enum FIELDS_BOOL{
+    NUM_FIELDS_BOOL=HADES_constants::kPT3+1
+  };
   AnalysisTree::EventHeader *
   CreateEventHeader(AnalysisTree::Configuration &config,
                        std::string branchName = "hades_event") {
+    fields_int_.clear();
+    fields_float_.clear();
+    fields_bool_.clear();
+
+    const std::map<int, std::string> triggers_names{
+        {Particle::kGoodVertexClust, "good_vertex_cluster"},
+        {Particle::kGoodVertexCand, "good_vertex_candidate"},
+        {Particle::kGoodSTART, "good_start"},
+        {Particle::kNoPileUpSTART, "no_pile_up_start"},
+        {Particle::kNoPileUpMETA, "no_pile_up_meta"},
+        {Particle::kNoPileUpMDC, "no_pile_up_mdc"},
+        {Particle::kNoFlashMDC, "no_flash_mdc"},
+        {Particle::kGoodMDCMult, "good_mdc_multiplicity"},
+        {Particle::kGoodMDCMIPSMult, "good_mdc_mips_multiplicity"},
+        {Particle::kGoodLepMult, "good_lepton_multiplicity"},
+        {Particle::kGoodTRIGGER, "good_trigger"},
+        {Particle::kGoodSTART2, "good_start2"},
+        {Particle::kNoVETO, "no_veto"},
+        {Particle::kGoodSTARTVETO, "good_start_veto"},
+        {Particle::kGoodSTARTMETA, "good_start_meta"},
+        {11, "physical_trigger_1"}, // Physical Trigger 1
+        {12, "physical_trigger_2"}, // Physical Trigger 2
+        {13, "physical_trigger_3"}  // Physical Trigger 3
+    };
+    const std::map<int, std::string> centrality_estimators_names{
+      {HParticleEvtCharaBK::kTOFtot, "tof_hits"},
+      {HParticleEvtCharaBK::kTOF, "selected_tof_hits"},
+      {HParticleEvtCharaBK::kRPCtot, "rpc_hits"},
+      {HParticleEvtCharaBK::kRPC, "selected_rpc_hits"},
+      {HParticleEvtCharaBK::kTOFRPCtot, "tof_rpc_hits"},
+      {HParticleEvtCharaBK::kTOFRPC, "selected_tof_rpc_hits"},
+      {HParticleEvtCharaBK::kPrimaryParticleCand, "mdc_tracks"},
+      {HParticleEvtCharaBK::kSelectedParticleCand, "selected_mdc_tracks"},
+      {HParticleEvtCharaBK::kFWSumChargeSpec, "fw_adc"},
+      {HParticleEvtCharaBK::kFWSumChargeZ, "fw_charge"}
+    };
+
     AnalysisTree::BranchConfig event_header_branch(
         branchName, AnalysisTree::DetType::kEventHeader);
+
+    for (auto centEst : fCEmapNames) {
+      event_header_branch.AddField<int>(centrality_estimators.second); // centrality estimator
+      fields_float_.insert( std::make_pair( centrality_estimators.first,
+                                          event_header_brach.GetFieldId( centrality_estimators.second ) ) );
+//      event_header_branch.AddField<float>("centrality_" +
+//                                      centEst.second); // centrality class
+    }
+    for (auto trigger : triggers_names) {
+      event_header_branch.AddField<bool>(triggers_names.second); // trigger name
+      fields_bool_.insert( std::make_pair( triggers_names.first,
+                                            event_header_brach.GetFieldId( triggers_names.second ) ) );
+     }
 
     event_header_branch.AddField<float>("vtx_chi2");
     event_header_branch.AddField<int>("run_id");
     event_header_branch.AddField<int>("event_id");
-    for (auto centEst : fCEmapNames) {
-      event_header_branch.AddField<int>(centrality_estimators_.second); // centrality estimator
-      event_header_branch.AddField<float>("centrality_" +
-                                      centEst.second); // centrality class
-    }
-    for (auto trigger : triggers_)
-      event_header_branch.AddField<bool>(trigger.second); // trigger name
-    config.AddBranchConfig(event_header_branch);
-    auto event_header = new AnalysisTree::EventHeader(config.GetLastId());
-    event_header->Init(event_header_branch);
-    return event_header;
+
+    fields_float_.insert( std::make_pair( VTX_CHI2, event_header_brach.GetFieldId( "vtx_chi2" )  ) );
+    fields_int_.insert( std::make_pair( RUN_ID, event_header_brach.GetFieldId( "run_id" )  ) );
+    fields_int_.insert( std::make_pair( EVENT_ID, event_header_brach.GetFieldId( "event_id" )  ) );
+
+    config.AddBranchConfig(std::move(event_header_branch));
+    event_header_ = new AnalysisTree::EventHeader(config.GetLastId());
+    event_header_->Init(event_header_branch);
+    return event_header_;
   }
+  AnalysisTree::EventHeader* GetEventHeader(){ return event_header_; }
+
+  explicit void SetField(int value, int idx){
+    event_header_.SetField( value, fields_int_.at(idx) );
+  }
+  explicit void SetField(float value, int idx){
+    event_header_.SetField( value, fields_int_.at(idx) );
+  }
+  explicit void SetField(bool value, int idx){
+    event_header_.SetField( value, fields_int_.at(idx) );
+  }
+  void Clear(){
+    event_header_->Clear();
+  }
+
 private:
-  const std::map<int, std::string> centrality_estimators_ = {
-      {HADES_constants::kNhitsTOF, "tof_hits"},
-      {HADES_constants::kNhitsTOF_cut, "selected_tof_hits"},
-      {HADES_constants::kNhitsRPC, "rpc_hits"},
-      {HADES_constants::kNhitsRPC_cut, "selected_rpc_hits"},
-      {HADES_constants::kNhitsTOF_RPC, "tof_rpc_hits"},
-      {HADES_constants::kNhitsTOF_RPC_cut, "selected_tof_rpc_hits"},
-      {HADES_constants::kNtracks, "mdc_tracks"},
-      {HADES_constants::kNselectedTracks, "selected_mdc_tracks"},
-      {HADES_constants::kFWSumChargeSpec, "fw_adc"},
-      {HADES_constants::kFWSumChargeZ, "fw_charge"},
-  };
-  const map<int, std::string> triggers_ = {
-      {HADES_constants::kGoodVertexClust, "kGoodVertexClust"},
-      {HADES_constants::kGoodVertexCand, "kGoodVertexCand"},
-      {HADES_constants::kGoodSTART, "kGoodSTART"},
-      {HADES_constants::kNoPileUpSTART, "kNoPileUpSTART"},
-      {HADES_constants::kNoPileUpMETA, "kNoPileUpMETA"},
-      {HADES_constants::kNoPileUpMDC, "kNoPileUpMDC"},
-      {HADES_constants::kNoFlashMDC, "kNoFlashMDC"},
-      {HADES_constants::kGoodMDCMult, "kGoodMDCMult"},
-      {HADES_constants::kGoodMDCMIPSMult, "kGoodMDCMIPSMult"},
-      {HADES_constants::kGoodLepMult, "kGoodLepMult"},
-      {HADES_constants::kGoodTRIGGER, "kGoodTRIGGER"},
-      {HADES_constants::kGoodSTART2, "kGoodSTART2"},
-      {HADES_constants::kNoVETO, "kNoVETO"},
-      {HADES_constants::kGoodSTARTVETO, "kGoodSTARTVETO"},
-      {HADES_constants::kGoodSTARTMETA, "kGoodSTARTMETA"},
-      {HADES_constants::kPT1, "kPT1"},
-      {HADES_constants::kPT2, "kPT2"},
-      {HADES_constants::kPT3, "kPT3"}};
+  static EventManager* instance_;
+  EventManager() = default;
+  ~EventManager() = default;
+  AnalysisTree::EventHeader* event_header_{nullptr};
 };
 
 } // namespace Analysis

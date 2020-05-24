@@ -3,3 +3,5 @@
 //
 
 #include "event_manager.h"
+
+EventManager* EventManager::instance_ = nullptr;

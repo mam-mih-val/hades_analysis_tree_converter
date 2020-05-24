@@ -26,6 +26,9 @@
 
 #include "hparticleevtcharaBK.h"
 
+#include "event_manager.h"
+#include "tree_builder.h
+
 #include <iostream>
 
 class HadesEventReader {
@@ -69,9 +72,51 @@ public:
     return position_ >= n_events_;
   }
   void ReadEvent(){
+    std::vector<int> triggers{
+      Particle::kGoodVertexClust,
+      Particle::kGoodVertexCand,Particle::kGoodSTART,
+      Particle::kNoPileUpSTART,
+      Particle::kNoPileUpMETA,
+      Particle::kNoPileUpMDC,
+      Particle::kNoFlashMDC,
+      Particle::kGoodMDCMult,
+      Particle::kGoodMDCMIPSMult,
+      Particle::kGoodLepMult,
+      Particle::kGoodTRIGGER,
+      Particle::kGoodSTART2,
+      Particle::kNoVETO,
+      Particle::kGoodSTARTVETO,
+      Particle::kGoodSTARTMETA,
+    };
+    std::vector<int> physical_triggers{11, 12, 13};
+    std::vector<int> centrality_estimators{
+      HParticleEvtCharaBK::kTOFtot,
+      HParticleEvtCharaBK::kTOF,
+      HParticleEvtCharaBK::kRPCtot,
+      HParticleEvtCharaBK::kRPC,
+      HParticleEvtCharaBK::kTOFRPCtot,
+      HParticleEvtCharaBK::kTOFRPC,
+      HParticleEvtCharaBK::kPrimaryParticleCand,
+      HParticleEvtCharaBK::kSelectedParticleCand,
+      HParticleEvtCharaBK::kFWSumChargeSpec,
+      HParticleEvtCharaBK::kFWSumChargeZ
+    };
     event_info_ = HCategoryManager::getObject(event_info_, event_info_category_, 0);
     event_header_ = gHades->getCurrentEvent()->getHeader();
     HVertex vertex_reco = event_header_->getVertexReco();
+
+    for(auto trigger : triggers)
+      Analysis::EventManager::Instance()->SetField(event_info_->isGoodEvent(trigger), trigger);
+    for(auto trigger : physical_triggers)
+      Analysis::EventManager::Instance()->SetField(event_header_->isTBit(trigger), trigger);
+    Analysis::EventManager::Instance()->GetEventHeader()->SetVertexX( vertex_reco.getX() );
+    Analysis::EventManager::Instance()->GetEventHeader()->SetVertexY( vertex_reco.getY() );
+    Analysis::EventManager::Instance()->GetEventHeader()->SetVertexZ( vertex_reco.getZ() );
+    Analysis::EventManager::Instance()->SetField(vertex_reco.getChi2(), Analysis::EventManager::VTX_CHI2);
+    for( auto estimator : estimators )
+      Analysis::EventManager::Instance()->SetField(
+          (float) evt_chara_bk_.getCentralityEstimator(estimator), estimator);
+    Analysis::TreeBuilder::Instance()->Fill();
   }
 
 private:

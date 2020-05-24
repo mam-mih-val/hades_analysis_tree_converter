@@ -64,10 +64,16 @@ add_definitions(${ROOT_CXX_FLAGS})
 set (HEADERS
 		src/HADES_constants.h
 		src/hades_event_reader.h
+		src/detector_manager.h
+		src/event_manager.h
+		src/tree_builder.h
 		)
 
 set (SOURCES
 		src/hades_event_reader.cc
+		src/detector_manager.cc
+		src/event_manager.cc
+		src/tree_builder.cc
 		src/main.cc
 		)
 
