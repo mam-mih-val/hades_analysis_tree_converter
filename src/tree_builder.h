@@ -27,10 +27,10 @@ public:
     config_.SetName("HADES_data");
     auto header = EventManager::Instance()->CreateEventHeader(config_);
     tree_ = new TTree( "hades_analysis_tree", "Analysis Tree, HADES data" );
-    tree->Branch( "event_header", &header );
+    tree_->Branch( "event_header", &header );
     config_.Write("configuration");
   }
-  void Fill(){ tree->Fill(); }
+  void Fill(){ tree_->Fill(); }
 
   void Finalize(){
     tree_->Write();
