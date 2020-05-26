@@ -31,7 +31,6 @@ public:
     auto header = event_manager_->CreateEventHeader(config_);
     auto track_detector = track_manager_->CreateTrackDetector(config_);
     auto hit_detector = hit_manager_->CreateHitDetector(config_);
-
     tree_ = new TTree( "hades_analysis_tree", "Analysis Tree, HADES data" );
     tree_->Branch("event_header", &header);
     tree_->Branch("mdc_vtx_tracks", &track_detector);

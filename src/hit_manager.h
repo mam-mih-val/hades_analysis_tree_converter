@@ -81,10 +81,10 @@ public:
 
 private:
   static HitManager* instance_;
-  HitManager() = default;
+  HitManager() : hit_detector_{nullptr}, hit_{nullptr} {};
   ~HitManager() = default;
-  AnalysisTree::HitDetector* hit_detector_{nullptr};
-  AnalysisTree::Hit* hit_{nullptr};
+  AnalysisTree::HitDetector* hit_detector_;
+  AnalysisTree::Hit* hit_;
 
 };
 } // namespace Analysis
