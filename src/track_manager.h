@@ -67,13 +67,13 @@ public:
     track_->Init(config.GetBranchConfig(vtx_tracks_->GetId() ) );
   }
   void ClearDetector(){ vtx_tracks_->ClearChannels(); }
-  void SetField(int value, int idx) override{
+  void SetField(const int& value, int idx) override{
     track_->SetField( value, fields_int_.at(idx) );
   }
-  void SetField(float value, int idx) override{
+  void SetField(const float& value, int idx) override{
     track_->SetField( value, fields_float_.at(idx) );
   }
-  void SetField(bool value, int idx) override{
+  void SetField(const bool& value, int idx) override{
     track_->SetField( value, fields_bool_.at(idx) );
   }
   void SetMomentum(const TVector3& p){
