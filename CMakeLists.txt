@@ -67,6 +67,7 @@ set (HEADERS
 		src/detector_manager.h
 		src/event_manager.h
 		src/track_manager.h
+		src/hit_manager.h
 		src/tree_manager.h
 		)
 
@@ -76,6 +77,7 @@ set (SOURCES
 		src/event_manager.cc
 		src/tree_manager.cc
 		src/track_manager.cc
+		src/hit_manager.cc
 		src/main.cc
 		)
 

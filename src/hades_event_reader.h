@@ -117,18 +117,16 @@ public:
     for( auto estimator : centrality_estimators )
       Analysis::EventManager::Instance()->SetField(
           (int) evt_chara_bk_.getCentralityEstimator(estimator), estimator);
-    ReadTracks();
+    ReadParticleCandidates();
     Analysis::TreeManager::Instance()->WriteEvent();
   }
-  void ReadTracks(){
-    if(!particle_category_)
-      return;
+  void ReadParticleCandidates(){
     HParticleCand* candidate{nullptr};
     int n_candidates = (int) particle_category_->getEntries();
     for( int i=0; i<n_candidates; ++i ){
+      candidate = HCategoryManager::getObject(candidate, particle_category_, i);
       if(!candidate)
         continue;
-      candidate = HCategoryManager::getObject(candidate, particle_category_, i);
       if(!loop_.goodSector(candidate->getSector()))
         continue; // skip inactive sectors
       if(!candidate->isFlagBit(kIsUsed))
@@ -177,6 +175,32 @@ public:
           (float) candidate->getZ(), Analysis::TrackManager::DCA_Z);
       Analysis::TrackManager::Instance()->SetField(
           (int) pid_code, Analysis::TrackManager::GEANT_PID);
+// META FILLING
+      Analysis::HitManager::Instance()->SetField(
+          (int)candidate->getCharge(), Analysis::HitManager::CHARGE);
+      if(candidate->getSystem() == 0) {
+        Analysis::HitManager::Instance()->SetField(
+            true, Analysis::HitManager::IS_RPC_HIT);
+        Analysis::HitManager::Instance()->SetField(
+            false, Analysis::HitManager::IS_TOF_HIT);
+      } else{
+        Analysis::HitManager::Instance()->SetField(
+            false, Analysis::HitManager::IS_RPC_HIT);
+        Analysis::HitManager::Instance()->SetField(
+            true, Analysis::HitManager::IS_TOF_HIT);
+      }
+      Analysis::HitManager::Instance()->SetField(
+          (float)candidate->getDistanceToMetaHit(), Analysis::HitManager::PATH_LENGTH);
+      Analysis::HitManager::Instance()->SetField(
+          (float)candidate->getBeta(), Analysis::HitManager::BETA);
+      Analysis::HitManager::Instance()->SetField(
+          (float) (candidate->getDistanceToMetaHit() / candidate->getBeta() / 299.792458), Analysis::HitManager::TIME_OF_FLIGHT);
+      Analysis::HitManager::Instance()->SetField(
+          (float)candidate->getMetaMatchRadius(), Analysis::HitManager::MATCH_RADIUS);
+      Analysis::HitManager::Instance()->SetField(
+          (float)candidate->getMetaMatchQuality(), Analysis::HitManager::MATCH_QUALITY);
+      Analysis::HitManager::Instance()->SetField(
+          (float)candidate->getMass2(), Analysis::HitManager::MASS2);
     }
   }
 

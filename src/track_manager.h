@@ -45,6 +45,7 @@ public:
     vtx_tracks_branch.AddField<int>("nhits_2");
     vtx_tracks_branch.AddField<int>("geant_pid");
 
+    config.AddBranchConfig(vtx_tracks_branch);
     vtx_tracks_ = new AnalysisTree::Particles(config.GetLastId());
 
     fields_float_.insert( std::make_pair(CHI2, vtx_tracks_branch.GetFieldId("chi2")) );
@@ -59,7 +60,6 @@ public:
     fields_int_.insert( std::make_pair(N_HITS_2, vtx_tracks_branch.GetFieldId("nhits_2")) );
     fields_int_.insert( std::make_pair(GEANT_PID, vtx_tracks_branch.GetFieldId("geant_pid")) );
 
-    config.AddBranchConfig(vtx_tracks_branch);
     return vtx_tracks_;
   }
   void NewTrack(AnalysisTree::Configuration &config){
@@ -85,10 +85,10 @@ public:
 
 private:
   static TrackManager* instance_;
-  TrackManager() = default;
+  TrackManager() : vtx_tracks_{nullptr}, track_{nullptr} {};
   ~TrackManager() = default;
-  AnalysisTree::Particles * vtx_tracks_{nullptr};
-  AnalysisTree::Particle* track_{nullptr};
+  AnalysisTree::Particles* vtx_tracks_;
+  AnalysisTree::Particle* track_;
 };
 } // namespace Analysis
 #endif // HTREE_TO_AT_SRC_TRACK_READER_H_
