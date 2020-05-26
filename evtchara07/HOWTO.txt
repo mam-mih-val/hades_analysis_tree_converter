@@ -215,7 +215,7 @@
       into a histogramm for each centrality class:
       
              Float_t deltaPhiAB =  TMath::Abs(TVector2::Phi_mpi_pi(EventPlaneA-EventPlaneB));
-             h->Fill(deltaPhiAB);
+             h->WriteEvent(deltaPhiAB);
 
       after your event-analysis you can finalize your results by calculating the EP-resolution for each centrality class
       by the ratio of event N(pi/2 < deltaEP_AB < pi)/N(0 < deltaEP_AB < pi):

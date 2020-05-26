@@ -6,12 +6,15 @@ int main(int argv, char **argc) {
   HadesEventReader reader;
   reader.Init( file_list );
   reader.InitEvtChara( "../evtchara07/centrality_epcorr_apr12_gen8_2019_02_pass30.root" );
-  Analysis::TreeBuilder::Instance()->SetFile( "output.root" );
-  Analysis::TreeBuilder::Instance()->CreateTree();
+  Analysis::TreeManager::Instance()->SetFile( "output.root" );
+  Analysis::TreeManager::Instance()->CreateTree();
+  int i=0;
   while( !reader.Eof() ) {
     reader.SwitchNextEvent();
     reader.ReadEvent();
+    ++i;
   }
-  Analysis::TreeBuilder::Instance()->Finalize();
+  std::cout << i << " events were converted from hades tree to analysis tree." << std::endl;
+  Analysis::TreeManager::Instance()->Finalize();
   return 0;
 }

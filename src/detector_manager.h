@@ -20,6 +20,10 @@ protected:
   std::map<int, int> fields_int_;
   std::map<int, int> fields_float_;
   std::map<int, int> fields_bool_;
+
+  virtual void SetField(int value, int idx){}
+  virtual void SetField(float value, int idx){}
+  virtual void SetField(bool value, int idx){}
 };
 } // namespace Analysis
 #endif // HTREE_TO_AT_SRC_DETECTOR_MANAGER_H_

@@ -101,13 +101,13 @@ public:
   }
   AnalysisTree::EventHeader* GetEventHeader(){ return event_header_; }
 
-  void SetField(int value, int idx){
+  void SetField(int value, int idx) override {
     event_header_->SetField( value, fields_int_.at(idx) );
   }
-  void SetField(float value, int idx){
+  void SetField(float value, int idx) override {
     event_header_->SetField( value, fields_float_.at(idx) );
   }
-  void SetField(bool value, int idx){
+  void SetField(bool value, int idx) override {
     event_header_->SetField( value, fields_bool_.at(idx) );
   }
 

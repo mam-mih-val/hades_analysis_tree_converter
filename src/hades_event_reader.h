@@ -27,7 +27,7 @@
 #include "hparticleevtcharaBK.h"
 
 #include "event_manager.h"
-#include "tree_builder.h"
+#include "tree_manager.h"
 
 #include <iostream>
 
@@ -74,7 +74,8 @@ public:
   void ReadEvent(){
     std::vector<int> triggers{
       Particle::kGoodVertexClust,
-      Particle::kGoodVertexCand,Particle::kGoodSTART,
+      Particle::kGoodVertexCand,
+      Particle::kGoodSTART,
       Particle::kNoPileUpSTART,
       Particle::kNoPileUpMETA,
       Particle::kNoPileUpMDC,
@@ -101,10 +102,10 @@ public:
       HParticleEvtCharaBK::kFWSumChargeSpec,
       HParticleEvtCharaBK::kFWSumChargeZ
     };
+    Analysis::TreeManager::Instance()->NewEvent();
     event_info_ = HCategoryManager::getObject(event_info_, event_info_category_, 0);
     event_header_ = gHades->getCurrentEvent()->getHeader();
     HVertex vertex_reco = event_header_->getVertexReco();
-
     for(auto trigger : triggers)
       Analysis::EventManager::Instance()->SetField(event_info_->isGoodEvent(trigger), trigger);
     for(auto trigger : physical_triggers)
@@ -116,7 +117,67 @@ public:
     for( auto estimator : centrality_estimators )
       Analysis::EventManager::Instance()->SetField(
           (int) evt_chara_bk_.getCentralityEstimator(estimator), estimator);
-    Analysis::TreeBuilder::Instance()->Fill();
+    ReadTracks();
+    Analysis::TreeManager::Instance()->WriteEvent();
+  }
+  void ReadTracks(){
+    if(!particle_category_)
+      return;
+    HParticleCand* candidate{nullptr};
+    int n_candidates = (int) particle_category_->getEntries();
+    for( int i=0; i<n_candidates; ++i ){
+      if(!candidate)
+        continue;
+      candidate = HCategoryManager::getObject(candidate, particle_category_, i);
+      if(!loop_.goodSector(candidate->getSector()))
+        continue; // skip inactive sectors
+      if(!candidate->isFlagBit(kIsUsed))
+        continue;
+      if(candidate->getMomentum() == candidate->getMomentumOrg())
+        continue; // skip tracks with too high pt ???
+      Analysis::TreeManager::Instance()->NewTrack();
+      int pid_code = candidate->getPID();
+      float p, theta, pt, eta, phi, mass;
+      TLorentzVector energy_momentum;
+      if( pid_code >= 0 ){
+        mass = HPhysicsConstants::mass(pid_code);
+        p = candidate->getCorrectedMomentumPID(pid_code);
+        candidate->setMomentum(p);                   // write it back
+        candidate->calc4vectorProperties(mass);      // sync with lorentz vector
+      }
+      else{
+        mass = candidate->getMass(); // META mass
+        p = candidate->getMomentum();
+      }
+      theta = candidate->getTheta() * TMath::DegToRad();
+      phi = candidate->getPhi() * TMath::DegToRad();
+      pt = p*TMath::Sin(theta);
+      eta = -TMath::Log(TMath::Tan(theta / 2.));
+      energy_momentum.SetPtEtaPhiM(pt, eta, phi, mass);
+      TVector3 momentum;
+      momentum.SetPtThetaPhi(pt, theta, phi);
+
+      Analysis::TrackManager::Instance()->SetMomentum(momentum);
+      Analysis::TrackManager::Instance()->SetMass(mass);
+      Analysis::TrackManager::Instance()->SetField(
+          (int) candidate->getCharge(), Analysis::TrackManager::CHARGE);
+      Analysis::TrackManager::Instance()->SetField(
+          (float) candidate->getChi2(), Analysis::TrackManager::CHI2);
+      Analysis::TrackManager::Instance()->SetField(
+          (int) candidate->getNLayer(0), Analysis::TrackManager::N_HITS_0);
+      Analysis::TrackManager::Instance()->SetField(
+          (int) candidate->getNLayer(1), Analysis::TrackManager::N_HITS_1);
+      Analysis::TrackManager::Instance()->SetField(
+          (int) candidate->getNLayer(2), Analysis::TrackManager::N_HITS_2);
+      Analysis::TrackManager::Instance()->SetField(
+          (float) candidate->getMdcdEdx(), Analysis::TrackManager::DE_DX);
+      Analysis::TrackManager::Instance()->SetField(
+          (float) candidate->getR(), Analysis::TrackManager::DCA_XY);
+      Analysis::TrackManager::Instance()->SetField(
+          (float) candidate->getZ(), Analysis::TrackManager::DCA_Z);
+      Analysis::TrackManager::Instance()->SetField(
+          (int) pid_code, Analysis::TrackManager::GEANT_PID);
+    }
   }
 
 private:

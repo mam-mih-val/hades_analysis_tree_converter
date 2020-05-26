@@ -3,3 +3,7 @@
 //
 
 #include "track_manager.h"
+
+namespace Analysis{
+TrackManager* TrackManager::instance_=nullptr;
+}
