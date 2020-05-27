@@ -119,7 +119,7 @@ void HadesEventReader::ReadParticleCandidates(){
       continue; // skip tracks with too high pt ???
     Analysis::TreeManager::Instance()->NewTrack();
     int pid_code = candidate->getPID();
-    float p, theta, pt, eta, phi, mass;
+    float p, theta, pt, phi, mass;
     TLorentzVector energy_momentum;
     if( pid_code >= 0 ){
       mass = HPhysicsConstants::mass(pid_code);
