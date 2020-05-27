@@ -66,7 +66,9 @@ set (HEADERS
 		src/event_manager.h
 		src/track_manager.h
 		src/hit_manager.h
+		src/wall_hits_manager.h
 		src/tree_manager.h
+		src/mhwalldivider.h
 		)
 
 set (SOURCES
@@ -76,6 +78,7 @@ set (SOURCES
 		src/tree_manager.cc
 		src/track_manager.cc
 		src/hit_manager.cc
+		src/module_manager.cc
 		src/main.cc
 		)
 
