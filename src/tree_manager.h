@@ -37,12 +37,11 @@ public:
     config_.Write("configuration");
   }
   void RecordDataHeader(){
-    const double T = 1.23;  // AGeV
-    const double M = 0.938; // GeV
-    const double GAMMA = (T + M) / M;
-    const double BETA = sqrt(1 - (M * M) / (M + T) / (M + T));
-    const double PZ = M * BETA * GAMMA;
-    const double E = T + M;
+    const float T = 1.23;  // AGeV
+    const float M = 0.938; // GeV
+    const float GAMMA = (T + M) / M;
+    const float BETA = sqrt(1 - (M * M) / (M + T) / (M + T));
+    const float PZ = M * BETA * GAMMA;
 
     data_header_.SetSystem("Au+Au");
     data_header_.SetBeamMomentum(PZ);
