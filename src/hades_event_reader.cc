@@ -78,7 +78,7 @@ void HadesEventReader::ReadWallHits(){
       std::cerr << "Error in short MHWallDivider::GetRing(short i=" << module_id << "): it returned 0" << std::endl;
       continue;
     }
-    bool has_passed_cuts = evtChara.PassesCutsFW(wallHit);
+    bool has_passed_cuts = evtChara.PassesCutsFW(wall_hit);
     Analysis::TreeManager::Instance()->NewWallModule();
     Analysis::WallHitsManager::Instance()->SetPosition(hit_x, hit_y, hit_z);
     Analysis::WallHitsManager::Instance()->SetSignal(signal);

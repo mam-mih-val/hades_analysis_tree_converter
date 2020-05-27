@@ -29,7 +29,7 @@ public:
       instance_ = new WallHitsManager;
     return instance_;
   }
-  void MakeBranch(AnalysisTree::Configuration &config, TTree *tree) override {
+  void MakeBranch(AnalysisTree::Configuration &config, TTree* tree) override {
     AnalysisTree::BranchConfig modules_branch("forward_wall_modules", AnalysisTree::DetType::kHit);
     modules_branch.AddField<int>("ring");
     modules_branch.AddField<int>("module_id");
