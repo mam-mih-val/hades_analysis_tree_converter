@@ -81,6 +81,7 @@ private:
 
     data_header_.SetSystem("Au+Au");
     data_header_.SetBeamMomentum(PZ);
+    data_header_.Write("data_information");
   }
   static TreeManager * instance_;
   AnalysisTree::Configuration config_;
