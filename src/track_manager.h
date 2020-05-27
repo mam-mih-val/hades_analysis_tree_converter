@@ -84,7 +84,7 @@ public:
 
 private:
   static TrackManager* instance_;
-  TrackManager() : vtx_tracks_{new AnalysisTree::Particles}, track_{new AnalysisTree::Particle} {};
+  TrackManager() : vtx_tracks_{nullptr}, track_{nullptr} {};
   ~TrackManager() = default;
   AnalysisTree::Particles* vtx_tracks_;
   AnalysisTree::Particle* track_;

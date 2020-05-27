@@ -81,7 +81,7 @@ public:
 
 private:
   static HitManager* instance_;
-  HitManager() : hit_detector_{new AnalysisTree::HitDetector}, hit_{new AnalysisTree::Hit} {};
+  HitManager() : hit_detector_{nullptr}, hit_{nullptr} {};
   ~HitManager() = default;
   AnalysisTree::HitDetector* hit_detector_;
   AnalysisTree::Hit* hit_;
