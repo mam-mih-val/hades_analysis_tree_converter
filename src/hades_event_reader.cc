@@ -71,14 +71,14 @@ void HadesEventReader::ReadWallHits(){
     float hit_beta = hit_distance / hit_time / 299.792458;
     float signal = wall_hit->getCharge();
     float p_signal =  93. * pow(signal, 0.46 - 0.006 * sqrt(signal));
-    int charge_z = evtChara.getFWCharge(wall_hit);
+    int charge_z = evt_chara_bk_.getFWCharge(wall_hit);
     int ring = divider.GetRing(module_id);
     if(ring == 0)
     {
       std::cerr << "Error in short MHWallDivider::GetRing(short i=" << module_id << "): it returned 0" << std::endl;
       continue;
     }
-    bool has_passed_cuts = evtChara.PassesCutsFW(wall_hit);
+    bool has_passed_cuts = evt_chara_bk_.PassesCutsFW(wall_hit);
     Analysis::TreeManager::Instance()->NewWallModule();
     Analysis::WallHitsManager::Instance()->SetPosition(hit_x, hit_y, hit_z);
     Analysis::WallHitsManager::Instance()->SetSignal(signal);
