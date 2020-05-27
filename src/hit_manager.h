@@ -31,7 +31,7 @@ public:
       instance_ = new HitManager;
     return instance_;
   }
-  AnalysisTree::HitDetector* CreateHitDetector( AnalysisTree::Configuration &config ){
+  void MakeBranch( AnalysisTree::Configuration &config, TTree* tree ) override {
     AnalysisTree::BranchConfig hit_branch("meta_hits", AnalysisTree::DetType::kHit);
     hit_branch.AddField<float>("mass2");
     hit_branch.AddField<float>("path_length");
@@ -46,9 +46,6 @@ public:
     hit_branch.AddField<bool>("is_tof_hit");
     hit_branch.AddField<bool>("is_rpc_hit");
 
-    config.AddBranchConfig(hit_branch);
-    hit_detector_ = new AnalysisTree::HitDetector( config.GetLastId() );
-
     fields_int_.insert( std::make_pair( CHARGE, hit_branch.GetFieldId("charge") ) );
 
     fields_float_.insert( std::make_pair( MASS2, hit_branch.GetFieldId("mass2") ) );
@@ -62,13 +59,16 @@ public:
     fields_bool_.insert( std::make_pair( IS_TOF_HIT, hit_branch.GetFieldId("is_tof_hit") ) );
     fields_bool_.insert( std::make_pair( IS_RPC_HIT, hit_branch.GetFieldId("is_rpc_hit") ) );
 
-    return hit_detector_;
+    config.AddBranchConfig(hit_branch);
+    hit_detector_ = new AnalysisTree::HitDetector( config.GetLastId() );
+    tree->Branch("meta_hits", "AnalysisTree::HitDetector", &hit_detector_);
   }
   void NewHit(AnalysisTree::Configuration& config){
     hit_ = hit_detector_->AddChannel();
     hit_->Init(config.GetBranchConfig(hit_detector_->GetId() ) );
   }
   void ClearDetector(){ hit_detector_->ClearChannels(); }
+  void ReserveHits(int n_hits){ hit_detector_->Reserve(n_hits); }
   void SetField( const int& value, int idx ) override {
     hit_->SetField( value, fields_int_.at(idx) );
   }
@@ -81,7 +81,7 @@ public:
 
 private:
   static HitManager* instance_;
-  HitManager() : hit_detector_{nullptr}, hit_{nullptr} {};
+  HitManager() : hit_detector_{new AnalysisTree::HitDetector}, hit_{new AnalysisTree::Hit} {};
   ~HitManager() = default;
   AnalysisTree::HitDetector* hit_detector_;
   AnalysisTree::Hit* hit_;

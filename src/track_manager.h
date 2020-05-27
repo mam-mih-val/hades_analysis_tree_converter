@@ -31,8 +31,7 @@ public:
       instance_ = new TrackManager;
     return instance_;
   }
-  AnalysisTree::Particles*
-  CreateTrackDetector(AnalysisTree::Configuration &config) {
+  void MakeBranch(AnalysisTree::Configuration &config, TTree* tree) override {
     AnalysisTree::BranchConfig vtx_tracks_branch("mdc_vtx_tracks", AnalysisTree::DetType::kParticle);
     vtx_tracks_branch.AddField<float>("chi2");
     vtx_tracks_branch.AddField<float>("vtx_chi2");
@@ -44,9 +43,6 @@ public:
     vtx_tracks_branch.AddField<int>("nhits_1");
     vtx_tracks_branch.AddField<int>("nhits_2");
     vtx_tracks_branch.AddField<int>("geant_pid");
-
-    config.AddBranchConfig(vtx_tracks_branch);
-    vtx_tracks_ = new AnalysisTree::Particles(config.GetLastId());
 
     fields_float_.insert( std::make_pair(CHI2, vtx_tracks_branch.GetFieldId("chi2")) );
     fields_float_.insert( std::make_pair(VTX_CHI2, vtx_tracks_branch.GetFieldId("vtx_chi2")) );
@@ -60,13 +56,16 @@ public:
     fields_int_.insert( std::make_pair(N_HITS_2, vtx_tracks_branch.GetFieldId("nhits_2")) );
     fields_int_.insert( std::make_pair(GEANT_PID, vtx_tracks_branch.GetFieldId("geant_pid")) );
 
-    return vtx_tracks_;
+    config.AddBranchConfig(vtx_tracks_branch);
+    vtx_tracks_ = new AnalysisTree::Particles(config.GetLastId());
+    tree->Branch("mdc_vtx_tracks", "AnalysisTree::Particles", &vtx_tracks_);
   }
   void NewTrack(AnalysisTree::Configuration &config){
     track_ = vtx_tracks_->AddChannel();
     track_->Init(config.GetBranchConfig(vtx_tracks_->GetId() ) );
   }
   void ClearDetector(){ vtx_tracks_->ClearChannels(); }
+  void ReserveTracks(int n_tracks){ vtx_tracks_->Reserve(n_tracks); }
   void SetField(const int& value, int idx) override{
     track_->SetField( value, fields_int_.at(idx) );
   }
@@ -85,7 +84,7 @@ public:
 
 private:
   static TrackManager* instance_;
-  TrackManager() : vtx_tracks_{nullptr}, track_{nullptr} {};
+  TrackManager() : vtx_tracks_{new AnalysisTree::Particles}, track_{new AnalysisTree::Particle} {};
   ~TrackManager() = default;
   AnalysisTree::Particles* vtx_tracks_;
   AnalysisTree::Particle* track_;

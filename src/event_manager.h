@@ -30,8 +30,7 @@ public:
   enum FIELDS_BOOL{
     NUM_FIELDS_BOOL=HADES_constants::kPT3+1
   };
-  AnalysisTree::EventHeader *
-  CreateEventHeader(AnalysisTree::Configuration &config) {
+  void MakeBranch(AnalysisTree::Configuration &config, TTree* tree) override {
     fields_int_.clear();
     fields_float_.clear();
     fields_bool_.clear();
@@ -97,7 +96,7 @@ public:
     config.AddBranchConfig(event_header_branch);
     event_header_ = new AnalysisTree::EventHeader(config.GetLastId());
     event_header_->Init(event_header_branch);
-    return event_header_;
+    tree->Branch("event_header", "AnalysisTree::EventHeader", &event_header_);
   }
   AnalysisTree::EventHeader* GetEventHeader(){ return event_header_; }
 

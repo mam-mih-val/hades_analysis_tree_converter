@@ -20,21 +20,17 @@ public:
       instance_ = new TreeManager;
     return instance_;
   }
-  void SetFile( std::string file_name ){
+  void CreateTree(const std::string& file_name){
     file_=TFile::Open( file_name.data(), "recreate" );
-  }
-  void CreateTree(){
     config_.SetName("HADES_data");
     event_manager_ = EventManager::Instance();
     track_manager_ = TrackManager::Instance();
     hit_manager_ = HitManager::Instance();
-    auto header = event_manager_->CreateEventHeader(config_);
-    auto track_detector = track_manager_->CreateTrackDetector(config_);
-    auto hit_detector = hit_manager_->CreateHitDetector(config_);
+
     tree_ = new TTree( "hades_analysis_tree", "Analysis Tree, HADES data" );
-    tree_->Branch("event_header", &header);
-    tree_->Branch("mdc_vtx_tracks", &track_detector);
-    tree_->Branch("meta_hits", &hit_detector);
+    event_manager_->MakeBranch(config_, tree_);
+    track_manager_->MakeBranch(config_, tree_);
+    hit_manager_->MakeBranch(config_, tree_);
     config_.Write("configuration");
   }
   void NewTrack(){
@@ -45,7 +41,18 @@ public:
     track_manager_->ClearDetector();
     hit_manager_->ClearDetector();
   }
-  void WriteEvent(){ tree_->Fill(); }
+  void ReserveTracks(int n_tracks){
+    track_manager_->ReserveTracks(n_tracks);
+    hit_manager_->ReserveHits(n_tracks);
+  }
+  bool WriteEvent(){
+    try {
+      tree_->Fill();
+      return true;
+    } catch (std::exception &e) {
+      return false;
+    }
+  }
   void Finalize(){
     tree_->Write();
     file_->Write();

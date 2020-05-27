@@ -65,11 +65,11 @@ public:
   }
   void SwitchNextEvent(){
     if( !Eof() )
-      loop_.nextEvent( position_ );
+      read_bytes = loop_.nextEvent( position_ );
     position_++;
   }
   bool Eof(){
-    return position_ >= n_events_;
+    return (position_ >= n_events_ || read_bytes <= 0);
   }
   void ReadEvent(){
     std::vector<int> triggers{
@@ -118,11 +118,11 @@ public:
       Analysis::EventManager::Instance()->SetField(
           (int) evt_chara_bk_.getCentralityEstimator(estimator), estimator);
     ReadParticleCandidates();
-    Analysis::TreeManager::Instance()->WriteEvent();
   }
   void ReadParticleCandidates(){
     HParticleCand* candidate{nullptr};
     int n_candidates = (int) particle_category_->getEntries();
+    Analysis::TreeManager::Instance()->ReserveTracks(n_candidates);
     for( int i=0; i<n_candidates; ++i ){
       candidate = HCategoryManager::getObject(candidate, particle_category_, i);
       if(!candidate)
@@ -206,6 +206,7 @@ public:
 
 private:
   HLoop loop_;
+  int read_bytes{1};
   long long n_events_{0};
   long long position_{0};
   HParticleEvtCharaBK evt_chara_bk_;
