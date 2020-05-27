@@ -37,7 +37,7 @@ public:
     hit_manager_->MakeBranch(config_, tree_);
     wall_manager_->MakeBranch(config_, tree_);
     matching_->MakeBranch(config_, tree_);
-    config_.Write("configuration");
+    config_.Write("Configuration");
     RecordDataHeader();
   }
   void NewTrack(){
