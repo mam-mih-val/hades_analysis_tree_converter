@@ -5,5 +5,5 @@
 #include "wall_hits_manager.h"
 
 namespace Analysis {
-ModuleManager* ModuleManager::instance_= nullptr;
+WallHitsManager* WallHitsManager::instance_= nullptr;
 }

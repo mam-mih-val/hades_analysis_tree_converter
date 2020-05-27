@@ -78,7 +78,7 @@ set (SOURCES
 		src/tree_manager.cc
 		src/track_manager.cc
 		src/hit_manager.cc
-		src/module_manager.cc
+		src/wall_hits_manager.cc
 		src/mhwalldivider.cc
 		src/main.cc
 		)
