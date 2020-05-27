@@ -133,9 +133,8 @@ void HadesEventReader::ReadParticleCandidates(){
     }
     theta = candidate->getTheta() * TMath::DegToRad();
     phi = candidate->getPhi() * TMath::DegToRad();
-    pt = p*TMath::Sin(theta);
-    eta = -TMath::Log(TMath::Tan(theta / 2.));
-    energy_momentum.SetPtEtaPhiM(pt, eta, phi, mass);
+    pt = p*TMath::Sin(theta) / 1000.0; // MeV->GeV
+    mass/=1000.0; // MeV->GeV
     TVector3 momentum;
     momentum.SetPtThetaPhi(pt, theta, phi);
 
