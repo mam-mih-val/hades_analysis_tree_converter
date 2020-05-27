@@ -67,6 +67,7 @@ public:
     hit_ = hit_detector_->AddChannel();
     hit_->Init(config.GetBranchConfig(hit_detector_->GetId() ) );
   }
+  int GetHitId() { return hit_->GetId(); }
   void ClearDetector(){ hit_detector_->ClearChannels(); }
   void ReserveHits(int n_hits){ hit_detector_->Reserve(n_hits); }
   void SetField( const int& value, int idx ) override {

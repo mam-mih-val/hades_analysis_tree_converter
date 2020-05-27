@@ -185,5 +185,7 @@ void HadesEventReader::ReadParticleCandidates(){
         (float)candidate->getMetaMatchQuality(), Analysis::HitManager::MATCH_QUALITY);
     Analysis::HitManager::Instance()->SetField(
         (float)candidate->getMass2(), Analysis::HitManager::MASS2);
+
+    Analysis::TrackTofMatch::Instance()->Match( Analysis::TrackManager::Instance()->GetTrackId(), Analysis::HitManager::Instance()->GetHitId() );
   }
 }

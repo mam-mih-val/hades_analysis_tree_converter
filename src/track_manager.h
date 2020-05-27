@@ -64,6 +64,7 @@ public:
     track_ = vtx_tracks_->AddChannel();
     track_->Init(config.GetBranchConfig(vtx_tracks_->GetId() ) );
   }
+  int GetTrackId(){ return track_->GetId(); }
   void ClearDetector(){ vtx_tracks_->ClearChannels(); }
   void ReserveTracks(int n_tracks){ vtx_tracks_->Reserve(n_tracks); }
   void SetField(const int& value, int idx) override{
