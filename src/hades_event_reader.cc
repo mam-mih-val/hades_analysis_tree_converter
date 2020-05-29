@@ -106,7 +106,7 @@ void HadesEventReader::ReadWallHits(){
 void HadesEventReader::ReadParticleCandidates(){
   HParticleCand* candidate{nullptr};
   int n_candidates = (int) particle_category_->getEntries();
-//    Analysis::TreeManager::Instance()->ReserveTracks(n_candidates);
+  HVertex vertex_reco = event_header_->getVertexReco();
   for( int i=0; i<n_candidates; ++i ){
     candidate = HCategoryManager::getObject(candidate, particle_category_, i);
     if(!candidate)
@@ -155,7 +155,7 @@ void HadesEventReader::ReadParticleCandidates(){
     Analysis::TrackManager::Instance()->SetField(
         (float) candidate->getR(), Analysis::TrackManager::DCA_XY);
     Analysis::TrackManager::Instance()->SetField(
-        (float) candidate->getZ(), Analysis::TrackManager::DCA_Z);
+        (float) candidate->getZ(), Analysis::TrackManager::DCA_Z-vertex_reco.getZ());
     Analysis::TrackManager::Instance()->SetField(
         (int) pid_code, Analysis::TrackManager::GEANT_PID);
 // META FILLING
@@ -183,7 +183,7 @@ void HadesEventReader::ReadParticleCandidates(){
     Analysis::HitManager::Instance()->SetField(
         (float)candidate->getMetaMatchQuality(), Analysis::HitManager::MATCH_QUALITY);
     Analysis::HitManager::Instance()->SetField(
-        (float)candidate->getMass2(), Analysis::HitManager::MASS2);
+        (float)candidate->getMass2()/powf( 10, 6 ), Analysis::HitManager::MASS2); // Mev -> GeV
 
     Analysis::TrackTofMatch::Instance()->Match( Analysis::TrackManager::Instance()->GetTrackId(), Analysis::HitManager::Instance()->GetHitId() );
   }
