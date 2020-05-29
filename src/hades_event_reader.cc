@@ -154,8 +154,9 @@ void HadesEventReader::ReadParticleCandidates(){
         (float) candidate->getMdcdEdx(), Analysis::TrackManager::DE_DX);
     Analysis::TrackManager::Instance()->SetField(
         (float) candidate->getR(), Analysis::TrackManager::DCA_XY);
+    float dca_z = candidate->getZ()-vertex_reco.getZ();
     Analysis::TrackManager::Instance()->SetField(
-        (float) candidate->getZ()-vertex_reco.getZ(), Analysis::TrackManager::DCA_Z);
+        (float) dca_z, Analysis::TrackManager::DCA_Z);
     Analysis::TrackManager::Instance()->SetField(
         (int) pid_code, Analysis::TrackManager::GEANT_PID);
 // META FILLING
