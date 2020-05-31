@@ -30,7 +30,7 @@ public:
     return instance_;
   }
   void MakeBranch(AnalysisTree::Configuration &config, TTree* tree) override {
-    AnalysisTree::BranchConfig modules_branch("forward_wall_modules", AnalysisTree::DetType::kHit);
+    AnalysisTree::BranchConfig modules_branch("forward_wall_hits", AnalysisTree::DetType::kHit);
     modules_branch.AddField<int>("ring");
     modules_branch.AddField<int>("module_id");
     modules_branch.AddField<float>("beta");
