@@ -70,6 +70,7 @@ void HadesEventReader::ReadWallHits(){
     float hit_distance = wall_hit->getDistance();
     float hit_beta = hit_distance / hit_time / 299.792458;
     float signal = wall_hit->getCharge();
+    std::cout << "signal in module: " << signal << std::endl;
     float p_signal =  93. * pow(signal, 0.46 - 0.006 * sqrt(signal));
     int charge_z = evt_chara_bk_.getFWCharge(wall_hit);
     int ring = divider.GetRing(module_id);
@@ -183,6 +184,8 @@ void HadesEventReader::ReadParticleCandidates(){
         (float)candidate->getMetaMatchRadius(), Analysis::HitManager::MATCH_RADIUS);
     Analysis::HitManager::Instance()->SetField(
         (float)candidate->getMetaMatchQuality(), Analysis::HitManager::MATCH_QUALITY);
+    Analysis::HitManager::Instance()->SetField(
+        (float)candidate->getTofdEdx(), Analysis::HitManager::DE_DX);
     Analysis::HitManager::Instance()->SetField(
         (float)candidate->getMass2()/powf( 10, 6 ), Analysis::HitManager::MASS2); // Mev -> GeV
 
