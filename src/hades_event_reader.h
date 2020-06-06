@@ -41,6 +41,8 @@ public:
     std::string file{};
     if( !file_list.empty() ){
       while(std::getline(list,file,',')){
+        if( file=="" )
+          continue;
         loop_.addFiles( file.data() );
         std::cout << file << " has been added to sequence" << std::endl;
       }
