@@ -60,30 +60,30 @@ set (HADES_LIBS
 add_definitions(${ROOT_CXX_FLAGS})
 
 set (HEADERS
-		src/HADES_constants.h
-		src/hades_event_reader.h
-		src/detector_manager.h
-		src/event_manager.h
-		src/track_manager.h
-		src/hit_manager.h
-		src/wall_hits_manager.h
-		src/tree_manager.h
-		src/track_tof_match.h
-		src/mhwalldivider.h
+        src/experimental/HADES_constants.h
+        src/experimental/hades_event_reader.h
+        src/experimental/detector_manager.h
+        src/experimental/event_manager.h
+        src/experimental/track_manager.h
+        src/experimental/hit_manager.h
+        src/experimental/wall_hits_manager.h
+        src/experimental/tree_manager.h
+        src/experimental/track_tof_match.h
+        src/experimental/mhwalldivider.h
 		)
 
 set (SOURCES
-		src/hades_event_reader.cc
-		src/detector_manager.cc
-		src/event_manager.cc
-		src/tree_manager.cc
-		src/track_manager.cc
-		src/hit_manager.cc
-		src/wall_hits_manager.cc
-		src/tree_manager.h
-		src/track_tof_match.cc
-		src/mhwalldivider.cc
-		src/main.cc
+        src/experimental/hades_event_reader.cc
+        src/experimental/detector_manager.cc
+        src/experimental/event_manager.cc
+        src/experimental/tree_manager.cc
+        src/experimental/track_manager.cc
+        src/experimental/hit_manager.cc
+        src/experimental/wall_hits_manager.cc
+        src/experimental/tree_manager.h
+        src/experimental/track_tof_match.cc
+        src/experimental/mhwalldivider.cc
+        src/experimental/main.cc
 		)
 
 set (DICT_FILE_NAME G__EvtCharaBK)
