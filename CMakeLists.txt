@@ -59,7 +59,7 @@ set (HADES_LIBS
 		)
 add_definitions(${ROOT_CXX_FLAGS})
 
-set (HEADERS
+set (HEADERS_exp
         src/experimental/HADES_constants.h
         src/experimental/hades_event_reader.h
         src/experimental/detector_manager.h
@@ -72,7 +72,7 @@ set (HEADERS
         src/experimental/mhwalldivider.h
 		)
 
-set (SOURCES
+set (SOURCES_exp
         src/experimental/hades_event_reader.cc
         src/experimental/detector_manager.cc
         src/experimental/event_manager.cc
@@ -95,5 +95,8 @@ ROOT_GENERATE_DICTIONARY(${DICT_FILE_NAME}
 add_library(EvtCharaBK SHARED evtchara07/hparticleevtcharaBK.cc ${DICT_FILE_NAME}.cxx)
 target_link_libraries(EvtCharaBK ${ROOT_LIBRARIES} ${HADES_LIBS})
 
-add_executable(HT2AT ${HEADERS} ${SOURCES})
+add_executable(ht2at ${HEADERS_exp} ${SOURCES_exp})
+target_link_libraries(HT2AT ${ROOT_LIBRARIES} ${HADES_LIBS}  AnalysisTreeBase EvtCharaBK)
+
+add_executable(HT2AT_sim ${HEADERS_exp} ${SOURCES_exp})
 target_link_libraries(HT2AT ${ROOT_LIBRARIES} ${HADES_LIBS}  AnalysisTreeBase EvtCharaBK)
