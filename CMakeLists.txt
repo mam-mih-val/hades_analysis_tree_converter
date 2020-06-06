@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
 
-project(HT2AT)
+project(hades_tree_to_analysis_tree)
 
 list(APPEND CMAKE_PREFIX_PATH $ENV{ROOTSYS})
 list(APPEND CMAKE_PREFIX_PATH $ENV{AnalysisTree_HOME})
@@ -71,6 +71,10 @@ set (HEADERS_exp
         src/experimental/track_tof_match.h
         src/experimental/mhwalldivider.h
 		)
+set(HEADERS_sim
+		src/simulation/hades_event_reader.h
+#		src/simulation/tree_manager.h
+		)
 
 set (SOURCES_exp
         src/experimental/hades_event_reader.cc
@@ -86,6 +90,11 @@ set (SOURCES_exp
         src/experimental/main.cc
 		)
 
+set(SOURCES_sim
+		src/simulation/hades_event_reader.cc
+#		src/simulation/tree_manager.cc
+		src/simulation/main.cc
+)
 set (DICT_FILE_NAME G__EvtCharaBK)
 ROOT_GENERATE_DICTIONARY(${DICT_FILE_NAME}
 		evtchara07/hparticleevtcharaBK.h
@@ -96,7 +105,7 @@ add_library(EvtCharaBK SHARED evtchara07/hparticleevtcharaBK.cc ${DICT_FILE_NAME
 target_link_libraries(EvtCharaBK ${ROOT_LIBRARIES} ${HADES_LIBS})
 
 add_executable(ht2at ${HEADERS_exp} ${SOURCES_exp})
-target_link_libraries(HT2AT ${ROOT_LIBRARIES} ${HADES_LIBS}  AnalysisTreeBase EvtCharaBK)
+target_link_libraries(ht2at ${ROOT_LIBRARIES} ${HADES_LIBS}  AnalysisTreeBase EvtCharaBK)
 
-add_executable(HT2AT_sim ${HEADERS_exp} ${SOURCES_exp})
-target_link_libraries(HT2AT ${ROOT_LIBRARIES} ${HADES_LIBS}  AnalysisTreeBase EvtCharaBK)
+add_executable(ht2at_sim ${HEADERS_sim} ${SOURCES_sim})
+target_link_libraries(ht2at_sim ${ROOT_LIBRARIES} ${HADES_LIBS}  AnalysisTreeBase)
