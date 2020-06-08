@@ -203,8 +203,8 @@ void HadesEventReader::ReadParticleCandidates(){
 void HadesEventReader::ReadSimData(){
   HGeantHeader* header = loop_.getGeantHeader();
   float impact_parameter = header->getImpactParameter();
-//  float reaction_plane = header->getEventPlane()*TMath::DegToRad();
-  float reaction_plane = header->getEventPlane();
+  float reaction_plane = header->getEventPlane()*TMath::DegToRad();
+//  float reaction_plane = header->getEventPlane();
   HGeantKine* sim_track{nullptr};
   bool is_set_vertex{false};
   float vx, vy, vz;
