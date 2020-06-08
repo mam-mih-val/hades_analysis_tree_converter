@@ -33,8 +33,8 @@
 
 class HadesEventReader {
 public:
-  HadesEventReader() :
-                       loop_(true){};
+  HadesEventReader() = delete;
+  explicit HadesEventReader(bool is_mc) : loop_(true), is_mc_(is_mc){};
   ~HadesEventReader() = default;
   void Init(std::string file_list){
     std::stringstream list{file_list};
@@ -47,10 +47,17 @@ public:
         std::cout << file << " has been added to sequence" << std::endl;
       }
     }
-    if(!loop_.setInput("-*,+HParticleCand,+HParticleEvtInfo,+HWallHit"))
-    {
-      cerr << "READBACK: ERROR : cannot read input !" << endl;
-      std::abort();
+    if( !is_mc_ ) {
+      if (!loop_.setInput("-*,+HParticleCand,+HParticleEvtInfo,+HWallHit")) {
+        cerr << "READBACK: ERROR : cannot read input !" << endl;
+        std::abort();
+      }
+    }
+    if( is_mc_ ){
+      if (!loop_.setInput("-*,+HParticleCand,+HParticleEvtInfo,+HWallHit,+HGeantKine")) {
+        cerr << "READBACK: ERROR : cannot read input !" << endl;
+        std::abort();
+      }
     }
     loop_.printCategories();
     loop_.printChain();
@@ -58,7 +65,8 @@ public:
     particle_category_ = (HCategory*)HCategoryManager::getCategory(catParticleCand);
     event_info_category_ = (HCategory*)HCategoryManager::getCategory(catParticleEvtInfo);
     wall_category_ = (HCategory*)HCategoryManager::getCategory(catWallHit);
-
+    if( is_mc_ )
+      geant_kine_ = (HCategory*)HCategoryManager::getCategory(catGeantKine);
     n_events_=loop_.getEntries();
   }
   void InitEvtChara( std::string parameter_file ){
@@ -76,16 +84,19 @@ public:
   void ReadEvent();
   void ReadParticleCandidates();
   void ReadWallHits();
+  void ReadKines();
 private:
   HLoop loop_;
   int read_bytes{1};
   long long n_events_{0};
   long long position_{0};
+  bool is_mc_{false};
   HParticleEvtCharaBK evt_chara_bk_;
   HEnergyLossCorrPar dE_dx_corr_;
   HCategory* particle_category_{nullptr};
   HCategory* event_info_category_{nullptr};
   HCategory* wall_category_{nullptr};
+  HCategory* geant_kine_{nullptr};
 
   HParticleEvtInfo* event_info_{nullptr};
   HEventHeader* event_header_{nullptr};

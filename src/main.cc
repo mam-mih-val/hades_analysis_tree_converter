@@ -3,18 +3,18 @@
 
 int main(int argv, char **argc) {
   auto start = std::chrono::system_clock::now();
-  if( argv < 2 ){
+  if( argv < 3 ){
     std::cout << "Error: Incorrect number of arguments. Minimum 1 argument required." << std::endl;
     std::cout << "Example: ./HT2AT path/to/input.root path/to/output.root" << std::endl;
     return 1;
   }
-  std::string file_list;
-  file_list = argc[1];
-  std::string file_output{"output.root"};
-  if( argv > 2 )
-    file_output = argc[2];
-
-  HadesEventReader reader;
+  std::string file_list = argc[argv-2];
+  std::string file_output = argc[argv-1];
+  std::string flag = argc[1];
+  bool is_mc{false};
+  if( flag == "--mc" )
+    is_mc=true;
+  HadesEventReader reader(is_mc);
   reader.Init( file_list );
   reader.InitEvtChara( "../evtchara07/centrality_epcorr_apr12_gen8_2019_02_pass30.root" );
   Analysis::TreeManager::Instance()->CreateTree(file_output);

@@ -104,7 +104,8 @@ void HadesEventReader::ReadWallHits(){
 }
 
 void HadesEventReader::ReadParticleCandidates(){
-  HParticleCand* candidate{nullptr};
+  HParticleCandSim* candidate{nullptr};
+  HGeantKine* kine{nullptr};
   int n_candidates = (int) particle_category_->getEntries();
   HVertex vertex_reco = event_header_->getVertexReco();
   for( int i=0; i<n_candidates; ++i ){
@@ -187,7 +188,15 @@ void HadesEventReader::ReadParticleCandidates(){
         (float)candidate->getTofdEdx(), Analysis::HitManager::DE_DX);
     Analysis::HitManager::Instance()->SetField(
         (float)candidate->getMass2()/powf( 10, 6 ), Analysis::HitManager::MASS2); // Mev -> GeV
-
     Analysis::TrackTofMatch::Instance()->Match( Analysis::TrackManager::Instance()->GetTrackId(), Analysis::HitManager::Instance()->GetHitId() );
+    if( is_mc_ )
+      kine = HCategoryManager::getObject(kine, geant_kine_, candidate->getGeantTrack()-1);
+  }
+}
+
+void HadesEventReader::ReadKines(){
+  HGeantKine* kine{nullptr};
+  for( int i=0; i<geant_kine_->getEntries(); ++i ){
+    kine = HCategoryManager::getObject(kine, geant_kine_, i);
   }
 }
