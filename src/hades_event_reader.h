@@ -36,7 +36,7 @@ public:
   HadesEventReader() = delete;
   explicit HadesEventReader(bool is_mc) : loop_(true), is_mc_(is_mc){};
   ~HadesEventReader() = default;
-  void Init(std::string file_list){
+  void Init(const std::string& file_list){
     std::stringstream list{file_list};
     std::string file{};
     if( !file_list.empty() ){
@@ -69,7 +69,7 @@ public:
       geant_kine_ = (HCategory*)HCategoryManager::getCategory(catGeantKine);
     n_events_=loop_.getEntries();
   }
-  void InitEvtChara( std::string parameter_file ){
+  void InitEvtChara( const std::string& parameter_file ){
     evt_chara_bk_.setParameterFile(parameter_file.data());
     evt_chara_bk_.init();
   }
@@ -78,13 +78,13 @@ public:
       read_bytes = loop_.nextEvent( position_ );
     position_++;
   }
-  bool Eof(){
+  bool Eof() const{
     return (position_ >= n_events_ || read_bytes <= 0);
   }
   void ReadEvent();
   void ReadParticleCandidates();
   void ReadWallHits();
-  void ReadKines();
+  void ReadSimData();
 private:
   HLoop loop_;
   int read_bytes{1};

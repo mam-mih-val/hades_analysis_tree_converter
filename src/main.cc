@@ -17,14 +17,12 @@ int main(int argv, char **argc) {
   HadesEventReader reader(is_mc);
   reader.Init( file_list );
   reader.InitEvtChara( "../evtchara07/centrality_epcorr_apr12_gen8_2019_02_pass30.root" );
-  Analysis::TreeManager::Instance()->CreateTree(file_output);
+  Analysis::TreeManager::Instance()->CreateTree(file_output, is_mc);
   int i=0;
   while( !reader.Eof() ) {
     reader.SwitchNextEvent();
     reader.ReadEvent();
-    bool is_written = Analysis::TreeManager::Instance()->WriteEvent();
-    if(is_written)
-      ++i;
+    Analysis::TreeManager::Instance()->WriteEvent();
   }
   std::cout << i << " events were converted from hades tree to analysis tree." << std::endl;
   Analysis::TreeManager::Instance()->Finalize();

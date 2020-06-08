@@ -37,6 +37,8 @@ void HadesEventReader::ReadEvent(){
       HParticleEvtCharaBK::kFWSumChargeZ
   };
   Analysis::TreeManager::Instance()->NewEvent();
+  if(is_mc_)
+    Analysis::TreeManager::Instance()->NewSimEvent();
   event_info_ = HCategoryManager::getObject(event_info_, event_info_category_, 0);
   event_header_ = gHades->getCurrentEvent()->getHeader();
   HVertex vertex_reco = event_header_->getVertexReco();
@@ -53,6 +55,8 @@ void HadesEventReader::ReadEvent(){
         (int) evt_chara_bk_.getCentralityEstimator(estimator), estimator);
   ReadWallHits();
   ReadParticleCandidates();
+  if( is_mc_ )
+    ReadSimData();
 }
 
 void HadesEventReader::ReadWallHits(){
@@ -189,14 +193,49 @@ void HadesEventReader::ReadParticleCandidates(){
     Analysis::HitManager::Instance()->SetField(
         (float)candidate->getMass2()/powf( 10, 6 ), Analysis::HitManager::MASS2); // Mev -> GeV
     Analysis::TrackTofMatch::Instance()->Match( Analysis::TrackManager::Instance()->GetTrackId(), Analysis::HitManager::Instance()->GetHitId() );
-    if( is_mc_ )
-      kine = HCategoryManager::getObject(kine, geant_kine_, candidate->getGeantTrack()-1);
+    if( is_mc_ ) {
+      Analysis::SimRecoMatch::Instance()->Match( Analysis::TrackManager::Instance()->GetTrackId(),
+                                                 candidate->getGeantTrack() - 1);
+    }
   }
 }
 
-void HadesEventReader::ReadKines(){
-  HGeantKine* kine{nullptr};
+void HadesEventReader::ReadSimData(){
+  HGeantHeader* header = loop_.getGeantHeader();
+  float impact_parameter = header->getImpactParameter();
+  float reaction_plane = header->getEventPlane()*TMath::DegToRad();
+  HGeantKine* sim_track{nullptr};
+  bool is_set_vertex{false};
+  float vx, vy, vz;
+  int k=0;
+  while(!is_set_vertex){
+    sim_track = HCategoryManager::getObject(sim_track, geant_kine_, k);
+    ++k;
+    if( !sim_track->isPrimary() )
+      continue;
+    sim_track->getVertex(vx, vy, vz);
+    is_set_vertex=true;
+  }
+  Analysis::SimEventManager::Instance()->SetVertex(vx, vy, vz);
+  Analysis::SimEventManager::Instance()->SetField(
+      impact_parameter, Analysis::SimEventManager::IMPACT_PARAMETER);
+  Analysis::SimEventManager::Instance()->SetField(
+      impact_parameter, Analysis::SimEventManager::REACTION_PLANE);
   for( int i=0; i<geant_kine_->getEntries(); ++i ){
-    kine = HCategoryManager::getObject(kine, geant_kine_, i);
+    sim_track = HCategoryManager::getObject(sim_track, geant_kine_, i);
+    float pt = sim_track->getTransverseMomentum();
+    float theta = sim_track->getThetaDeg()*TMath::DegToRad();
+    float phi = sim_track->getPhiDeg()*TMath::DegToRad();
+    float mass = sim_track->getM();
+    int pid = sim_track->getID();
+    bool is_primary = sim_track->isPrimary();
+    TVector3 p; p.SetPtThetaPhi(pt, theta, phi);
+    Analysis::TreeManager::Instance()->NewSimTrack();
+    Analysis::SimTrackManager::Instance()->SetMomentum(p);
+    Analysis::SimTrackManager::Instance()->SetMass(mass);
+    Analysis::SimTrackManager::Instance()->SetField(
+        is_primary,Analysis::SimTrackManager::IS_PRIMARY);
+    Analysis::SimTrackManager::Instance()->SetField(
+        pid,Analysis::SimTrackManager::GEANT_PID);
   }
 }

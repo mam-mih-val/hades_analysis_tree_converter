@@ -69,6 +69,9 @@ set (HEADERS
 		src/wall_hits_manager.h
 		src/tree_manager.h
 		src/track_tof_match.h
+		src/sim_track_manager.h
+		src/sim_event_manager.h
+		src/sim_reco_match.h
 		src/mhwalldivider.h
 		)
 
@@ -82,6 +85,9 @@ set (SOURCES
 		src/wall_hits_manager.cc
 		src/tree_manager.h
 		src/track_tof_match.cc
+		src/sim_track_manager.cc
+		src/sim_event_manager.cc
+		src/sim_reco_match.cc
 		src/mhwalldivider.cc
 		src/main.cc
 		)
