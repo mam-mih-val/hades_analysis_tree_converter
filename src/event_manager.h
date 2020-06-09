@@ -23,7 +23,7 @@ public:
     NUM_FIELDS_FLOAT
   };
   enum FIELDS_INT{
-    RUN_ID,
+    RUN_ID=HParticleEvtCharaBK::kFWSumChargeZ+1,
     EVENT_ID,
     NUM_FIELDS_INT
   };
@@ -73,8 +73,11 @@ public:
 
     for (auto centrality_estimator : centrality_estimators_names) {
       event_header_branch.AddField<int>(centrality_estimator.second); // centrality estimator
+      event_header_branch.AddField<float>(centrality_estimator.second+"_centrality"); // centrality value
       fields_int_.insert( std::make_pair( centrality_estimator.first,
                                           event_header_branch.GetFieldId( centrality_estimator.second ) ) );
+      fields_float_.insert( std::make_pair( centrality_estimator.first,
+                                          event_header_branch.GetFieldId( centrality_estimator.second+"_centrality" ) ) );
 
 //      event_header_branch.AddField<float>("centrality_" +
 //                                      centEst.second); // centrality class
