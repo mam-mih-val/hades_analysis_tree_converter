@@ -70,7 +70,7 @@ void HadesEventReader::ReadWallHits(){
     return;
   for( int i=0; i<n_wall_hits; ++i )
     module_ids.emplace_back(i);
-  std::random_suffle( module_ids.begin(), module_ids.end() );
+  std::random_shuffle( module_ids.begin(), module_ids.end() );
   std::map<int, int> module_sub;
   for( int i=0; i<module_ids.size(); ++i ){
     module_sub.insert(std::make_pair( module_ids.at(i), i%2 ));
