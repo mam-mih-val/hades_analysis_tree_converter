@@ -20,6 +20,7 @@ public:
     RING=0,
     MODULE_ID,
     D_CHARGE, // Discrete charge
+    RND_SUB, // 1 or 2
   };
   enum FIELDS_BOOL{
     PASSED_CUTS=0
@@ -33,6 +34,7 @@ public:
     AnalysisTree::BranchConfig modules_branch("forward_wall_hits", AnalysisTree::DetType::kHit);
     modules_branch.AddField<int>("ring");
     modules_branch.AddField<int>("module_id");
+    modules_branch.AddField<int>("rnd_sub");
     modules_branch.AddField<float>("beta");
     modules_branch.AddField<float>("time");
     modules_branch.AddField<float>("distance");
@@ -42,6 +44,7 @@ public:
 
     fields_int_.insert( std::make_pair( RING, modules_branch.GetFieldId("ring")) );
     fields_int_.insert( std::make_pair( MODULE_ID, modules_branch.GetFieldId("module_id")) );
+    fields_int_.insert( std::make_pair( RND_SUB, modules_branch.GetFieldId("rnd_sub")) );
     fields_float_.insert( std::make_pair( BETA, modules_branch.GetFieldId("beta")) );
     fields_float_.insert( std::make_pair( TIME, modules_branch.GetFieldId("time")) );
     fields_float_.insert( std::make_pair( DISTANCE, modules_branch.GetFieldId("distance")) );

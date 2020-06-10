@@ -65,8 +65,16 @@ void HadesEventReader::ReadEvent(){
 
 void HadesEventReader::ReadWallHits(){
   int n_wall_hits = wall_category_->getEntries();
+  std::vector<int> module_ids;
   if( n_wall_hits <= 0 )
     return;
+  for( int i=0; i<n_wall_hits; ++i )
+    module_ids.emplace_back(i);
+  std::random_suffle( module_ids.begin(), module_ids.end() );
+  std::map<int, int> module_sub;
+  for( int i=0; i<module_ids.size(); ++i ){
+    module_sub.insert(std::make_pair( module_ids.at(i), i%2 ));
+  }
   HWallHitSim* wall_hit = 0;
   MHWallDivider divider;
   for(int i=0; i<n_wall_hits; ++i){
@@ -108,6 +116,8 @@ void HadesEventReader::ReadWallHits(){
         module_id, Analysis::WallHitsManager::MODULE_ID);
     Analysis::WallHitsManager::Instance()->SetField(
         has_passed_cuts, Analysis::WallHitsManager::PASSED_CUTS);
+    Analysis::WallHitsManager::Instance()->SetField(
+        module_sub.at(i), Analysis::WallHitsManager::RND_SUB);
   }
 }
 
