@@ -238,10 +238,10 @@ void HadesEventReader::ReadSimData(){
       (float) reaction_plane, Analysis::SimEventManager::REACTION_PLANE);
   for( int i=0; i<geant_kine_->getEntries(); ++i ){
     sim_track = HCategoryManager::getObject(sim_track, geant_kine_, i);
-    float pt = sim_track->getTransverseMomentum();
+    float pt = sim_track->getTransverseMomentum() / 1000.; // MeV->GeV
     float theta = sim_track->getThetaDeg()*TMath::DegToRad();
     float phi = sim_track->getPhiDeg()*TMath::DegToRad();
-    float mass = sim_track->getM();
+    float mass = sim_track->getM()/1000.; // MeV->GeV
     int pid = sim_track->getID();
     bool is_primary = sim_track->isPrimary();
     TVector3 p; p.SetPtThetaPhi(pt, theta, phi);
