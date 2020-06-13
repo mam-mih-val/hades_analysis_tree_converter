@@ -19,8 +19,8 @@ cd $job_num
 echo "loading " $hadesroot
 source $hadesroot
 
-echo "executing $build_dir/HT2AT --mc $input_files output.dir"
-$build_dir/HT2AT --mc $input_files output.dir
+echo "executing $build_dir/HT2AT --mc $input_files output.root"
+$build_dir/HT2AT --mc $input_files output.root
 
 echo JOB FINISHED!
 date $format
