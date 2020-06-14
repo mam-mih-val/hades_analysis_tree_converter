@@ -63,6 +63,15 @@ public:
   void NewWallModule(){
     wall_manager_->NewModule(config_);
   }
+  void CheckIfNewFile(){
+    auto* file = tree_->GetCurrentFile();
+    if( file != file_ ) {
+      file_ = file;
+      file_->cd();
+      config_.Write("Configuration");
+      data_header_.Write("data_information");
+    }
+  }
   void NewSimEvent(){
     sim_track_manager_->ClearDetector();
     sim_reco_matching_->ClearMatching();

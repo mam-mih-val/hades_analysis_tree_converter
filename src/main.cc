@@ -23,6 +23,7 @@ int main(int argv, char **argc) {
     reader.SwitchNextEvent();
     reader.ReadEvent();
     Analysis::TreeManager::Instance()->WriteEvent();
+    Analysis::TreeManager::Instance()->CheckIfNewFile();
   }
   std::cout << i << " events were converted from hades tree to analysis tree." << std::endl;
   Analysis::TreeManager::Instance()->Finalize();
