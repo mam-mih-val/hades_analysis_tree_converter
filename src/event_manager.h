@@ -78,8 +78,6 @@ public:
                                           event_header_branch.GetFieldId( centrality_estimator.second ) ) );
       fields_float_.insert( std::make_pair( centrality_estimator.first,
                                           event_header_branch.GetFieldId( centrality_estimator.second+"_centrality" ) ) );
-      event_header_branch.AddField<float>("centrality_" +
-                                      centEst.second); // centrality class
     }
     for (auto trigger : triggers_names) {
       event_header_branch.AddField<bool>(trigger.second); // trigger name
