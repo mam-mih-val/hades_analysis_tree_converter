@@ -73,11 +73,11 @@ public:
 
     for (auto centrality_estimator : centrality_estimators_names) {
       event_header_branch.AddField<int>(centrality_estimator.second); // centrality estimator
-      event_header_branch.AddField<float>(centrality_estimator.second+"_centrality"); // centrality value
+//      event_header_branch.AddField<float>(centrality_estimator.second+"_centrality"); // centrality value
       fields_int_.insert( std::make_pair( centrality_estimator.first,
                                           event_header_branch.GetFieldId( centrality_estimator.second ) ) );
-      fields_float_.insert( std::make_pair( centrality_estimator.first,
-                                          event_header_branch.GetFieldId( centrality_estimator.second+"_centrality" ) ) );
+//      fields_float_.insert( std::make_pair( centrality_estimator.first,
+//                                          event_header_branch.GetFieldId( centrality_estimator.second+"_centrality" ) ) );
     }
     for (auto trigger : triggers_names) {
       event_header_branch.AddField<bool>(trigger.second); // trigger name
