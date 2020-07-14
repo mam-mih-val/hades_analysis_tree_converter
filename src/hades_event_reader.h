@@ -23,8 +23,7 @@
 #include "htime.h"
 #include "hwallhit.h"
 #include "walldef.h"
-
-#include "hparticleevtcharaBK.h"
+#include "hparticleevtchara.h"
 
 #include "event_manager.h"
 #include "tree_manager.h"
@@ -70,7 +69,7 @@ public:
     n_events_=loop_.getEntries();
   }
   void InitEvtChara( const std::string& parameter_file ){
-    evt_chara_bk_.setParameterFile(parameter_file.data());
+//    evt_chara_bk_.setParameterFile(parameter_file.data());
     evt_chara_bk_.init();
   }
   void SwitchNextEvent(){
@@ -91,7 +90,7 @@ private:
   long long n_events_{0};
   long long position_{0};
   bool is_mc_{false};
-  HParticleEvtCharaBK evt_chara_bk_;
+  HParticleEvtChara evt_chara_bk_;
   HEnergyLossCorrPar dE_dx_corr_;
   HCategory* particle_category_{nullptr};
   HCategory* event_info_category_{nullptr};
