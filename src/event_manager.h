@@ -55,14 +55,14 @@ public:
       {13, "physical_trigger_3"}  // Physical Trigger 3
     };
     const std::map<int, std::string> centrality_estimators_names{
-      {HADES_constants::kNhitsTOF, "tof_hits"},
-      {HADES_constants::kNhitsTOF_cut, "selected_tof_hits"},
-      {HADES_constants::kNhitsRPC, "rpc_hits"},
-      {HADES_constants::kNhitsTOF_cut, "selected_rpc_hits"},
-      {HADES_constants::kNhitsTOF_RPC, "tof_rpc_hits"},
-      {HADES_constants::kNhitsTOF_RPC_cut, "selected_tof_rpc_hits"},
-      {HADES_constants::kNtracks, "mdc_tracks"},
-      {HADES_constants::kNselectedTracks, "selected_mdc_tracks"},
+      {HADES_constants::kTOFtot, "tof_hits"},
+      {HADES_constants::kTOF, "selected_tof_hits"},
+      {HADES_constants::kRPCtot, "rpc_hits"},
+      {HADES_constants::kRPC, "selected_rpc_hits"},
+      {HADES_constants::kTOFRPCtot, "tof_rpc_hits"},
+      {HADES_constants::kTOFRPC, "selected_tof_rpc_hits"},
+      {HADES_constants::kPrimaryParticleCand, "mdc_tracks"},
+      {HADES_constants::kSelectedParticleCand, "selected_mdc_tracks"},
       {HADES_constants::kFWSumChargeSpec, "fw_adc"},
       {HADES_constants::kFWSumChargeZ, "fw_charge"}
     };

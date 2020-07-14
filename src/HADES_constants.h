@@ -39,8 +39,8 @@ enum eDetectors
 
 enum eTOFdetectors
 {
-  kRPC = 0,
-  kTOF,
+  kRPC_detector = 0,
+  kTOF_detector,
   kNTOFdetectors
 };
 
