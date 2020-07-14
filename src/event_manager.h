@@ -55,16 +55,16 @@ public:
       {13, "physical_trigger_3"}  // Physical Trigger 3
     };
     const std::map<int, std::string> centrality_estimators_names{
-      {HParticleEvtCharaBK::kTOFtot, "tof_hits"},
-      {HParticleEvtCharaBK::kTOF, "selected_tof_hits"},
-      {HParticleEvtCharaBK::kRPCtot, "rpc_hits"},
-      {HParticleEvtCharaBK::kRPC, "selected_rpc_hits"},
-      {HParticleEvtCharaBK::kTOFRPCtot, "tof_rpc_hits"},
-      {HParticleEvtCharaBK::kTOFRPC, "selected_tof_rpc_hits"},
-      {HParticleEvtCharaBK::kPrimaryParticleCand, "mdc_tracks"},
-      {HParticleEvtCharaBK::kSelectedParticleCand, "selected_mdc_tracks"},
-      {HParticleEvtCharaBK::kFWSumChargeSpec, "fw_adc"},
-      {HParticleEvtCharaBK::kFWSumChargeZ, "fw_charge"}
+      {HADES_constants::kNhitsTOF, "tof_hits"},
+      {HADES_constants::kNhitsTOF_cut, "selected_tof_hits"},
+      {HADES_constants::kNhitsRPC, "rpc_hits"},
+      {HADES_constants::kNhitsTOF_cut, "selected_rpc_hits"},
+      {HADES_constants::kNhitsTOF_RPC, "tof_rpc_hits"},
+      {HADES_constants::kNhitsTOF_RPC_cut, "selected_tof_rpc_hits"},
+      {HADES_constants::kNtracks, "mdc_tracks"},
+      {HADES_constants::kNselectedTracks, "selected_mdc_tracks"},
+      {HADES_constants::kFWSumChargeSpec, "fw_adc"},
+      {HADES_constants::kFWSumChargeZ, "fw_charge"}
     };
 
     AnalysisTree::BranchConfig event_header_branch(
