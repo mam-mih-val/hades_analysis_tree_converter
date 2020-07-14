@@ -4,6 +4,7 @@
 
 #include "hades_event_reader.h"
 #include "mhwalldivider.h"
+#include "HADES_constants.h"
 
 void HadesEventReader::ReadEvent(){
   std::vector<int> triggers{
@@ -50,11 +51,11 @@ void HadesEventReader::ReadEvent(){
   Analysis::EventManager::Instance()->GetEventHeader()->SetVertexY( vertex_reco.getY() );
   Analysis::EventManager::Instance()->GetEventHeader()->SetVertexZ( vertex_reco.getZ() );
   Analysis::EventManager::Instance()->SetField(vertex_reco.getChi2(), Analysis::EventManager::VTX_CHI2);
-  for( auto estimator : centrality_estimators ) {
+  for( auto estimator : HADES_constants::centrality_estimators ) {
     Analysis::EventManager::Instance()->SetField(
-        (int)evt_chara_bk_.getCentralityEstimator(estimator), estimator);
+        (int)evt_chara_bk_.getCentralityEstimator(estimator.second), estimator.first);
     Analysis::EventManager::Instance()->SetField(
-        (float)evt_chara_bk_.getCentralityPercentile(estimator), estimator);
+        (float)evt_chara_bk_.getCentralityPercentile(estimator.second), estimator.first);
   }
   ReadWallHits();
   ReadParticleCandidates();

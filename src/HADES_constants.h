@@ -58,6 +58,19 @@ enum eCentralityEstimators
   kFWSumChargeZ,
   kNCentralityEstimators
 };
+
+std::map<int, std::string> centrality_estrimators{
+    {kNhitsTOF, "TOFRPCtot"},
+    {kNhitsTOF_cut, "TOF"},
+    {kNhitsRPC, "RPCtot"},
+    {kNhitsRPC_cut, "RPC"},
+    {kNhitsTOF_RPC, "TOFRPC_tot"},
+    {kNhitsTOF_RPC_cut, "TOFRPC"},
+    {kNtracks, "PrimaryParticleCand"},
+    {kNselectedTracks, "SelectedParticleCand"},
+    {kFWSumChargeSpec, "FWSumChargeSpec"},
+    {kFWSumChargeZ, "FWSumChargeZ"},
+};
 }
 
 #endif

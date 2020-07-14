@@ -6,7 +6,6 @@
 #define HTREE_TO_AT_SRC_EVENT_MANAGER_H_
 
 #include "HADES_constants.h"
-#include "hparticleevtcharaBK.h"
 #include "detector_manager.h"
 
 namespace Analysis {
