@@ -17,7 +17,7 @@ include_directories(
 		$ENV{HADDIR}/include
 		${CMAKE_SOURCE_DIR}
 		${CMAKE_SOURCE_DIR}/src
-		${CMAKE_SOURCE_DIR}/evtchara07
+#		${CMAKE_SOURCE_DIR}/evtchara07
 		${ROOT_INCLUDE_DIRS}
 		${AnalysisTree_INCLUDE_DIR}
 )
@@ -92,14 +92,14 @@ set (SOURCES
 		src/main.cc
 		)
 
-set (DICT_FILE_NAME G__EvtCharaBK)
-ROOT_GENERATE_DICTIONARY(${DICT_FILE_NAME}
-		evtchara07/hparticleevtcharaBK.h
-		LINKDEF evtchara07/EvtCharaLinkDef.h
-		OPTIONS -s libEvtCharaBK -I${HADES_INCLUDE_DIR} -I${CMAKE_CURRENT_SOURCE_DIR}
-		)
-add_library(EvtCharaBK SHARED evtchara07/hparticleevtcharaBK.cc ${DICT_FILE_NAME}.cxx)
-target_link_libraries(EvtCharaBK ${ROOT_LIBRARIES} ${HADES_LIBS})
+#set (DICT_FILE_NAME G__EvtCharaBK)
+#ROOT_GENERATE_DICTIONARY(${DICT_FILE_NAME}
+#		evtchara07/hparticleevtcharaBK.h
+#		LINKDEF evtchara07/EvtCharaLinkDef.h
+#		OPTIONS -s libEvtCharaBK -I${HADES_INCLUDE_DIR} -I${CMAKE_CURRENT_SOURCE_DIR}
+#		)
+#add_library(EvtCharaBK SHARED evtchara07/hparticleevtcharaBK.cc ${DICT_FILE_NAME}.cxx)
+#target_link_libraries(EvtCharaBK ${ROOT_LIBRARIES} ${HADES_LIBS})
 
 add_executable(HT2AT ${HEADERS} ${SOURCES})
 target_link_libraries(HT2AT ${ROOT_LIBRARIES} ${HADES_LIBS}  AnalysisTreeBase)
