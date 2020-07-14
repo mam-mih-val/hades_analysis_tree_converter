@@ -1,5 +1,8 @@
 #ifndef HADES_constants_H
 #define HADES_constants_H 1
+
+#include <map>
+
 namespace HADES_constants
 {
 enum eTriggers
