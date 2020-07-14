@@ -7,6 +7,11 @@
 
 #include "HADES_constants.h"
 #include "detector_manager.h"
+#include "hparticledef.h"
+#include "hparticlestructs.h"
+#include "hparticlecand.h"
+#include "hparticlecandsim.h"
+#include "hparticleevtinfo.h"
 
 namespace Analysis {
 
