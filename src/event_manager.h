@@ -18,11 +18,11 @@ public:
     return instance_;
   }
   enum FIELDS_FLOAT{
-    VTX_CHI2=HParticleEvtCharaBK::kFWSumChargeZ+1, // Centrality estimators + corresponding centrality value;
+    VTX_CHI2=HADES_constants::kFWSumChargeZ+1, // Centrality estimators + corresponding centrality value;
     NUM_FIELDS_FLOAT
   };
   enum FIELDS_INT{
-    RUN_ID=HParticleEvtCharaBK::kFWSumChargeZ+1,
+    RUN_ID=HADES_constants::kFWSumChargeZ+1,
     EVENT_ID,
     NUM_FIELDS_INT
   };

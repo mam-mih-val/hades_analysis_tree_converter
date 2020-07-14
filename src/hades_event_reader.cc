@@ -25,18 +25,6 @@ void HadesEventReader::ReadEvent(){
       Particle::kGoodSTARTMETA,
   };
   std::vector<int> physical_triggers{11, 12, 13};
-  std::vector<int> centrality_estimators{
-      HParticleEvtCharaBK::kTOFtot,
-      HParticleEvtCharaBK::kTOF,
-      HParticleEvtCharaBK::kRPCtot,
-      HParticleEvtCharaBK::kRPC,
-      HParticleEvtCharaBK::kTOFRPCtot,
-      HParticleEvtCharaBK::kTOFRPC,
-      HParticleEvtCharaBK::kPrimaryParticleCand,
-      HParticleEvtCharaBK::kSelectedParticleCand,
-      HParticleEvtCharaBK::kFWSumChargeSpec,
-      HParticleEvtCharaBK::kFWSumChargeZ
-  };
   Analysis::TreeManager::Instance()->NewEvent();
   if(is_mc_)
     Analysis::TreeManager::Instance()->NewSimEvent();
