@@ -41,9 +41,9 @@ void HadesEventReader::ReadEvent(){
   Analysis::EventManager::Instance()->SetField(vertex_reco.getChi2(), Analysis::EventManager::VTX_CHI2);
   for( auto estimator : HADES_constants::centrality_estimators ) {
     Analysis::EventManager::Instance()->SetField(
-        (int)evt_chara_bk_.getCentralityEstimator(estimator.second.data()), estimator.first);
+        (int)evt_chara_bk_.getCentralityEstimator(estimator.first), estimator.first);
     Analysis::EventManager::Instance()->SetField(
-        (float)evt_chara_bk_.getCentralityPercentile(estimator.second.data()), estimator.first);
+        (float)evt_chara_bk_.getCentralityPercentile(estimator.first), estimator.first);
   }
   ReadWallHits();
   ReadParticleCandidates();
