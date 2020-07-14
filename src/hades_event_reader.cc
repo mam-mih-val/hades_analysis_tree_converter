@@ -24,6 +24,18 @@ void HadesEventReader::ReadEvent(){
       Particle::kGoodSTARTVETO,
       Particle::kGoodSTARTMETA,
   };
+  std::vector<int> centrality_estimators{
+      HADES_constants::kTOFtot,
+      HADES_constants::kTOF,
+      HADES_constants::kRPCtot,
+      HADES_constants::kRPC,
+      HADES_constants::kTOFRPCtot,
+      HADES_constants::kTOFRPC,
+      HADES_constants::kPrimaryParticleCand,
+      HADES_constants::kSelectedParticleCand,
+      HADES_constants::kFWSumChargeSpec,
+      HADES_constants::kFWSumChargeZ,
+  };
   std::vector<int> physical_triggers{11, 12, 13};
   Analysis::TreeManager::Instance()->NewEvent();
   if(is_mc_)
@@ -39,11 +51,11 @@ void HadesEventReader::ReadEvent(){
   Analysis::EventManager::Instance()->GetEventHeader()->SetVertexY( vertex_reco.getY() );
   Analysis::EventManager::Instance()->GetEventHeader()->SetVertexZ( vertex_reco.getZ() );
   Analysis::EventManager::Instance()->SetField(vertex_reco.getChi2(), Analysis::EventManager::VTX_CHI2);
-  for( auto estimator : HADES_constants::centrality_estimators ) {
+  for( auto estimator : centrality_estimators ) {
     Analysis::EventManager::Instance()->SetField(
-        (int)evt_chara_bk_.getCentralityEstimator(estimator.first), estimator.first);
+        (int)evt_chara_bk_.getCentralityEstimator(estimator), estimator);
     Analysis::EventManager::Instance()->SetField(
-        (float)evt_chara_bk_.getCentralityPercentile(estimator.first), estimator.first);
+        (float)evt_chara_bk_.getCentralityPercentile(estimator), estimator);
   }
   ReadWallHits();
   ReadParticleCandidates();

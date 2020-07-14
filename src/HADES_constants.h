@@ -70,19 +70,6 @@ enum eCentralityEstimators
   kEt                                  ,
   kNumCentralityEstimator
 };
-
-std::map<int, std::string> centrality_estimators{
-    {kTOFtot, "TOFRPCtot"},
-    {kTOF, "TOF"},
-    {kRPCtot, "RPCtot"},
-    {kRPC, "RPC"},
-    {kTOFRPCtot, "TOFRPC_tot"},
-    {kTOFRPC, "TOFRPC"},
-    {kPrimaryParticleCand, "PrimaryParticleCand"},
-    {kSelectedParticleCand, "SelectedParticleCand"},
-    {kFWSumChargeSpec, "FWSumChargeSpec"},
-    {kFWSumChargeZ, "FWSumChargeZ"},
-};
 }
 
 #endif
