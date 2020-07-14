@@ -59,7 +59,7 @@ enum eCentralityEstimators
   kNCentralityEstimators
 };
 
-std::map<int, std::string> centrality_estrimators{
+std::map<int, std::string> centrality_estimators{
     {kNhitsTOF, "TOFRPCtot"},
     {kNhitsTOF_cut, "TOF"},
     {kNhitsRPC, "RPCtot"},
