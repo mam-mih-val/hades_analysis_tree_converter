@@ -16,9 +16,9 @@ public:
   }
   void MakeBranch( AnalysisTree::Configuration &config, TTree* tree ) override {
     matching_ = new AnalysisTree::Matching(
-        config.GetBranchConfig("sim_tracks").GetId(),
-        config.GetBranchConfig("mdc_vtx_tracks").GetId());
-    config.AddMatch("mdc_vtx_tracks", "sim_tracks","reco_sim_tracks");
+        config.GetBranchConfig("mdc_vtx_tracks").GetId(),
+        config.GetBranchConfig("sim_tracks").GetId());
+    config.AddMatch(matching_);
     tree->Branch("reco_sim_tracks", "AnalysisTree::Matching", &matching_);
   }
   void ClearMatching(){

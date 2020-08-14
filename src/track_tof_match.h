@@ -17,7 +17,7 @@ public:
   }
   void MakeBranch( AnalysisTree::Configuration &config, TTree* tree ) override {
     matching_ = new AnalysisTree::Matching( config.GetBranchConfig("mdc_vtx_tracks").GetId(), config.GetBranchConfig("meta_hits").GetId() );
-    config.AddMatch("mdc_vtx_tracks", "meta_hits", "mdc_meta_match");
+    config.AddMatch(matching_);
     tree->Branch("mdc_meta_match", "AnalysisTree::Matching", &matching_);
   }
   void ClearMatching(){
