@@ -47,9 +47,7 @@ void HadesEventReader::ReadEvent(){
     Analysis::EventManager::Instance()->SetField(event_info_->isGoodEvent(trigger), trigger);
   for(auto trigger : physical_triggers)
     Analysis::EventManager::Instance()->SetField(event_header_->isTBit(trigger), trigger);
-  Analysis::EventManager::Instance()->GetEventHeader()->SetVertexX( vertex_reco.getX() );
-  Analysis::EventManager::Instance()->GetEventHeader()->SetVertexY( vertex_reco.getY() );
-  Analysis::EventManager::Instance()->GetEventHeader()->SetVertexZ( vertex_reco.getZ() );
+  Analysis::EventManager::Instance()->GetEventHeader()->SetVertexPosition3( {vertex_reco.getX(), vertex_reco.getY(), vertex_reco.getZ()} );
   Analysis::EventManager::Instance()->SetField(vertex_reco.getChi2(), Analysis::EventManager::VTX_CHI2);
   for( auto estimator : centrality_estimators ) {
     Analysis::EventManager::Instance()->SetField(
