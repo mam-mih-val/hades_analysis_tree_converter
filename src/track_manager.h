@@ -82,8 +82,8 @@ public:
   void SetMass(const float& mass){
     track_->SetMass(mass);
   }
-  void SetPdgCode( long long x pdg_code ){
-    track_->SetPid(pdg);
+  void SetPdgCode( long long pdg_code ){
+    track_->SetPid(pdg_code);
   }
 
 private:
