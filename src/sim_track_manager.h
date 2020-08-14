@@ -53,6 +53,9 @@ public:
   void SetMass(const float& mass){
     track_->SetMass(mass);
   }
+  void SetPdgCode( long long x pdg_code ){
+    track_->SetPid(pdg);
+  }
 private:
   static SimTrackManager * instance_;
   SimTrackManager() = default;

@@ -159,6 +159,7 @@ void HadesEventReader::ReadParticleCandidates(){
 
     Analysis::TrackManager::Instance()->SetMomentum(momentum);
     Analysis::TrackManager::Instance()->SetMass(mass);
+    Analysis::TrackManager::Instance()->SetPdgCode( TDatabasePDG::Instance()->ConvertGeant3ToPdg(pid_code) );
     Analysis::TrackManager::Instance()->SetField(
         (int) candidate->getCharge(), Analysis::TrackManager::CHARGE);
     Analysis::TrackManager::Instance()->SetField(
@@ -248,9 +249,11 @@ void HadesEventReader::ReadSimData(){
     Analysis::TreeManager::Instance()->NewSimTrack();
     Analysis::SimTrackManager::Instance()->SetMomentum(p);
     Analysis::SimTrackManager::Instance()->SetMass(mass);
+    Analysis::SimTrackManager::Instance()->SetPdgCode( TDatabasePDG::Instance()->ConvertGeant3ToPdg(pid_code) );
     Analysis::SimTrackManager::Instance()->SetField(
         is_primary,Analysis::SimTrackManager::IS_PRIMARY);
     Analysis::SimTrackManager::Instance()->SetField(
         pid,Analysis::SimTrackManager::GEANT_PID);
+
   }
 }

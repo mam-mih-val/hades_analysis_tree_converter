@@ -18,8 +18,8 @@ public:
     matching_ = new AnalysisTree::Matching(
         config.GetBranchConfig("sim_tracks").GetId(),
         config.GetBranchConfig("mdc_vtx_tracks").GetId());
-    config.AddMatch("sim_tracks", "mdc_vtx_tracks","sim_reco_tracks");
-    tree->Branch("sim_reco_tracks", "AnalysisTree::Matching", &matching_);
+    config.AddMatch("mdc_vtx_tracks", "sim_tracks","reco_sim_tracks");
+    tree->Branch("reco_sim_tracks", "AnalysisTree::Matching", &matching_);
   }
   void ClearMatching(){
     matching_->Clear();

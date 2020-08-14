@@ -28,6 +28,8 @@
 #include "event_manager.h"
 #include "tree_manager.h"
 
+#include "TDatabasePDG.h"
+
 #include <iostream>
 
 class HadesEventReader {
