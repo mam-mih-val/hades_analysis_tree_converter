@@ -36,7 +36,7 @@ public:
   }
   AnalysisTree::EventHeader* GetEventHeader(){ return event_header_; }
   void SetVertex(float x, float y, float z){
-    event_header_->SetVertexPosition({x, y, z});
+    event_header_->SetVertexPosition3({x, y, z});
   }
   void SetField(const int& value, int idx) override {
     event_header_->SetField( value, fields_int_.at(idx) );
