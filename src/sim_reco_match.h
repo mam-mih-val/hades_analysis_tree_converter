@@ -5,7 +5,7 @@
 #ifndef HTREE_TO_AT_SRC_SIM_RECO_MATCH_H_
 #define HTREE_TO_AT_SRC_SIM_RECO_MATCH_H_
 #include "detector_manager.h"
-#include <AnalysisTree/Matching.hpp"
+#include <AnalysisTree/Matching.hpp>
 
 namespace Analysis {
 class SimRecoMatch : public DetectorManager {

@@ -6,7 +6,7 @@
 #define HTREE_TO_AT_SRC_TRACK_TOF_MATCH_H_
 
 #include "detector_manager.h"
-#include <AnalysisTree/Matching.hpp"
+#include <AnalysisTree/Matching.hpp>
 
 namespace Analysis {
 class TrackTofMatch : public DetectorManager {
