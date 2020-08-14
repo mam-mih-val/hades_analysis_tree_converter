@@ -249,7 +249,7 @@ void HadesEventReader::ReadSimData(){
     Analysis::TreeManager::Instance()->NewSimTrack();
     Analysis::SimTrackManager::Instance()->SetMomentum(p);
     Analysis::SimTrackManager::Instance()->SetMass(mass);
-    Analysis::SimTrackManager::Instance()->SetPdgCode( TDatabasePDG::Instance()->ConvertGeant3ToPdg(pid_code) );
+    Analysis::SimTrackManager::Instance()->SetPdgCode( TDatabasePDG::Instance()->ConvertGeant3ToPdg(pid) );
     Analysis::SimTrackManager::Instance()->SetField(
         is_primary,Analysis::SimTrackManager::IS_PRIMARY);
     Analysis::SimTrackManager::Instance()->SetField(
