@@ -20,7 +20,7 @@ public:
         config.GetBranchConfig("mdc_vtx_tracks").GetId(),
         config.GetBranchConfig("sim_tracks").GetId());
     config.AddMatch(matching_);
-    tree->Branch("reco_sim_tracks", "AnalysisTree::Matching", &matching_);
+    tree->Branch("mdc_vtx_tracks2sim_tracks", "AnalysisTree::Matching", &matching_);
   }
   void ClearMatching(){
     matching_->Clear();
