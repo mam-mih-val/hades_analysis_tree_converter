@@ -8,7 +8,7 @@ namespace Analysis {
 EventManager *EventManager::instance_ = nullptr;
 
 void EventManager::MakeBranch(AnalysisTree::Configuration &config,
-                              TTree *tree) override {
+                              TTree *tree) {
   fields_int_.clear();
   fields_float_.clear();
   fields_bool_.clear();
