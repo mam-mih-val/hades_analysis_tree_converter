@@ -101,5 +101,5 @@ set (SOURCES
 #add_library(EvtCharaBK SHARED evtchara07/hparticleevtcharaBK.cc ${DICT_FILE_NAME}.cxx)
 #target_link_libraries(EvtCharaBK ${ROOT_LIBRARIES} ${HADES_LIBS})
 
-add_executable(HT2AT ${SOURCES})
+add_executable(HT2AT ${HEADERS} ${SOURCES})
 target_link_libraries(HT2AT ${ROOT_LIBRARIES} ROOT::EG ${HADES_LIBS}  AnalysisTreeBase)
