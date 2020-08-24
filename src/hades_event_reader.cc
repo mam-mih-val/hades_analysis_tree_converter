@@ -138,16 +138,18 @@ void HadesEventReader::ReadParticleCandidates(){
     int pid_code = candidate->getPID();
     float p, theta, pt, phi, mass;
     TLorentzVector energy_momentum;
-    if( pid_code >= 0 ){
-      mass = HPhysicsConstants::mass(pid_code);
-      p = candidate->getCorrectedMomentumPID(pid_code);
-      candidate->setMomentum(p);                   // write it back
-      candidate->calc4vectorProperties(mass);      // sync with lorentz vector
-    }
-    else{
-      mass = candidate->getMass(); // META mass
-      p = candidate->getMomentum();
-    }
+//    if( pid_code >= 0 ){
+//      mass = HPhysicsConstants::mass(pid_code);
+//      p = candidate->getCorrectedMomentumPID(pid_code);
+//      candidate->setMomentum(p);                   // write it back
+//      candidate->calc4vectorProperties(mass);      // sync with lorentz vector
+//    }
+//    else{
+//      mass = candidate->getMass(); // META mass
+//      p = candidate->getMomentum();
+//    }
+    mass = candidate->getMass(); // META mass
+    p = candidate->getMomentum();
     theta = candidate->getTheta() * TMath::DegToRad();
     phi = candidate->getPhi() * TMath::DegToRad();
     pt = p*TMath::Sin(theta) / 1000.0; // MeV->GeV

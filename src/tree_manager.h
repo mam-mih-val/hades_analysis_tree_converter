@@ -68,7 +68,7 @@ public:
       file_ = file;
       file_->cd();
       config_.Write("Configuration");
-      data_header_.Write("data_information");
+      data_header_.Write("DataHeader");
     }
   }
   void NewSimEvent(){
