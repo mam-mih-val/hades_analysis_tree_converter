@@ -23,6 +23,12 @@ public:
     N_HITS_0,
     N_HITS_1,
     N_HITS_2,
+    LAYERS_0,
+    LAYERS_1,
+    LAYERS_2,
+    LAYERS_3,
+    LAYERS_TOTAL,
+    LAYERS_BITS,
     GEANT_PID,
     NUMBER_FIELDS_INT
   };
@@ -42,6 +48,12 @@ public:
     vtx_tracks_branch.AddField<int>("nhits_0");
     vtx_tracks_branch.AddField<int>("nhits_1");
     vtx_tracks_branch.AddField<int>("nhits_2");
+    vtx_tracks_branch.AddField<int>("layers_0"); // fired layers in station 0
+    vtx_tracks_branch.AddField<int>("layers_1"); // fired layers in station 1
+    vtx_tracks_branch.AddField<int>("layers_2"); // fired layers in station 2
+    vtx_tracks_branch.AddField<int>("layers_3"); // fired layers in station 3
+    vtx_tracks_branch.AddField<int>("layers_total"); // sum over all layers
+    vtx_tracks_branch.AddField<int>("layers_bits");
     vtx_tracks_branch.AddField<int>("geant_pid");
 
     fields_float_.insert( std::make_pair(CHI2, vtx_tracks_branch.GetFieldId("chi2")) );
@@ -55,6 +67,13 @@ public:
     fields_int_.insert( std::make_pair(N_HITS_1, vtx_tracks_branch.GetFieldId("nhits_1")) );
     fields_int_.insert( std::make_pair(N_HITS_2, vtx_tracks_branch.GetFieldId("nhits_2")) );
     fields_int_.insert( std::make_pair(GEANT_PID, vtx_tracks_branch.GetFieldId("geant_pid")) );
+
+    fields_int_.insert( std::make_pair(LAYERS_0, vtx_tracks_branch.GetFieldId("layers_0")) );
+    fields_int_.insert( std::make_pair(LAYERS_1, vtx_tracks_branch.GetFieldId("layers_1")) );
+    fields_int_.insert( std::make_pair(LAYERS_2, vtx_tracks_branch.GetFieldId("layers_2")) );
+    fields_int_.insert( std::make_pair(LAYERS_3, vtx_tracks_branch.GetFieldId("layers_3")) );
+    fields_int_.insert( std::make_pair(LAYERS_TOTAL, vtx_tracks_branch.GetFieldId("layers_total")) );
+    fields_int_.insert( std::make_pair(LAYERS_BITS, vtx_tracks_branch.GetFieldId("layers_bits")) );
 
     config.AddBranchConfig(vtx_tracks_branch);
     vtx_tracks_ = new AnalysisTree::Particles(config.GetLastId());

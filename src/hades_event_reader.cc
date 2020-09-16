@@ -138,16 +138,16 @@ void HadesEventReader::ReadParticleCandidates(){
     int pid_code = candidate->getPID();
     float p, theta, pt, phi, mass;
     TLorentzVector energy_momentum;
-//    if( pid_code >= 0 ){
-//      mass = HPhysicsConstants::mass(pid_code);
-//      p = candidate->getCorrectedMomentumPID(pid_code);
-//      candidate->setMomentum(p);                   // write it back
-//      candidate->calc4vectorProperties(mass);      // sync with lorentz vector
-//    }
-//    else{
-//      mass = candidate->getMass(); // META mass
-//      p = candidate->getMomentum();
-//    }
+    if( pid_code >= 0 ){
+      mass = HPhysicsConstants::mass(pid_code);
+      p = candidate->getCorrectedMomentumPID(pid_code);
+      candidate->setMomentum(p);                   // write it back
+      candidate->calc4vectorProperties(mass);      // sync with lorentz vector
+    }
+    else{
+      mass = candidate->getMass(); // META mass
+      p = candidate->getMomentum();
+    }
     mass = candidate->getMass(); // META mass
     p = candidate->getMomentum();
     theta = candidate->getTheta() * TMath::DegToRad();
@@ -156,7 +156,27 @@ void HadesEventReader::ReadParticleCandidates(){
     mass/=1000.0; // MeV->GeV
     TVector3 momentum;
     momentum.SetPtThetaPhi(pt, theta, phi);
+    int layers_0{0};
+    int layers_1{0};
+    int layers_2{0};
+    int layers_3{0};
+    int layers_total{0};
+    int layers_bits{0x00};
 
+    for( int i=0; i<24; ++i ){
+      if( !candidate->getLayer(0, i) )
+          continue;
+      layers_bits |=  ( 0x01 << i );
+      if( 0 <= i && i < 6 )
+        layers_0++;
+      if( 6 <= i && i < 12 )
+        layers_1++;
+      if( 12 <= i && i < 18 )
+        layers_2++;
+      if( 18 <= i && i < 24 )
+        layers_3++;
+      layers_total++;
+    }
     Analysis::TrackManager::Instance()->SetMomentum(momentum);
     Analysis::TrackManager::Instance()->SetMass(mass);
     Analysis::TrackManager::Instance()->SetPdgCode( TDatabasePDG::Instance()->ConvertGeant3ToPdg(pid_code) );
@@ -170,6 +190,14 @@ void HadesEventReader::ReadParticleCandidates(){
         (int) candidate->getNLayer(1), Analysis::TrackManager::N_HITS_1);
     Analysis::TrackManager::Instance()->SetField(
         (int) candidate->getNLayer(2), Analysis::TrackManager::N_HITS_2);
+
+    Analysis::TrackManager::Instance()->SetField( (int) layers_0, Analysis::TrackManager::LAYERS_0);
+    Analysis::TrackManager::Instance()->SetField( (int) layers_1, Analysis::TrackManager::LAYERS_1);
+    Analysis::TrackManager::Instance()->SetField( (int) layers_2, Analysis::TrackManager::LAYERS_2);
+    Analysis::TrackManager::Instance()->SetField( (int) layers_3, Analysis::TrackManager::LAYERS_3);
+    Analysis::TrackManager::Instance()->SetField( (int) layers_total, Analysis::TrackManager::LAYERS_TOTAL);
+    Analysis::TrackManager::Instance()->SetField( (int) layers_bits, Analysis::TrackManager::LAYERS_bits);
+
     Analysis::TrackManager::Instance()->SetField(
         (float) candidate->getMdcdEdx(), Analysis::TrackManager::DE_DX);
     Analysis::TrackManager::Instance()->SetField(
