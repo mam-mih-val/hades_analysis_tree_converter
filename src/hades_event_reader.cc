@@ -196,7 +196,7 @@ void HadesEventReader::ReadParticleCandidates(){
     Analysis::TrackManager::Instance()->SetField( (int) layers_2, Analysis::TrackManager::LAYERS_2);
     Analysis::TrackManager::Instance()->SetField( (int) layers_3, Analysis::TrackManager::LAYERS_3);
     Analysis::TrackManager::Instance()->SetField( (int) layers_total, Analysis::TrackManager::LAYERS_TOTAL);
-    Analysis::TrackManager::Instance()->SetField( (int) layers_bits, Analysis::TrackManager::LAYERS_bits);
+    Analysis::TrackManager::Instance()->SetField( (int) layers_bits, Analysis::TrackManager::LAYERS_BITS);
 
     Analysis::TrackManager::Instance()->SetField(
         (float) candidate->getMdcdEdx(), Analysis::TrackManager::DE_DX);
