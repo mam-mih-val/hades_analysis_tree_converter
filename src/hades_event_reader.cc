@@ -269,7 +269,7 @@ void HadesEventReader::ReadSimData(){
   for( int i=0; i<geant_kine_->getEntries(); ++i ){
     sim_track = HCategoryManager::getObject(sim_track, geant_kine_, i);
     int parent_track_id = sim_track->getParentTrack();
-    bool parent_is_selected = std::count( selected_tracks.begin(), selected_tracks.end(), parent_track_id ) != 0;
+    bool parent_is_selected = std::count( selected_tracks.begin(), selected_tracks.end(), parent_track_id ) > 0;
     if( !sim_track->isPrimary() )
       if( !parent_is_selected )
         continue;
@@ -290,4 +290,5 @@ void HadesEventReader::ReadSimData(){
     Analysis::SimTrackManager::Instance()->SetField(
         pid,Analysis::SimTrackManager::GEANT_PID);
   }
+  std::cout << selected_tracks.size() << " out of " << geant_kine_->getEntries() << " are selected" << std::endl;
 }
