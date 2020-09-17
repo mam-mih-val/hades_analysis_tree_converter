@@ -269,6 +269,7 @@ void HadesEventReader::ReadSimData(){
     sim_track = HCategoryManager::getObject(sim_track, geant_kine_, i);
     if( sim_track->getMechanism() != 0 && sim_track->getMechanism() != 5 )
       continue;
+    std::cout << sim_track->getMechanism() << std::endl;
     float pt = sim_track->getTransverseMomentum() / 1000.; // MeV->GeV
     float theta = sim_track->getThetaDeg()*TMath::DegToRad();
     float phi = sim_track->getPhiDeg()*TMath::DegToRad();
