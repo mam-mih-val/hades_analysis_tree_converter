@@ -265,7 +265,6 @@ void HadesEventReader::ReadSimData(){
       impact_parameter, Analysis::SimEventManager::IMPACT_PARAMETER);
   Analysis::SimEventManager::Instance()->SetField(
       (float) reaction_plane, Analysis::SimEventManager::REACTION_PLANE);
-  selected_tracks.clear();
   for( int i=0; i<geant_kine_->getEntries(); ++i ){
     sim_track = HCategoryManager::getObject(sim_track, geant_kine_, i);
     if( sim_track->getMechanism() != 0 && sim_track->getMechanism() != 5 )
