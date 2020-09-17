@@ -265,8 +265,14 @@ void HadesEventReader::ReadSimData(){
       impact_parameter, Analysis::SimEventManager::IMPACT_PARAMETER);
   Analysis::SimEventManager::Instance()->SetField(
       (float) reaction_plane, Analysis::SimEventManager::REACTION_PLANE);
+  std::vector<int> selected_tracks;
   for( int i=0; i<geant_kine_->getEntries(); ++i ){
     sim_track = HCategoryManager::getObject(sim_track, geant_kine_, i);
+    int parent_track_id = sim_track->getParent();
+    bool parent_is_selected = std::count( selected_tracks.begin(), selected_tracks.end(), parent_track_id ) != 0;
+    if( !sim_tracks->isPrimary() && !parent_is_selected )
+      continue;
+    selected_tracks.push_back( sim_track->getTrack() );
     float pt = sim_track->getTransverseMomentum() / 1000.; // MeV->GeV
     float theta = sim_track->getThetaDeg()*TMath::DegToRad();
     float phi = sim_track->getPhiDeg()*TMath::DegToRad();
@@ -282,6 +288,5 @@ void HadesEventReader::ReadSimData(){
         is_primary,Analysis::SimTrackManager::IS_PRIMARY);
     Analysis::SimTrackManager::Instance()->SetField(
         pid,Analysis::SimTrackManager::GEANT_PID);
-
   }
 }
