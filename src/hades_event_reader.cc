@@ -285,5 +285,4 @@ void HadesEventReader::ReadSimData(){
     Analysis::SimTrackManager::Instance()->SetField(
         pid,Analysis::SimTrackManager::GEANT_PID);
   }
-  std::cout << selected_tracks.size() << " out of " << geant_kine_->getEntries() << " are selected" << std::endl;
 }
