@@ -292,5 +292,18 @@ void HadesEventReader::ReadSimData(){
         is_primary,Analysis::SimTrackManager::IS_PRIMARY);
     Analysis::SimTrackManager::Instance()->SetField(
         pid,Analysis::SimTrackManager::GEANT_PID);
+    Analysis::SimTrackManager::Instance()->SetField(
+        sim_track->getTrack(),Analysis::SimTrackManager::GEANT_TRACK_ID);
+    Analysis::SimTrackManager::Instance()->SetField(
+        sim_track->getParentTrack(),Analysis::SimTrackManager::GEANT_PARENT_ID);
+    Analysis::SimTrackManager::Instance()->SetField(
+        sim_track->getMechanism(),Analysis::SimTrackManager::GEANT_PROCESS_ID);
+    Analysis::SimTrackManager::Instance()->SetField(
+        sim_track->getMedium(),Analysis::SimTrackManager::GEANT_MEDIUM_NUMBER);
+    float vtx_x, vtx_y, vtx_z;
+    sim_track->getVertex(vtx_x, vtx_y, vtx_z);
+    Analysis::SimTrackManager::Instance()->SetField(vtx_x,Analysis::SimTrackManager::VTX_X);
+    Analysis::SimTrackManager::Instance()->SetField(vtx_y,Analysis::SimTrackManager::VTX_Y);
+    Analysis::SimTrackManager::Instance()->SetField(vtx_z,Analysis::SimTrackManager::VTX_Z);
   }
 }
