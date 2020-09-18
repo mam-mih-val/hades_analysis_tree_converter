@@ -11,7 +11,7 @@ class SimTrackManager : public DetectorManager  {
 public:
   enum sim_track_fields_int{
     GEANT_PID=0,
-    GEAT_TRACK_ID,
+    GEANT_TRACK_ID,
     GEANT_PARENT_ID,
     GEANT_MEDIUM_NUMBER,
     GEANT_PROCESS_ID,
