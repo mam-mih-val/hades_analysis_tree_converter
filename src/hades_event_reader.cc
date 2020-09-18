@@ -277,7 +277,7 @@ void HadesEventReader::ReadSimData(){
       continue;
     }
     if( sim_track->getID() == 3 ){ // selection of electron
-      int match_idx = Analysis::SimRecoMatch::Instance()->GetMatching()->GetMatchInverted();
+      int match_idx = Analysis::SimRecoMatch::Instance()->GetMatching()->GetMatchInverted(i);
       if( match_idx == AnalysisTree::UndefValueInt )
         continue;
     }
