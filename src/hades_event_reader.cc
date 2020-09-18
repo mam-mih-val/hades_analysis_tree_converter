@@ -273,6 +273,9 @@ void HadesEventReader::ReadSimData(){
       (float) reaction_plane, Analysis::SimEventManager::REACTION_PLANE);
   std::vector<int> selected_tracks;
   int n_rejected_electrons{0};
+  std::map<int, int> track_id_position; // matching between selected particle track id and its position in detector
+  int position{0};
+  // loop over all gen particles
   for( int i=0; i<geant_kine_->getEntries(); ++i ){
     sim_track = HCategoryManager::getObject(sim_track, geant_kine_, i);
     if( sim_track->getMechanism() != 0 && sim_track->getMechanism() != 5 ) {
@@ -319,6 +322,8 @@ void HadesEventReader::ReadSimData(){
     Analysis::SimTrackManager::Instance()->SetField(vtx_x,Analysis::SimTrackManager::VTX_X);
     Analysis::SimTrackManager::Instance()->SetField(vtx_y,Analysis::SimTrackManager::VTX_Y);
     Analysis::SimTrackManager::Instance()->SetField(vtx_z,Analysis::SimTrackManager::VTX_Z);
+    track_id_position.insert({sim_track->getTrack(), position});
+    position++;
   }
 
   Analysis::SimEventManager::Instance()->SetField(
@@ -339,15 +344,6 @@ void HadesEventReader::ReadSimData(){
     if (candidate->getMomentum() == candidate->getMomentumOrg())
       continue; // skip tracks with too high pt ???
     int geant_track_id = candidate->getGeantTrack();
-    bool is_matched=false;
-    int k=0;
-    while( !is_matched && k < geant_kine_->getEntries() ) {
-      sim_track = HCategoryManager::getObject(sim_track, geant_kine_, k);
-      if( sim_track->getTrack() == geant_track_id ) {
-        Analysis::SimRecoMatch::Instance()->Match(i, k);
-        is_matched=true;
-      }
-      k++;
-    }
+    Analysis::SimRecoMatch::Instance()->Match(i, track_id_position.at( geant_track_id ) );
   }
 }
