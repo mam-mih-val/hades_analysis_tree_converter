@@ -98,7 +98,6 @@ private:
   HCategory* event_info_category_{nullptr};
   HCategory* wall_category_{nullptr};
   HCategory* geant_kine_{nullptr};
-
   HParticleEvtInfo* event_info_{nullptr};
   HEventHeader* event_header_{nullptr};
 };

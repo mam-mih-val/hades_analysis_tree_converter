@@ -28,6 +28,9 @@ public:
   void Match( int track_idx, int hit_idx ){
     matching_->AddMatch(track_idx, hit_idx);
   }
+  AnalysisTree::Matching* GetMatching(){
+    retrun matching_;
+  }
 private:
   static SimRecoMatch* instance_;
   SimRecoMatch() = default;

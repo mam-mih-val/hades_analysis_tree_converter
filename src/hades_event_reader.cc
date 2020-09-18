@@ -276,6 +276,11 @@ void HadesEventReader::ReadSimData(){
     if( !is_parent_in_list && !sim_track->isPrimary() ){
       continue;
     }
+    if( sim_track->getID() == 3 ){ // selection of electron
+      int match_idx = Analysis::SimRecoMatch::Instance()->GetMatching()->GetMatchInverted();
+      if( match_idx == AnalysisTree::UndefValueInt )
+        continue;
+    }
     selected_tracks.push_back( sim_track->getTrack() );
     float pt = sim_track->getTransverseMomentum() / 1000.; // MeV->GeV
     float theta = sim_track->getThetaDeg()*TMath::DegToRad();
