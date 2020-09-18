@@ -21,8 +21,8 @@ public:
   };
   enum sim_track_fields_float{
     VTX_X=0,
-    VTX_Y=0,
-    VTX_Z=0,
+    VTX_Y,
+    VTX_Z,
   };
   static SimTrackManager * Instance(){
     if(!instance_)
