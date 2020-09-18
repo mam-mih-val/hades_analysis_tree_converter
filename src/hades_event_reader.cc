@@ -277,7 +277,6 @@ void HadesEventReader::ReadSimData(){
       continue;
     }
     selected_tracks.push_back( sim_track->getTrack() );
-    std::cout << sim_track->getMechanism() << std::endl;
     float pt = sim_track->getTransverseMomentum() / 1000.; // MeV->GeV
     float theta = sim_track->getThetaDeg()*TMath::DegToRad();
     float phi = sim_track->getPhiDeg()*TMath::DegToRad();
