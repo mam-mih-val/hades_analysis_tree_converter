@@ -245,8 +245,10 @@ void HadesEventReader::ReadParticleCandidates(){
 
 void HadesEventReader::ReadSimData(){
   HGeantHeader* header = loop_.getGeantHeader();
+  float beam_energy = header->getBeamEnergy() / 1.23f;
   float impact_parameter = header->getImpactParameter();
   float reaction_plane = header->getEventPlane()*TMath::DegToRad();
+  int geant_event_id = header->getEventId();
 //  float reaction_plane = header->getEventPlane();
   HGeantKine* sim_track{nullptr};
   bool is_set_vertex{false};
@@ -262,10 +264,16 @@ void HadesEventReader::ReadSimData(){
   }
   Analysis::SimEventManager::Instance()->SetVertex(vx, vy, vz);
   Analysis::SimEventManager::Instance()->SetField(
+      geant_event_id, Analysis::SimEventManager::GEANT_EVENT_ID);
+  Analysis::SimEventManager::Instance()->SetField(
+      beam_energy, Analysis::SimEventManager::BEAM_ENERGY);
+
+  Analysis::SimEventManager::Instance()->SetField(
       impact_parameter, Analysis::SimEventManager::IMPACT_PARAMETER);
   Analysis::SimEventManager::Instance()->SetField(
       (float) reaction_plane, Analysis::SimEventManager::REACTION_PLANE);
   std::vector<int> selected_tracks;
+  int n_rejected_electrons{0};
   for( int i=0; i<geant_kine_->getEntries(); ++i ){
     sim_track = HCategoryManager::getObject(sim_track, geant_kine_, i);
     if( sim_track->getMechanism() != 0 && sim_track->getMechanism() != 5 ) {
@@ -278,8 +286,10 @@ void HadesEventReader::ReadSimData(){
     }
     if( sim_track->getID() == 3 ){ // selection of electron
       int match_idx = Analysis::SimRecoMatch::Instance()->GetMatching()->GetMatchInverted(i);
-      if( match_idx == AnalysisTree::UndefValueInt )
+      if( match_idx == AnalysisTree::UndefValueInt ){
+        n_rejected_electrons++;
         continue;
+      }
     }
     selected_tracks.push_back( sim_track->getTrack() );
     float pt = sim_track->getTransverseMomentum() / 1000.; // MeV->GeV
@@ -311,4 +321,7 @@ void HadesEventReader::ReadSimData(){
     Analysis::SimTrackManager::Instance()->SetField(vtx_y,Analysis::SimTrackManager::VTX_Y);
     Analysis::SimTrackManager::Instance()->SetField(vtx_z,Analysis::SimTrackManager::VTX_Z);
   }
+
+  Analysis::SimEventManager::Instance()->SetField(
+      n_rejected_electrons, Analysis::SimEventManager::REJECTED_ELECTRONS);
 }

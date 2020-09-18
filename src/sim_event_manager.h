@@ -10,8 +10,13 @@ namespace Analysis {
 class SimEventManager : public DetectorManager{
 public:
   enum sim_header_fields_float{
+    BEAM_ENERGY,
     IMPACT_PARAMETER,
     REACTION_PLANE
+  };
+  enum sim_header_fields_int{
+    GEANT_EVENT_ID,
+    REJECTED_ELECTRONS,
   };
   static SimEventManager* Instance(){
     if( !instance_ )
@@ -23,11 +28,17 @@ public:
     AnalysisTree::BranchConfig sim_header_branch(
         "sim_header", AnalysisTree::DetType::kEventHeader);
 
+    sim_header_branch.AddField<float>("beam_energy");
     sim_header_branch.AddField<float>("impact_parameter");
     sim_header_branch.AddField<float>("reaction_plane");
+    sim_header_branch.AddField<int>("geant_event_id");
+    sim_header_branch.AddField<int>("rejected_electrons");
 
+    fields_float_.insert( std::make_pair( BEAM_ENERGY, sim_header_branch.GetFieldId( "beam_energy" )  ) );
     fields_float_.insert( std::make_pair( IMPACT_PARAMETER, sim_header_branch.GetFieldId( "impact_parameter" )  ) );
     fields_float_.insert( std::make_pair( REACTION_PLANE, sim_header_branch.GetFieldId( "reaction_plane" )  ) );
+    fields_int_.insert( std::make_pair( GEANT_EVENT_ID, sim_header_branch.GetFieldId( "geant_event_id" )  ) );
+    fields_int_.insert( std::make_pair( REJECTED_ELECTRONS, sim_header_branch.GetFieldId( "rejected_electrons" )  ) );
 
     config.AddBranchConfig(sim_header_branch);
     event_header_ = new AnalysisTree::EventHeader(config.GetLastId());
