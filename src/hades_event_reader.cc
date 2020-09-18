@@ -333,6 +333,7 @@ void HadesEventReader::ReadSimData(){
   HParticleCandSim* candidate{nullptr};
   int n_candidates = (int) particle_category_->getEntries();
   Analysis::SimRecoMatch::Instance()->ClearMatching();
+  int reco_position=0;
   for( int i=0; i<n_candidates; ++i ) {
     candidate = HCategoryManager::getObject(candidate, particle_category_, i);
     if (!candidate)
@@ -346,7 +347,8 @@ void HadesEventReader::ReadSimData(){
     int geant_track_id = candidate->getGeantTrack();
     try {
       Analysis::SimRecoMatch::Instance()->Match(
-          i, track_id_position.at(geant_track_id));
+          reco_position, track_id_position.at(geant_track_id));
     }catch(std::out_of_range&){}
+    reco_position++;
   }
 }
