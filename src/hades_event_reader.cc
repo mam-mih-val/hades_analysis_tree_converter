@@ -341,7 +341,7 @@ void HadesEventReader::ReadSimData(){
     int geant_track_id = candidate->getGeantTrack();
     bool is_matched=false;
     int k=0;
-    while( !is_matched || k < geant_kine_->getEntries() ) {
+    while( !is_matched && k < geant_kine_->getEntries() ) {
       sim_track = HCategoryManager::getObject(sim_track, geant_kine_, k);
       if( sim_track->getTrack() == geant_track_id ) {
         Analysis::SimRecoMatch::Instance()->Match(i, k);
