@@ -344,6 +344,9 @@ void HadesEventReader::ReadSimData(){
     if (candidate->getMomentum() == candidate->getMomentumOrg())
       continue; // skip tracks with too high pt ???
     int geant_track_id = candidate->getGeantTrack();
-    Analysis::SimRecoMatch::Instance()->Match(i, track_id_position.at( geant_track_id ) );
+    try {
+      Analysis::SimRecoMatch::Instance()->Match(
+          i, track_id_position.at(geant_track_id));
+    }catch(std::out_of_range&){}
   }
 }
