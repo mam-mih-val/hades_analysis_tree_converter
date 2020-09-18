@@ -29,7 +29,7 @@ public:
     matching_->AddMatch(track_idx, hit_idx);
   }
   AnalysisTree::Matching* GetMatching(){
-    retrun matching_;
+    return matching_;
   }
 private:
   static SimRecoMatch* instance_;
