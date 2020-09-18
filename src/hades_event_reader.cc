@@ -121,7 +121,6 @@ void HadesEventReader::ReadWallHits(){
 
 void HadesEventReader::ReadParticleCandidates(){
   HParticleCandSim* candidate{nullptr};
-  HGeantKine* kine{nullptr};
   int n_candidates = (int) particle_category_->getEntries();
   HVertex vertex_reco = event_header_->getVertexReco();
   for( int i=0; i<n_candidates; ++i ){
@@ -324,4 +323,31 @@ void HadesEventReader::ReadSimData(){
 
   Analysis::SimEventManager::Instance()->SetField(
       n_rejected_electrons, Analysis::SimEventManager::REJECTED_ELECTRONS);
+
+  // matching reco and gen tracks again due to skipped gen tracks
+  HParticleCandSim* candidate{nullptr};
+  int n_candidates = (int) particle_category_->getEntries();
+  Analysis::SimRecoMatch::Instance()->ClearMatching();
+  for( int i=0; i<n_candidates; ++i ) {
+    candidate = HCategoryManager::getObject(candidate, particle_category_, i);
+    if (!candidate)
+      continue;
+    if (!loop_.goodSector(candidate->getSector()))
+      continue; // skip inactive sectors
+    if (!candidate->isFlagBit(kIsUsed))
+      continue;
+    if (candidate->getMomentum() == candidate->getMomentumOrg())
+      continue; // skip tracks with too high pt ???
+    int geant_track_id = candidate->getGeantTrack();
+    bool is_matched=false;
+    int k=0;
+    while( !is_matched || k < geant_kine_->getEntries() ) {
+      sim_track = HCategoryManager::getObject(sim_track, geant_kine_, k);
+      if( sim_track->getTrack() == geant_track_id ) {
+        Analysis::SimRecoMatch::Instance()->Match(i, k);
+        is_matched=true;
+      }
+      k++;
+    }
+  }
 }
