@@ -44,7 +44,7 @@ public:
     sim_tracks_branch.AddField<float>("vtx_z");
 
     fields_int_.insert( std::make_pair(GEANT_PID, sim_tracks_branch.GetFieldId("geant_pid")) );
-    fields_int_.insert( std::make_pair(GEAT_TRACK_ID, sim_tracks_branch.GetFieldId("geant_track_id")) );
+    fields_int_.insert( std::make_pair(GEANT_TRACK_ID, sim_tracks_branch.GetFieldId("geant_track_id")) );
     fields_int_.insert( std::make_pair(GEANT_PARENT_ID, sim_tracks_branch.GetFieldId("geant_parent_id")) );
     fields_int_.insert( std::make_pair(GEANT_MEDIUM_NUMBER, sim_tracks_branch.GetFieldId("geant_medium_number")) );
     fields_int_.insert( std::make_pair(GEANT_PROCESS_ID, sim_tracks_branch.GetFieldId("geant_process_id")) );
