@@ -276,22 +276,25 @@ void HadesEventReader::ReadSimData(){
   std::map<int, int> track_id_position; // matching between selected particle track id and its position in detector
   int position{0};
   // loop over all gen particles
+  bool is_matched = false;
+  int match_idx = Analysis::SimRecoMatch::Instance()->GetMatching()->GetMatchInverted(i);
+  if( match_idx != AnalysisTree::UndefValueInt ){
+    is_matched = true;
+  }
   for( int i=0; i<geant_kine_->getEntries(); ++i ){
     sim_track = HCategoryManager::getObject(sim_track, geant_kine_, i);
     if( sim_track->getMechanism() != 0 && sim_track->getMechanism() != 5 ) {
-      int match_idx = Analysis::SimRecoMatch::Instance()->GetMatching()->GetMatchInverted(i);
-      if( match_idx == AnalysisTree::UndefValueInt ){
+      if( !is_matched )
         continue;
-      }
     }
     int parent_id = sim_track->getParentTrack();
     bool is_parent_in_list = std::count( selected_tracks.begin(), selected_tracks.end(), parent_id ) > 0;
     if( !is_parent_in_list && !sim_track->isPrimary() ){
-      continue;
+      if( !is_matched )
+        continue;
     }
     if( sim_track->getID() == 3 ){ // selection of electron
-      int match_idx = Analysis::SimRecoMatch::Instance()->GetMatching()->GetMatchInverted(i);
-      if( match_idx == AnalysisTree::UndefValueInt ){
+      if( !is_matched ){
         n_rejected_electrons++;
         continue;
       }
