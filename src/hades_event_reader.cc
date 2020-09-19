@@ -276,12 +276,13 @@ void HadesEventReader::ReadSimData(){
   std::map<int, int> track_id_position; // matching between selected particle track id and its position in detector
   int position{0};
   // loop over all gen particles
-  bool is_matched = false;
-  int match_idx = Analysis::SimRecoMatch::Instance()->GetMatching()->GetMatchInverted(i);
-  if( match_idx != AnalysisTree::UndefValueInt ){
-    is_matched = true;
-  }
+
   for( int i=0; i<geant_kine_->getEntries(); ++i ){
+    bool is_matched = false;
+    int match_idx = Analysis::SimRecoMatch::Instance()->GetMatching()->GetMatchInverted(i);
+    if( match_idx != AnalysisTree::UndefValueInt ){
+      is_matched = true;
+    }
     sim_track = HCategoryManager::getObject(sim_track, geant_kine_, i);
     if( sim_track->getMechanism() != 0 && sim_track->getMechanism() != 5 ) {
       if( !is_matched )
