@@ -279,7 +279,10 @@ void HadesEventReader::ReadSimData(){
   for( int i=0; i<geant_kine_->getEntries(); ++i ){
     sim_track = HCategoryManager::getObject(sim_track, geant_kine_, i);
     if( sim_track->getMechanism() != 0 && sim_track->getMechanism() != 5 ) {
-      continue;
+      int match_idx = Analysis::SimRecoMatch::Instance()->GetMatching()->GetMatchInverted(i);
+      if( match_idx == AnalysisTree::UndefValueInt ){
+        continue;
+      }
     }
     int parent_id = sim_track->getParentTrack();
     bool is_parent_in_list = std::count( selected_tracks.begin(), selected_tracks.end(), parent_id ) > 0;
@@ -348,7 +351,7 @@ void HadesEventReader::ReadSimData(){
     try {
       Analysis::SimRecoMatch::Instance()->Match(
           reco_position, track_id_position.at(geant_track_id));
-    }catch(std::out_of_range&){}
+    }catch(std::out_of_range&){ std::cout << "reco track not matched with sim track" << std::endl; }
     reco_position++;
   }
 }
