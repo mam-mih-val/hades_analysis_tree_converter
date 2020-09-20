@@ -5,7 +5,6 @@
 #include "hades_event_reader.h"
 #include "HADES_constants.h"
 #include "mhwalldivider.h"
-#include <AnalysisTree/Constants.h>
 #include <hwallhitsim.h>
 
 void HadesEventReader::ReadEvent(){
