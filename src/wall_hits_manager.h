@@ -6,7 +6,6 @@
 #define HTREE_TO_AT_SRC_WALL_HITS_MANAGER_H_
 
 #include "detector_manager.h"
-#include <AnalysisTree/Detector.h>
 
 namespace Analysis {
 class WallHitsManager : public DetectorManager {
