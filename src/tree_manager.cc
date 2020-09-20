@@ -46,21 +46,4 @@ void TreeManager::RecordDataHeader(){
   data_header_.SetBeamMomentum(PZ);
   data_header_.Write("DataHeader");
 }
-
-EventManager *TreeManager::GetEventManager() const { return event_manager_; }
-SimEventManager *TreeManager::GetSimEventManager() const {
-  return sim_event_manager_;
-}
-MdcTracksManager *TreeManager::GetMdcTracksManager() const { return track_manager_; }
-SimTracksManager *TreeManager::GetSimTracksManager() const {
-  return sim_track_manager_;
-}
-MetaHitsManager *TreeManager::GetMetaHitsManager() const { return hit_manager_; }
-WallHitsManager *TreeManager::GetWallHitsManager() const { return wall_manager_; }
-MdcMetaMatching *TreeManager::GetMdcMetaMatching() const {
-  return track_tof_matching_;
-}
-RecoSimMatching *TreeManager::GetRecoSimMatching() const {
-  return sim_reco_matching_;
-}
 }

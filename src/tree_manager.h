@@ -59,14 +59,14 @@ public:
     track_manager_->ReserveTracks(n_tracks);
     hit_manager_->ReserveHits(n_tracks);
   }
-  EventManager *GetEventManager() const;
-  SimEventManager *GetSimEventManager() const;
-  MdcTracksManager *GetMdcTracksManager() const;
-  SimTracksManager *GetSimTracksManager() const;
-  MetaHitsManager *GetMetaHitsManager() const;
-  WallHitsManager *GetWallHitsManager() const;
-  MdcMetaMatching *GetMdcMetaMatching() const;
-  RecoSimMatching *GetRecoSimMatching() const;
+  EventManager *GetEventManager() const { return event_manager_; }
+  SimEventManager *GetSimEventManager() const { return sim_event_manager_; }
+  MdcTracksManager *GetMdcTracksManager() const { return track_manager_; }
+  SimTracksManager *GetSimTracksManager() const { return sim_track_manager_; }
+  MetaHitsManager *GetMetaHitsManager() const { return hit_manager_; }
+  WallHitsManager *GetWallHitsManager() const { return wall_manager_; }
+  MdcMetaMatching *GetMdcMetaMatching() const  { return track_tof_matching_; }
+  RecoSimMatching *GetRecoSimMatching() const { return sim_reco_matching_; }
   bool WriteEvent(){
     try {
       tree_->Fill();
