@@ -2,18 +2,18 @@
 // Created by mikhail on 5/27/20.
 //
 
-#ifndef HTREE_TO_AT_SRC_TRACK_TOF_MATCH_H_
-#define HTREE_TO_AT_SRC_TRACK_TOF_MATCH_H_
+#ifndef HTREE_TO_AT_SRC_MDC_META_MATCHING_H_
+#define HTREE_TO_AT_SRC_MDC_META_MATCHING_H_
 
 #include "detector_manager.h"
 #include <AnalysisTree/Matching.hpp>
 
 namespace Analysis {
-class TrackTofMatch : public DetectorManager {
+class MdcMetaMatching : public DetectorManager {
 public:
-  static TrackTofMatch* Instance(){
+  static MdcMetaMatching * Instance(){
     if(!instance_)
-      instance_ = new TrackTofMatch;
+      instance_ = new MdcMetaMatching;
     return instance_;
   }
   void MakeBranch( AnalysisTree::Configuration &config, TTree* tree ) override {
@@ -30,9 +30,9 @@ public:
   }
 
 private:
-  static TrackTofMatch* instance_;
-  TrackTofMatch() = default;
-  ~TrackTofMatch() = default;
+  static MdcMetaMatching * instance_;
+  MdcMetaMatching() = default;
+  ~MdcMetaMatching() = default;
   void SetField(const int&, int) override {};
   void SetField(const float&, int) override {};
   void SetField(const bool&, int) override {};
@@ -40,4 +40,4 @@ private:
   AnalysisTree::Matching* matching_{nullptr};
 };
 } // namespace Analysis
-#endif // HTREE_TO_AT_SRC_TRACK_TOF_MATCH_H_
+#endif // HTREE_TO_AT_SRC_MDC_META_MATCHING_H_

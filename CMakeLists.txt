@@ -64,14 +64,14 @@ set (HEADERS
 		src/hades_event_reader.h
 		src/detector_manager.h
 		src/event_manager.h
-		src/track_manager.h
-		src/hit_manager.h
+		src/mdc_tracks_manager.h
+		src/meta_hits_manager.h
 		src/wall_hits_manager.h
 		src/tree_manager.h
-		src/track_tof_match.h
-		src/sim_track_manager.h
+		src/mdc_meta_matching.h
+        src/sim_tracks_manager.h
 		src/sim_event_manager.h
-		src/sim_reco_match.h
+		src/reco_sim_matching.h
 		src/mhwalldivider.h
 		)
 
@@ -80,26 +80,17 @@ set (SOURCES
 		src/detector_manager.cc
 		src/event_manager.cc
 		src/tree_manager.cc
-		src/track_manager.cc
-		src/hit_manager.cc
+		src/mdc_tracks_manager.cc
+		src/meta_hits_manager.cc
 		src/wall_hits_manager.cc
 		src/tree_manager.h
-		src/track_tof_match.cc
-		src/sim_track_manager.cc
+		src/mdc_meta_matching.cc
+        src/sim_tracks_manager.cc
 		src/sim_event_manager.cc
-		src/sim_reco_match.cc
+		src/reco_sim_matching.cc
 		src/mhwalldivider.cc
 		src/main.cc
 		)
-
-#set (DICT_FILE_NAME G__EvtCharaBK)
-#ROOT_GENERATE_DICTIONARY(${DICT_FILE_NAME}
-#		evtchara07/hparticleevtcharaBK.h
-#		LINKDEF evtchara07/EvtCharaLinkDef.h
-#		OPTIONS -s libEvtCharaBK -I${HADES_INCLUDE_DIR} -I${CMAKE_CURRENT_SOURCE_DIR}
-#		)
-#add_library(EvtCharaBK SHARED evtchara07/hparticleevtcharaBK.cc ${DICT_FILE_NAME}.cxx)
-#target_link_libraries(EvtCharaBK ${ROOT_LIBRARIES} ${HADES_LIBS})
 
 add_executable(HT2AT ${HEADERS} ${SOURCES})
 target_link_libraries(HT2AT ${ROOT_LIBRARIES} ROOT::EG ${HADES_LIBS}  AnalysisTreeBase)

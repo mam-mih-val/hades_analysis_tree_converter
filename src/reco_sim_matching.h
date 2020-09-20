@@ -2,17 +2,17 @@
 // Created by mikhail on 6/8/20.
 //
 
-#ifndef HTREE_TO_AT_SRC_SIM_RECO_MATCH_H_
-#define HTREE_TO_AT_SRC_SIM_RECO_MATCH_H_
+#ifndef HTREE_TO_AT_SRC_RECO_SIM_MATCHING_H_
+#define HTREE_TO_AT_SRC_RECO_SIM_MATCHING_H_
 #include "detector_manager.h"
 #include <AnalysisTree/Matching.hpp>
 
 namespace Analysis {
-class SimRecoMatch : public DetectorManager {
+class RecoSimMatching : public DetectorManager {
 public:
-  static SimRecoMatch* Instance(){
+  static RecoSimMatching * Instance(){
     if(!instance_)
-      instance_ = new SimRecoMatch;
+      instance_ = new RecoSimMatching;
     return instance_;
   }
   void MakeBranch( AnalysisTree::Configuration &config, TTree* tree ) override {
@@ -32,9 +32,9 @@ public:
     return matching_;
   }
 private:
-  static SimRecoMatch* instance_;
-  SimRecoMatch() = default;
-  ~SimRecoMatch() = default;
+  static RecoSimMatching * instance_;
+  RecoSimMatching() = default;
+  ~RecoSimMatching() = default;
   void SetField(const int&, int) override {};
   void SetField(const float&, int) override {};
   void SetField(const bool&, int) override {};
@@ -42,4 +42,4 @@ private:
   AnalysisTree::Matching* matching_{nullptr};
 };
 } // namespace Analysis
-#endif // HTREE_TO_AT_SRC_SIM_RECO_MATCH_H_
+#endif // HTREE_TO_AT_SRC_RECO_SIM_MATCHING_H_

@@ -23,28 +23,7 @@ public:
       instance_=new SimEventManager;
     return instance_;
   }
-  void MakeBranch(AnalysisTree::Configuration &config, TTree* tree) override {
-
-    AnalysisTree::BranchConfig sim_header_branch(
-        "sim_header", AnalysisTree::DetType::kEventHeader);
-
-    sim_header_branch.AddField<float>("beam_energy");
-    sim_header_branch.AddField<float>("impact_parameter");
-    sim_header_branch.AddField<float>("reaction_plane");
-    sim_header_branch.AddField<int>("geant_event_id");
-    sim_header_branch.AddField<int>("rejected_electrons");
-
-    fields_float_.insert( std::make_pair( BEAM_ENERGY, sim_header_branch.GetFieldId( "beam_energy" )  ) );
-    fields_float_.insert( std::make_pair( IMPACT_PARAMETER, sim_header_branch.GetFieldId( "impact_parameter" )  ) );
-    fields_float_.insert( std::make_pair( REACTION_PLANE, sim_header_branch.GetFieldId( "reaction_plane" )  ) );
-    fields_int_.insert( std::make_pair( GEANT_EVENT_ID, sim_header_branch.GetFieldId( "geant_event_id" )  ) );
-    fields_int_.insert( std::make_pair( REJECTED_ELECTRONS, sim_header_branch.GetFieldId( "rejected_electrons" )  ) );
-
-    config.AddBranchConfig(sim_header_branch);
-    event_header_ = new AnalysisTree::EventHeader(config.GetLastId());
-    event_header_->Init(sim_header_branch);
-    tree->Branch("sim_header", "AnalysisTree::EventHeader", &event_header_);
-  }
+  void MakeBranch(AnalysisTree::Configuration &config, TTree* tree) override;
   AnalysisTree::EventHeader* GetEventHeader(){ return event_header_; }
   void SetVertex(float x, float y, float z){
     event_header_->SetVertexPosition3({x, y, z});

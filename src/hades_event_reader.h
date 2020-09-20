@@ -98,8 +98,8 @@ private:
   HCategory* event_info_category_{nullptr};
   HCategory* wall_category_{nullptr};
   HCategory* geant_kine_{nullptr};
-  HParticleEvtInfo* event_info_{nullptr};
-  HEventHeader* event_header_{nullptr};
+  HParticleEvtInfo*hades_event_info_{nullptr};
+  HEventHeader*hades_event_header_{nullptr};
 };
 
 #endif // HTREE_TO_AT_SRC_HADES_EVENT_READER_H_

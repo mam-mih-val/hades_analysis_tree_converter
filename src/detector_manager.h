@@ -5,11 +5,12 @@
 #ifndef HTREE_TO_AT_SRC_DETECTOR_MANAGER_H_
 #define HTREE_TO_AT_SRC_DETECTOR_MANAGER_H_
 
+#include "AnalysisTree/Configuration.hpp"
+#include "AnalysisTree/DataHeader.hpp"
 #include "AnalysisTree/Detector.hpp"
 #include "AnalysisTree/EventHeader.hpp"
 #include "AnalysisTree/Track.hpp"
-#include "AnalysisTree/DataHeader.hpp"
-#include "AnalysisTree/Configuration.hpp"
+#include <AnalysisTree/Configuration.h>
 #include <TTree.h>
 
 namespace Analysis {

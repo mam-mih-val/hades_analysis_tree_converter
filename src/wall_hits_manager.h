@@ -6,6 +6,7 @@
 #define HTREE_TO_AT_SRC_WALL_HITS_MANAGER_H_
 
 #include "detector_manager.h"
+#include <AnalysisTree/Detector.h>
 
 namespace Analysis {
 class WallHitsManager : public DetectorManager {
@@ -30,32 +31,8 @@ public:
       instance_ = new WallHitsManager;
     return instance_;
   }
-  void MakeBranch(AnalysisTree::Configuration &config, TTree* tree) override {
-    AnalysisTree::BranchConfig modules_branch("forward_wall_hits", AnalysisTree::DetType::kHit);
-    modules_branch.AddField<int>("ring");
-    modules_branch.AddField<int>("module_id");
-    modules_branch.AddField<int>("rnd_sub");
-    modules_branch.AddField<float>("beta");
-    modules_branch.AddField<float>("time");
-    modules_branch.AddField<float>("distance");
-    modules_branch.AddField<float>("parametrized_charge");
-    modules_branch.AddField<int>("discrete_charge");
-    modules_branch.AddField<bool>("has_passed_cuts");
+  void MakeBranch(AnalysisTree::Configuration &config, TTree* tree) override;
 
-    fields_int_.insert( std::make_pair( RING, modules_branch.GetFieldId("ring")) );
-    fields_int_.insert( std::make_pair( MODULE_ID, modules_branch.GetFieldId("module_id")) );
-    fields_int_.insert( std::make_pair( RND_SUB, modules_branch.GetFieldId("rnd_sub")) );
-    fields_float_.insert( std::make_pair( BETA, modules_branch.GetFieldId("beta")) );
-    fields_float_.insert( std::make_pair( TIME, modules_branch.GetFieldId("time")) );
-    fields_float_.insert( std::make_pair( DISTANCE, modules_branch.GetFieldId("distance")) );
-    fields_float_.insert( std::make_pair( P_CHARGE, modules_branch.GetFieldId("parametrized_charge")) );
-    fields_int_.insert( std::make_pair( D_CHARGE, modules_branch.GetFieldId("discrete_charge")) );
-    fields_bool_.insert( std::make_pair( PASSED_CUTS, modules_branch.GetFieldId("has_passed_cuts")) );
-
-    config.AddBranchConfig(modules_branch);
-    wall_hits_ = new AnalysisTree::HitDetector(config.GetLastId());
-    tree->Branch("forward_wall_hits", "AnalysisTree::HitDetector", &wall_hits_);
-  }
   void NewModule(AnalysisTree::Configuration &config){
     hit_ = wall_hits_->AddChannel();
     hit_->Init(config.GetBranchConfig(wall_hits_->GetId() ) );
