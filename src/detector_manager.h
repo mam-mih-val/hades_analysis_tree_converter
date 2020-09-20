@@ -10,7 +10,6 @@
 #include "AnalysisTree/Detector.hpp"
 #include "AnalysisTree/EventHeader.hpp"
 #include "AnalysisTree/Track.hpp"
-#include <AnalysisTree/Configuration.h>
 #include <TTree.h>
 
 namespace Analysis {
