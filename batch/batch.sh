@@ -17,7 +17,7 @@ mkdir -p $output_dir
 mkdir -p $log_dir
 mkdir -p $lists_dir
 
-head -1000 "$file_list" > "$lists_dir/0.list"
+head -1000 $file_list > $lists_dir/0.list
 csplit -s -f "$lists_dir/" -b %1d.list  -k "$lists_dir/0.list" 10
 rm $lists_dir/0.list
 
