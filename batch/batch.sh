@@ -18,7 +18,7 @@ mkdir -p $log_dir
 mkdir -p $lists_dir
 
 head -1000 $file_list > $lists_dir/0.list
-csplit -s -f "$lists_dir/" -b %1d.list "$lists_dir/0.list" -k 10 {*}
+csplit -s -f "$lists_dir/" -b %1d.list $lists_dir/0.list -k 10 {*}
 rm $lists_dir/0.list
 
 n_runs=$(ls $lists_dir/*.list | wc -l)
@@ -32,4 +32,4 @@ echo lists_dir=$lists_dir
 echo n_runs=$n_runs
 echo job_range=$job_range
 
-sbatch -J DT_Reader -p $partition -t $time -a $job_range -e ${log_dir}/%A_%a.e -o ${log_dir}/%A_%a.o --export=output_dir=$output_dir,file_list=$file_list,hadesroot=$hadesroot,lists_dir=$lists_dir,build_dir=$build_dir batch_run.sh
+#sbatch -J DT_Reader -p $partition -t $time -a $job_range -e ${log_dir}/%A_%a.e -o ${log_dir}/%A_%a.o --export=output_dir=$output_dir,file_list=$file_list,hadesroot=$hadesroot,lists_dir=$lists_dir,build_dir=$build_dir batch_run.sh
