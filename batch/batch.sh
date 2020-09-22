@@ -18,7 +18,7 @@ mkdir -p $log_dir
 mkdir -p $lists_dir
 
 head 1000 > $lists_dir/0.list
-split -l 10 "$lists_dir/0.list" "$lists_dir/" {1000}
+split -l 10 "$lists_dir/0.list" "$lists_dir/"
 rm $lists_dir/0.list
 
 n_runs=$(ls $lists_dir/*.list | wc -l)
