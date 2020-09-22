@@ -36,13 +36,13 @@ void TreeManager::CreateTree(const std::string& file_name, bool is_mc){
 }
 
 void TreeManager::RecordDataHeader(){
-  const float T = 1.23;  // AGeV
+  const float T = 1.58;  // AGeV
   const float M = 0.938; // GeV
   const float GAMMA = (T + M) / M;
   const float BETA = sqrt(1 - (M * M) / (M + T) / (M + T));
   const float PZ = M * BETA * GAMMA;
 
-  data_header_.SetSystem("Au+Au");
+  data_header_.SetSystem("Ag+Ag");
   data_header_.SetBeamMomentum(PZ);
   data_header_.Write("DataHeader");
 }
