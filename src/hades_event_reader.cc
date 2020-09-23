@@ -56,7 +56,7 @@ void HadesEventReader::ReadEvent(){
   for( auto estimator : centrality_estimators ) {
     analysis_event_manager->SetField((int)evt_chara_bk_.getCentralityEstimator(estimator), estimator);
     float percentile = evt_chara_bk_.getCentralityClass5(estimator)*5 - 2.5;
-    analysis_event_manager->SetField((float)evt_chara_bk_.getCentralityPercentile(estimator), estimator);
+    analysis_event_manager->SetField(percentile, estimator);
   }
   ReadWallHits();
   ReadParticleCandidates();
