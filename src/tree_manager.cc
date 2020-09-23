@@ -7,7 +7,9 @@
 namespace Analysis {
 TreeManager *TreeManager::instance_ = nullptr;
 
-void TreeManager::CreateTree(const std::string& file_name, bool is_mc){
+void TreeManager::CreateTree(const std::string& file_name, const std::string& system, float energy, bool is_mc=false){
+  colliding_system_ = system;
+  lab_energy_ = energy;
   file_=TFile::Open( file_name.data(), "recreate" );
   event_manager_ = EventManager::Instance();
   track_manager_ = MdcTracksManager::Instance();
@@ -36,13 +38,13 @@ void TreeManager::CreateTree(const std::string& file_name, bool is_mc){
 }
 
 void TreeManager::RecordDataHeader(){
-  const float T = 1.23;  // AGeV
+  const float T = lab_energy_;  // AGeV
   const float M = 0.938; // GeV
   const float GAMMA = (T + M) / M;
   const float BETA = sqrt(1 - (M * M) / (M + T) / (M + T));
   const float PZ = M * BETA * GAMMA;
 
-  data_header_.SetSystem("Ag+Ag");
+  data_header_.SetSystem(colliding_system_);
   data_header_.SetBeamMomentum(PZ);
   data_header_.Write("DataHeader");
 }

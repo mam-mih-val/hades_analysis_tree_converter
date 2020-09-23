@@ -79,8 +79,11 @@ public:
       read_bytes = loop_.nextEvent( position_ );
     position_++;
   }
-  bool Eof() const{
-    return (position_ >= n_events_ || read_bytes <= 0);
+  bool Eof(long long events=0) const{
+    if( events > 0 )
+      return (position_ >= n_events_ || read_bytes <= 0 || position_ > events );
+    if( events == 0 )
+      return (position_ >= n_events_ || read_bytes <= 0 );
   }
   void ReadEvent();
   void ReadParticleCandidates();

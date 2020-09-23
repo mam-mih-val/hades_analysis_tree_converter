@@ -6,6 +6,7 @@ list(APPEND CMAKE_PREFIX_PATH $ENV{ROOTSYS})
 list(APPEND CMAKE_PREFIX_PATH $ENV{AnalysisTree_HOME})
 list(APPEND CMAKE_PREFIX_PATH ${AnalysisTree_HOME})
 
+find_package(Boost REQUIRED COMPONENTS program_options regex)
 find_package(ROOT REQUIRED COMPONENTS RIO Tree)
 find_package( AnalysisTree REQUIRED)
 
@@ -17,9 +18,9 @@ include_directories(
 		$ENV{HADDIR}/include
 		${CMAKE_SOURCE_DIR}
 		${CMAKE_SOURCE_DIR}/src
-#		${CMAKE_SOURCE_DIR}/evtchara07
 		${ROOT_INCLUDE_DIRS}
 		${AnalysisTree_INCLUDE_DIR}
+		${Boost_INCLUDE_DIRS}
 )
 
 link_directories(
@@ -93,4 +94,4 @@ set (SOURCES
 		)
 
 add_executable(HT2AT ${HEADERS} ${SOURCES})
-target_link_libraries(HT2AT ${ROOT_LIBRARIES} ROOT::EG ${HADES_LIBS}  AnalysisTreeBase)
+target_link_libraries(HT2AT ${Boost_LIBRARIES} ${ROOT_LIBRARIES} ROOT::EG ${HADES_LIBS}  AnalysisTreeBase)

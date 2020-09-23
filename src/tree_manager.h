@@ -25,7 +25,7 @@ public:
       instance_ = new TreeManager;
     return instance_;
   }
-  void CreateTree(const std::string& file_name, bool is_mc=false);
+  void CreateTree(const std::string& file_name, const std::string& system, float energy, bool is_mc=false);
   void NewTrack(){
     track_manager_->NewTrack( config_ );
     hit_manager_->NewHit(config_);
@@ -91,6 +91,8 @@ private:
   AnalysisTree::DataHeader data_header_;
   TFile* file_{nullptr};
   TTree* tree_{nullptr};
+  std::string colliding_system_;
+  float lab_energy_;
   EventManager* event_manager_{nullptr};
   SimEventManager* sim_event_manager_{nullptr};
   MdcTracksManager * track_manager_{nullptr};
