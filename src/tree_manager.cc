@@ -7,7 +7,7 @@
 namespace Analysis {
 TreeManager *TreeManager::instance_ = nullptr;
 
-void TreeManager::CreateTree(const std::string& file_name, const std::string& system, float energy, bool is_mc=false){
+void TreeManager::CreateTree(const std::string& file_name, const std::string& system, float energy, bool is_mc){
   colliding_system_ = system;
   lab_energy_ = energy;
   file_=TFile::Open( file_name.data(), "recreate" );
