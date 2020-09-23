@@ -71,7 +71,7 @@ public:
     n_events_=loop_.getEntries();
   }
   void InitEvtChara( const std::string& parameter_file ){
-//    evt_chara_bk_.setParameterFile(parameter_file.data());
+    evt_chara_bk_.setParameterFile(parameter_file.data());
     evt_chara_bk_.init();
   }
   void SwitchNextEvent(){
