@@ -36,7 +36,7 @@ void TreeManager::CreateTree(const std::string& file_name, bool is_mc){
 }
 
 void TreeManager::RecordDataHeader(){
-  const float T = 1.58;  // AGeV
+  const float T = 1.23;  // AGeV
   const float M = 0.938; // GeV
   const float GAMMA = (T + M) / M;
   const float BETA = sqrt(1 - (M * M) / (M + T) / (M + T));
