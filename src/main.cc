@@ -50,7 +50,7 @@ int main(int argv, char **argc) {
   HadesEventReader reader(is_mc);
   reader.Init( input_list );
   reader.InitEvtChara( event_chara_param_file );
-  Analysis::TreeManager::Instance()->CreateTree(output_file, system, energy is_mc);
+  Analysis::TreeManager::Instance()->CreateTree(output_file, system, energy, is_mc);
   int i=0;
   while( !reader.Eof(n_events) ) {
     reader.SwitchNextEvent();
