@@ -17,7 +17,7 @@ public:
   };
   static StartHitsManager *Instance() {
     if (!instance_)
-      instance_ = new MetaHitsManager;
+      instance_ = new StartHitsManager;
     return instance_;
   }
   void MakeBranch(AnalysisTree::Configuration &config, TTree *tree) override;
