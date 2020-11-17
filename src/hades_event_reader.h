@@ -29,6 +29,7 @@
 
 #include "event_manager.h"
 #include "tree_manager.h"
+#include "start_hits_manager.h"
 
 #include "TDatabasePDG.h"
 
