@@ -59,7 +59,7 @@ void HadesEventReader::ReadEvent(){
 //    std::cout << percentile << std::endl;
     analysis_event_manager->SetField(percentile, estimator);
   }
-  auto start2hit = (HStart2Hit*) catStartHit->getObject(0);
+  auto start2hit = (HStart2Hit*) start2hit_category_->getObject(0);
   analysis_event_manager->SetField( (int)start2hit->getModule(), Analysis::EventManager::START_MODULE);
   analysis_event_manager->SetField( (int)start2hit->getStrip(), Analysis::EventManager::START_STRIP);
   analysis_event_manager->SetField( (int)start2hit->getMultiplicity(), Analysis::EventManager::START_MULT);
