@@ -82,6 +82,7 @@ void HadesEventReader::ReadEvent(){
   if (vz >= -17.0 && vz < -13.0) target = 13;
   if (vz >= -13.0) target = 14;
   analysis_event_manager->SetField( (int) target, Analysis::EventManager::TARGER_SEGMENT);
+  ReadStartCals();
   ReadWallHits();
   ReadParticleCandidates();
   if( is_mc_ )
@@ -387,5 +388,21 @@ void HadesEventReader::ReadSimData(){
           reco_position, track_id_position.at(geant_track_id));
     }catch(std::out_of_range&){ std::cout << "reco track not matched with sim track" << std::endl; }
     reco_position++;
+  }
+}
+
+void HadesEventReader::ReadStartCals(){
+  auto start_hits_manager = Analysis::TreeManager::Instance()->GetStartHitsManager();
+  size_t size = start2cal_category_->getEntries();
+  for( size_t i=0; i<size; ++i ){
+    auto *start_cal = (HStart2Cal*)start2cal_category_->getObject(i);
+    Analysis::TreeManager::Instance()->NewStartHit();
+    start_hits_manager->SetField(start_cal->getModule(), StartHitsManager::MODULE);
+    start_hits_manager->SetField(start_cal->getStrip(), StartHitsManager::STRIP);
+    start_hits_manager->SetField(start_cal->getMultiplicity(), StartHitsManager::MULTIPLICITY);
+    for( int j=0; j<10; ++j ){
+      start_hits_manager->SetTime( start_cal->getTime(j+1), j );
+      start_hits_manager->SetWidth( start_cal->getTime(j+1), j );
+    }
   }
 }

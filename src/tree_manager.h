@@ -16,6 +16,7 @@
 #include "sim_event_manager.h"
 #include "sim_tracks_manager.h"
 #include "wall_hits_manager.h"
+#include "start_hits_manager.h"
 
 namespace Analysis {
 class TreeManager {
@@ -36,6 +37,9 @@ public:
   void NewWallModule(){
     wall_manager_->NewModule(config_);
   }
+  void NewStartHit(){
+    start_hits_manager_->NewHit(config_);
+  }
   void CheckIfNewFile(){
     auto* file = tree_->GetCurrentFile();
     if( file != file_ ) {
@@ -50,6 +54,7 @@ public:
     sim_reco_matching_->ClearMatching();
   }
   void NewEvent(){
+    start_hits_manager_->ClearDetector();
     track_manager_->ClearDetector();
     hit_manager_->ClearDetector();
     wall_manager_->ClearDetector();
@@ -67,6 +72,7 @@ public:
   WallHitsManager *GetWallHitsManager() const { return wall_manager_; }
   MdcMetaMatching *GetMdcMetaMatching() const  { return track_tof_matching_; }
   RecoSimMatching *GetRecoSimMatching() const { return sim_reco_matching_; }
+  StartHitsManager *GetStartHitsManager() const;
   bool WriteEvent(){
     try {
       tree_->Fill();
@@ -99,6 +105,7 @@ private:
   SimTracksManager * sim_track_manager_{nullptr};
   MetaHitsManager * hit_manager_{nullptr};
   WallHitsManager* wall_manager_{nullptr};
+  StartHitsManager* start_hits_manager_{nullptr};
   MdcMetaMatching * track_tof_matching_{nullptr};
   RecoSimMatching * sim_reco_matching_{nullptr};
 };

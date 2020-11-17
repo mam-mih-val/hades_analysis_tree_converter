@@ -19,6 +19,7 @@ void TreeManager::CreateTree(const std::string& file_name, const std::string& sy
   sim_event_manager_ = SimEventManager::Instance();
   sim_track_manager_ = SimTracksManager::Instance();
   sim_reco_matching_ = RecoSimMatching::Instance();
+  start_hits_manager_ = StartHitsManager::Instance();
 
   tree_ = new TTree( "hades_analysis_tree", "Analysis Tree, HADES data" );
   event_manager_->MakeBranch(config_, tree_);
@@ -26,6 +27,7 @@ void TreeManager::CreateTree(const std::string& file_name, const std::string& sy
   hit_manager_->MakeBranch(config_, tree_);
   wall_manager_->MakeBranch(config_, tree_);
   track_tof_matching_->MakeBranch(config_, tree_);
+  start_hits_manager_->MakeBranch(config_, tree_);
   if( is_mc ) {
     sim_event_manager_->MakeBranch(config_, tree_);
     sim_track_manager_->MakeBranch(config_, tree_);
@@ -47,5 +49,8 @@ void TreeManager::RecordDataHeader(){
   data_header_.SetSystem(colliding_system_);
   data_header_.SetBeamMomentum(PZ);
   data_header_.Write("DataHeader");
+}
+StartHitsManager *TreeManager::GetStartHitsManager() const {
+  return start_hits_manager_;
 }
 }

@@ -91,6 +91,9 @@ set (SOURCES
 		src/reco_sim_matching.cc
 		src/mhwalldivider.cc
 		src/main.cc
+        src/start_hits_manager.cc
+		src/start_hits_manager.h
+		src/start_hits_manager.cc
 		)
 
 add_executable(HT2AT ${HEADERS} ${SOURCES})
