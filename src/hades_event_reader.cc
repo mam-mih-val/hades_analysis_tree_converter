@@ -397,9 +397,9 @@ void HadesEventReader::ReadStartCals(){
   for( size_t i=0; i<size; ++i ){
     auto *start_cal = (HStart2Cal*)start2cal_category_->getObject(i);
     Analysis::TreeManager::Instance()->NewStartHit();
-    start_hits_manager->SetField(start_cal->getModule(), StartHitsManager::MODULE);
-    start_hits_manager->SetField(start_cal->getStrip(), StartHitsManager::STRIP);
-    start_hits_manager->SetField(start_cal->getMultiplicity(), StartHitsManager::MULTIPLICITY);
+    start_hits_manager->SetField(start_cal->getModule(), Analysis::StartHitsManager::MODULE);
+    start_hits_manager->SetField(start_cal->getStrip(), Analysis::StartHitsManager::STRIP);
+    start_hits_manager->SetField(start_cal->getMultiplicity(), Analysis::StartHitsManager::MULTIPLICITY);
     for( int j=0; j<10; ++j ){
       start_hits_manager->SetTime( start_cal->getTime(j+1), j );
       start_hits_manager->SetWidth( start_cal->getTime(j+1), j );
