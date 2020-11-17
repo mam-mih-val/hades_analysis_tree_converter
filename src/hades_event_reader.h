@@ -49,13 +49,13 @@ public:
       }
     }
     if( !is_mc_ ) {
-      if (!loop_.setInput("-*,+HParticleCand,+HParticleEvtInfo,+HWallHit")) {
+      if (!loop_.setInput("-*,+HParticleCand,+HParticleEvtInfo,+HWallHit,+HStart2Hit,+HStart2Cal")) {
         cerr << "READBACK: ERROR : cannot read input !" << endl;
         std::abort();
       }
     }
     if( is_mc_ ){
-      if (!loop_.setInput("-*,+HParticleCand,+HParticleEvtInfo,+HWallHit,+HGeantKine")) {
+      if (!loop_.setInput("-*,+HParticleCand,+HParticleEvtInfo,+HWallHit,+HStart2Hit,+HStart2Cal,+HGeantKine")) {
         cerr << "READBACK: ERROR : cannot read input !" << endl;
         std::abort();
       }
@@ -66,6 +66,8 @@ public:
     particle_category_ = (HCategory*)HCategoryManager::getCategory(catParticleCand);
     event_info_category_ = (HCategory*)HCategoryManager::getCategory(catParticleEvtInfo);
     wall_category_ = (HCategory*)HCategoryManager::getCategory(catWallHit);
+    start2hit_category_ = (HCategory*)HCategoryManager::getCategory(catStart2Hit);
+    start2cal_category_ = (HCategory*)HCategoryManager::getCategory(catStart2Cal);
     if( is_mc_ )
       geant_kine_ = (HCategory*)HCategoryManager::getCategory(catGeantKine);
     n_events_=loop_.getEntries();
@@ -100,6 +102,8 @@ private:
   HCategory* particle_category_{nullptr};
   HCategory* event_info_category_{nullptr};
   HCategory* wall_category_{nullptr};
+  HCategory* start2hit_category_{nullptr};
+  HCategory* start2cal_category_{nullptr};
   HCategory* geant_kine_{nullptr};
   HParticleEvtInfo*hades_event_info_{nullptr};
   HEventHeader*hades_event_header_{nullptr};

@@ -68,15 +68,30 @@ void EventManager::MakeBranch(AnalysisTree::Configuration &config,
   }
 
   event_header_branch.AddField<float>("vtx_chi2");
+  event_header_branch.AddField<float>("start_time");
   event_header_branch.AddField<int>("run_id");
   event_header_branch.AddField<int>("event_id");
+  event_header_branch.AddField<int>("target_segment");
+  event_header_branch.AddField<int>("start_module");
+  event_header_branch.AddField<int>("start_strip");
+  event_header_branch.AddField<int>("start_multiplicity");
 
   fields_float_.insert(
       std::make_pair(VTX_CHI2, event_header_branch.GetFieldId("vtx_chi2")));
+  fields_float_.insert(
+      std::make_pair(START_TIME, event_header_branch.GetFieldId("start_time")));
   fields_int_.insert(
       std::make_pair(RUN_ID, event_header_branch.GetFieldId("run_id")));
   fields_int_.insert(
       std::make_pair(EVENT_ID, event_header_branch.GetFieldId("event_id")));
+  fields_int_.insert(
+      std::make_pair(TARGER_SEGMENT, event_header_branch.GetFieldId("target_segment")));
+  fields_int_.insert(
+      std::make_pair(START_MODULE, event_header_branch.GetFieldId("start_module")));
+  fields_int_.insert(
+      std::make_pair(START_STRIP, event_header_branch.GetFieldId("start_strip")));
+  fields_int_.insert(
+      std::make_pair(START_MULT, event_header_branch.GetFieldId("start_multiplicity")));
 
   config.AddBranchConfig(event_header_branch);
   event_header_ = new AnalysisTree::EventHeader(config.GetLastId());

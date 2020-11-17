@@ -26,11 +26,16 @@ public:
   }
   enum FIELDS_FLOAT{
     VTX_CHI2=HADES_constants::kFWSumChargeZ+1, // Centrality estimators + corresponding centrality value;
+    START_TIME,
     NUM_FIELDS_FLOAT
   };
   enum FIELDS_INT{
     RUN_ID=HADES_constants::kFWSumChargeZ+1,
     EVENT_ID,
+    TARGER_SEGMENT,
+    START_MODULE,
+    START_STRIP,
+    START_MULT,
     NUM_FIELDS_INT
   };
   enum FIELDS_BOOL{
