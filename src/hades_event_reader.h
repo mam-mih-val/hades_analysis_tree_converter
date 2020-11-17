@@ -22,6 +22,8 @@
 #include "hruntimedb.h"
 #include "htime.h"
 #include "hwallhit.h"
+#include "hstart2hit.h"
+#include "hstart2cal.h"
 #include "walldef.h"
 #include "hparticleevtchara.h"
 
