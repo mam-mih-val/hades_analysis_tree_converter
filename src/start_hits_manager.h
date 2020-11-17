@@ -6,6 +6,7 @@
 #define HTREE_TO_AT_SRC_START_HITS_MANAGER_H_
 
 #include "detector_manager.h"
+
 namespace Analysis {
 class StartHitsManager : public DetectorManager {
 public:
@@ -42,7 +43,7 @@ public:
 private:
   static StartHitsManager *instance_;
   StartHitsManager() : hit_detector_{nullptr}, hit_{nullptr} {};
-  ~MetaHitsManager() = default;
+  ~StartHitsManager() = default;
   AnalysisTree::HitDetector *hit_detector_;
   AnalysisTree::Hit *hit_;
 };
