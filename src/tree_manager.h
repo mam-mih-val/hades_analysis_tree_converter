@@ -82,6 +82,7 @@ public:
     }
   }
   void Finalize(){
+    file_->cd();
     tree_->Write();
     file_->Write();
     file_->Close();
