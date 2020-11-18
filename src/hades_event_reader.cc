@@ -472,12 +472,12 @@ void HadesEventReader::ReadStartCals(){
   }
   auto bin_x = histo->GetXaxis()->FindBin( start_strip_0 );
   auto bin_y = histo->GetYaxis()->FindBin( start_strip_1 );
-  std::cout << "***********************************" << std::endl;
-  std::cout << "segment: " << target;
-  std::cout << " hit time: " << start_time << std::endl;
-  std::cout << "strip 0: " << start_strip_0 << " strip 1: " << start_strip_1 << std::endl;
-  std::cout << "mean multiplicity: " << histo->GetBinContent(bin_x, bin_y) << std::endl;
-  std::cout << "has passed cuts: " << (histo->GetBinContent(bin_x, bin_y) > min_mean_value) << std::endl;
+//  std::cout << "***********************************" << std::endl;
+//  std::cout << "segment: " << target;
+//  std::cout << " hit time: " << start_time << std::endl;
+//  std::cout << "strip 0: " << start_strip_0 << " strip 1: " << start_strip_1 << std::endl;
+//  std::cout << "mean multiplicity: " << histo->GetBinContent(bin_x, bin_y) << std::endl;
+//  std::cout << "has passed cuts: " << (histo->GetBinContent(bin_x, bin_y) > min_mean_value) << std::endl;
   {
     event_manager->SetField(histo->GetBinContent(bin_x, bin_y) > min_mean_value,
                             Analysis::EventManager::HAS_PASSED_SZYMON_CUT);
