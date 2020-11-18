@@ -1,5 +1,6 @@
 {
   "system": "Au+Au",
   "energy": 1.23,
-  "param file": "/lustre/nyx/hades/user/mmamaev/hades_analysis_tree_converter/src/param/AuAu_1_23AGeV.root"
+  "param file": "/lustre/nyx/hades/user/mmamaev/hades_analysis_tree_converter/src/param/AuAu_1_23AGeV.root",
+  "start strips file": "/u/harabasz/mar19/loopDST_carbon_install/mult_mean_stripes_1230.root"
 }

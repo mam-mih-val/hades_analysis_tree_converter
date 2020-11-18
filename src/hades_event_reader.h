@@ -84,6 +84,9 @@ public:
       read_bytes = loop_.nextEvent( position_ );
     position_++;
   }
+  void SetSzymonFile(const std::string &szymon_file);
+  void SetSystem(const std::string &system) { system_ = system; }
+  void SetEnergy(float energy) { energy_ = energy; }
   bool Eof(long long events=0) const{
     if( events > 0 )
       return (position_ >= n_events_ || read_bytes <= 0 || position_ > events );
@@ -101,6 +104,9 @@ private:
   long long n_events_{0};
   long long position_{0};
   bool is_mc_{false};
+  TFile* szymon_file_;
+  std::string system_;
+  float energy_;
   HParticleEvtChara evt_chara_bk_;
   HEnergyLossCorrPar dE_dx_corr_;
   HCategory* particle_category_{nullptr};

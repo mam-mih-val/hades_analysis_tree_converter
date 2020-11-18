@@ -393,6 +393,8 @@ void HadesEventReader::ReadSimData(){
 
 void HadesEventReader::ReadStartCals(){
   auto start_hits_manager = Analysis::TreeManager::Instance()->GetStartHitsManager();
+  auto event_manager = Analysis::TreeManager::Instance()->GetEventManager();
+  auto start2hit = (HStart2Hit*) start2hit_category_->getObject(0);
   size_t size = start2cal_category_->getEntries();
   for( size_t i=0; i<size; ++i ){
     auto *start_cal = (HStart2Cal*)start2cal_category_->getObject(i);
@@ -405,4 +407,77 @@ void HadesEventReader::ReadStartCals(){
       start_hits_manager->SetWidth( start_cal->getTime(j+1), j );
     }
   }
+  auto start_time = start2hit->getTime();
+  int start_strip_0;
+  int start_strip_1;
+  int n0=0, n1=0;
+  for( size_t i=0; i<size; ++i ){
+    auto *start_cal = (HStart2Cal*)start2cal_category_->getObject(i);
+    for ( int j=0; j<10; j++ ){
+      if( fabs( start_cal->getTime(j+1) - start_time ) < 2.0 ){
+        if( start_cal->getModule() == 0 ){
+          start_strip_0 = start_cal->getStrip();
+          n0++;
+          break;
+        }
+        if( start_cal->getModule() == 1 ){
+          start_strip_1 = start_cal->getStrip();
+          n1++;
+          break;
+        }
+      }
+    }
+  }
+  if ( n1>1 || n0 > 1  ) {
+    event_manager->SetField(false,
+                            Analysis::EventManager::HAS_PASSED_SZYMON_CUT);
+    return;
+  }
+  if( !szymon_file_ ) {
+    event_manager->SetField(false,
+                            Analysis::EventManager::HAS_PASSED_SZYMON_CUT);
+    return;
+  }
+  float min_mean_value;
+  if( fabsf(energy_ - 1.23) < std::numeric_limits<float>::epsilon() )
+    min_mean_value = 50.1;
+  if( fabsf(energy_ - 1.58) < std::numeric_limits<float>::epsilon() )
+    min_mean_value = 55.0;
+  hades_event_header_ = gHades->getCurrentEvent()->getHeader();
+  HVertex vertex_reco = hades_event_header_->getVertexReco();
+  auto vz = vertex_reco.getZ();
+  int target = -1;
+  if (vz >= -63.0 && vz < -60.0) target = 0;
+  if (vz >= -60.0 && vz < -56.5) target = 1;
+  if (vz >= -56.5 && vz < -52.5) target = 2;
+  if (vz >= -52.5 && vz < -49.5) target = 3;
+  if (vz >= -49.5 && vz < -45.5) target = 4;
+  if (vz >= -45.0 && vz < -42.0) target = 5;
+  if (vz >= -42.0 && vz < -39.0) target = 6;
+  if (vz >= -39.0 && vz < -35.5) target = 7;
+  if (vz >= -35.5 && vz < -31.5) target = 8;
+  if (vz >= -31.5 && vz < -28.0) target = 9;
+  if (vz >= -28.0 && vz < -24.0) target = 10;
+  if (vz >= -24.0 && vz < -21.5) target = 11;
+  if (vz >= -21.5 && vz < -17.0) target = 12;
+  if (vz >= -17.0 && vz < -13.0) target = 13;
+  if (vz >= -13.0) target = 14;
+  std::string histo_name = "h_mult_mean_target"+std::to_string(target);
+  TH2F* histo;
+  szymon_file_->GetObject( histo_name.c_str(), histo );
+  if( !histo ){
+    event_manager->SetField(false,
+                            Analysis::EventManager::HAS_PASSED_SZYMON_CUT);
+    return;
+  }
+  auto bin_x = histo->GetXaxis()->FindBin( start_strip_0 );
+  auto bin_y = histo->GetYaxis()->FindBin( start_strip_1 );
+  {
+    event_manager->SetField(histo->GetBinContent(bin_x, bin_y) > min_mean_value,
+                            Analysis::EventManager::HAS_PASSED_SZYMON_CUT);
+    return;
+  }
+}
+void HadesEventReader::SetSzymonFile(const std::string &szymon_file) {
+  szymon_file_ = TFile::Open(szymon_file.c_str());
 }

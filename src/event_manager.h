@@ -39,7 +39,9 @@ public:
     NUM_FIELDS_INT
   };
   enum FIELDS_BOOL{
+    HAS_PASSED_SZYMON_CUT,
     NUM_FIELDS_BOOL=HADES_constants::kPT3+1
+
   };
   void MakeBranch(AnalysisTree::Configuration &config, TTree* tree) override;
 

@@ -46,11 +46,15 @@ int main(int argv, char **argc) {
   auto system = config.get<std::string>("system", "");
   auto energy = config.get<float>("energy", 0.0f);
   auto event_chara_param_file = config.get<std::string>("param file", "");
+  auto szymon_start_histograms_file = config.get<std::string>("start strips file", "");
 
   HadesEventReader reader(is_mc);
   reader.Init( input_list );
   reader.InitEvtChara( event_chara_param_file );
   Analysis::TreeManager::Instance()->CreateTree(output_file, system, energy, is_mc);
+  reader.SetSzymonFile(szymon_start_histograms_file);
+  reader.SetSystem(system);
+  reader.SetEnergy(energy);
   int i=0;
   while( !reader.Eof(n_events) ) {
     reader.SwitchNextEvent();

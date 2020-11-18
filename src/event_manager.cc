@@ -75,6 +75,10 @@ void EventManager::MakeBranch(AnalysisTree::Configuration &config,
   event_header_branch.AddField<int>("start_module");
   event_header_branch.AddField<int>("start_strip");
   event_header_branch.AddField<int>("start_multiplicity");
+  event_header_branch.AddField<bool>("has_passed_szymon_cut");
+
+  fields_bool_.insert(
+      std::make_pair(HAS_PASSED_SZYMON_CUT, event_header_branch.GetFieldId("has_passed_szymon_cut")));
 
   fields_float_.insert(
       std::make_pair(VTX_CHI2, event_header_branch.GetFieldId("vtx_chi2")));
