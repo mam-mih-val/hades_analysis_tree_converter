@@ -2,5 +2,5 @@
   "system": "Ag+Ag",
   "energy": 1.58,
   "param file": "/lustre/nyx/hades/user/mmamaev/hades_analysis_tree_converter/src/param/AgAg_1_58AGeV.root",
-  "start strips file": "/u/harabasz/mar19/loopDST_carbon_install/mult_mean_stripes_1580.root"
+  "start strips file": "/lustre/nyx/hades/user/mmamaev/hades_analysis_tree_converter/src/param/mult_mean_stripes_1580.root"
 }
