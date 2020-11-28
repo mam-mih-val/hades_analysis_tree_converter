@@ -69,6 +69,8 @@ void EventManager::MakeBranch(AnalysisTree::Configuration &config,
 
   event_header_branch.AddField<float>("vtx_chi2");
   event_header_branch.AddField<float>("start_time");
+  event_header_branch.AddField<float>("fw_angle_plain");
+  event_header_branch.AddField<float>("fw_angle_shift_charge_rotation");
   event_header_branch.AddField<int>("run_id");
   event_header_branch.AddField<int>("event_id");
   event_header_branch.AddField<int>("target_segment");
@@ -84,6 +86,10 @@ void EventManager::MakeBranch(AnalysisTree::Configuration &config,
       std::make_pair(VTX_CHI2, event_header_branch.GetFieldId("vtx_chi2")));
   fields_float_.insert(
       std::make_pair(START_TIME, event_header_branch.GetFieldId("start_time")));
+  fields_float_.insert(
+      std::make_pair(FW_ANGLE_PLAIN, event_header_branch.GetFieldId("fw_angle_plain")));
+  fields_float_.insert(
+      std::make_pair(FW_ANGLE_SHIFT_CHARGE_ROTATION, event_header_branch.GetFieldId("fw_angle_shift_charge_rotation")));
   fields_int_.insert(
       std::make_pair(RUN_ID, event_header_branch.GetFieldId("run_id")));
   fields_int_.insert(

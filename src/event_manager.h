@@ -27,6 +27,8 @@ public:
   enum FIELDS_FLOAT{
     VTX_CHI2=HADES_constants::kFWSumChargeZ+1, // Centrality estimators + corresponding centrality value;
     START_TIME,
+    FW_ANGLE_PLAIN, // No corrections
+    FW_ANGLE_SHIFT_CHARGE_ROTATION, // Default correction in HParticleEntChara
     NUM_FIELDS_FLOAT
   };
   enum FIELDS_INT{
