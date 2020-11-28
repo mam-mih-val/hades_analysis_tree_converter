@@ -60,7 +60,7 @@ void HadesEventReader::ReadEvent(){
     analysis_event_manager->SetField(percentile, estimator);
   }
   auto fw_angle_plain = evt_chara_bk_.getEventPlane();
-  auto fw_angle_corrected = evt_chara_bk_.getEventPlane(kDefault);
+  auto fw_angle_corrected = evt_chara_bk_.getEventPlane(HParticleEvtChara::kDefault);
   analysis_event_manager->SetField( (float) fw_angle_plain, Analysis::EventManager::FW_ANGLE_PLAIN );
   analysis_event_manager->SetField( (float) fw_angle_corrected, Analysis::EventManager::FW_ANGLE_SHIFT_CHARGE_ROTATION );
   auto start2hit = (HStart2Hit*) start2hit_category_->getObject(0);
