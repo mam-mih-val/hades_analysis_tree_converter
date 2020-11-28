@@ -63,11 +63,17 @@ void HadesEventReader::ReadEvent(){
   auto fw_angle_corrected = evt_chara_bk_.getEventPlane(HParticleEvtChara::kDefault);
   analysis_event_manager->SetField( (float) fw_angle_plain, Analysis::EventManager::FW_ANGLE_PLAIN );
   analysis_event_manager->SetField( (float) fw_angle_corrected, Analysis::EventManager::FW_ANGLE_SHIFT_CHARGE_ROTATION );
-  auto start2hit = (HStart2Hit*) start2hit_category_->getObject(0);
-  analysis_event_manager->SetField( (int)start2hit->getModule(), Analysis::EventManager::START_MODULE);
-  analysis_event_manager->SetField( (int)start2hit->getStrip(), Analysis::EventManager::START_STRIP);
-  analysis_event_manager->SetField( (int)start2hit->getMultiplicity(), Analysis::EventManager::START_MULT);
-  analysis_event_manager->SetField( (float)start2hit->getTime(), Analysis::EventManager::START_TIME);
+  if( !is_mc_ ) {
+    auto start2hit = (HStart2Hit *)start2hit_category_->getObject(0);
+    analysis_event_manager->SetField((int)start2hit->getModule(),
+                                     Analysis::EventManager::START_MODULE);
+    analysis_event_manager->SetField((int)start2hit->getStrip(),
+                                     Analysis::EventManager::START_STRIP);
+    analysis_event_manager->SetField((int)start2hit->getMultiplicity(),
+                                     Analysis::EventManager::START_MULT);
+    analysis_event_manager->SetField((float)start2hit->getTime(),
+                                     Analysis::EventManager::START_TIME);
+  }
   auto vz = vertex_reco.getZ();
   int target = -1;
   if (vz >= -63.0 && vz < -60.0) target = 0;
@@ -86,7 +92,8 @@ void HadesEventReader::ReadEvent(){
   if (vz >= -17.0 && vz < -13.0) target = 13;
   if (vz >= -13.0) target = 14;
   analysis_event_manager->SetField( (int) target, Analysis::EventManager::TARGER_SEGMENT);
-  ReadStartCals();
+  if( !is_mc_ )
+    ReadStartCals();
   ReadWallHits();
   ReadParticleCandidates();
   if( is_mc_ )
