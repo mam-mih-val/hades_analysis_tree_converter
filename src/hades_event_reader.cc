@@ -65,14 +65,16 @@ void HadesEventReader::ReadEvent(){
   analysis_event_manager->SetField( (float) fw_angle_corrected, Analysis::EventManager::FW_ANGLE_SHIFT_CHARGE_ROTATION );
   if( !is_mc_ ) {
     auto start2hit = (HStart2Hit *)start2hit_category_->getObject(0);
-    analysis_event_manager->SetField((int)start2hit->getModule(),
-                                     Analysis::EventManager::START_MODULE);
-    analysis_event_manager->SetField((int)start2hit->getStrip(),
-                                     Analysis::EventManager::START_STRIP);
-    analysis_event_manager->SetField((int)start2hit->getMultiplicity(),
-                                     Analysis::EventManager::START_MULT);
-    analysis_event_manager->SetField((float)start2hit->getTime(),
-                                     Analysis::EventManager::START_TIME);
+    if( start2hit ) {
+      analysis_event_manager->SetField((int)start2hit->getModule(),
+                                       Analysis::EventManager::START_MODULE);
+      analysis_event_manager->SetField((int)start2hit->getStrip(),
+                                       Analysis::EventManager::START_STRIP);
+      analysis_event_manager->SetField((int)start2hit->getMultiplicity(),
+                                       Analysis::EventManager::START_MULT);
+      analysis_event_manager->SetField((float)start2hit->getTime(),
+                                       Analysis::EventManager::START_TIME);
+    }
   }
   auto vz = vertex_reco.getZ();
   int target = -1;
@@ -406,6 +408,8 @@ void HadesEventReader::ReadStartCals(){
   auto start_hits_manager = Analysis::TreeManager::Instance()->GetStartHitsManager();
   auto event_manager = Analysis::TreeManager::Instance()->GetEventManager();
   auto start2hit = (HStart2Hit*) start2hit_category_->getObject(0);
+  if( !start2hit )
+    return;
   size_t size = start2cal_category_->getEntries();
   for( size_t i=0; i<size; ++i ){
     auto *start_cal = (HStart2Cal*)start2cal_category_->getObject(i);
