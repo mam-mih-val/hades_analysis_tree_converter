@@ -310,7 +310,7 @@ void HadesEventReader::ReadSimData(){
   bool is_set_vertex{false};
   float vx, vy, vz;
   int k=0;
-  while(!is_set_vertex){
+  while(!is_set_vertex && k<geant_kine_->getEntries()){
     hades_geant_track = HCategoryManager::getObject(hades_geant_track, geant_kine_, k);
     ++k;
     if( !hades_geant_track->isPrimary() )
