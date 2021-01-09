@@ -11,7 +11,7 @@ partition=main
 time=8:00:00
 build_dir=$current_dir/../build
 
-lists_dir=${output_dir}/lists
+lists_dir=${output_dir}/lists/
 log_dir=${output_dir}/log
 
 mkdir -p $output_dir
