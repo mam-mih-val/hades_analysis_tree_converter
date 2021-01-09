@@ -6,7 +6,7 @@ date $format
 
 job_num=$(($SLURM_ARRAY_TASK_ID))
 
-filelist=$lists_dir/$job_num.list
+filelist=$(ls $lists_dir | sed "${job_num}q;d")
 
 while read line; do
     input_files=$input_files","$line

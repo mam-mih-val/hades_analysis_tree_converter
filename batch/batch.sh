@@ -18,8 +18,7 @@ mkdir -p $output_dir
 mkdir -p $log_dir
 mkdir -p $lists_dir
 
-csplit -s -f "$lists_dir/" -b %1d.list "$file_list" -k 100 {*}
-rm $lists_dir/0.list
+split -l 10 -d -a 3 --additional-suffix=.list "$file_list" $lists_dir
 
 n_runs=$(ls $lists_dir/*.list | wc -l)
 

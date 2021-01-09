@@ -213,6 +213,25 @@ void HadesEventReader::ReadParticleCandidates(){
         layers_3++;
       layers_total++;
     }
+    auto pdg_code = TDatabasePDG::Instance()->ConvertGeant3ToPdg(pid_code);
+    if( pdg_code == 0 ){
+      switch (pid_code) {
+      case 45:
+        pdg_code = 1000010020;
+        break;
+      case 46:
+        pdg_code = 1000010030;
+        break;
+      case 49:
+        pdg_code = 1000020030;
+        break;
+      case 47:
+        pdg_code = 1000020040;
+        break;
+      default:
+        break;
+      }
+    }
     analysis_track_manager->SetMomentum(momentum);
     analysis_track_manager->SetMass(mass);
     analysis_track_manager->SetPdgCode( TDatabasePDG::Instance()->ConvertGeant3ToPdg(pid_code) );
