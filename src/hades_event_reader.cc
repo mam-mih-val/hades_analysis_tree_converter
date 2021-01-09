@@ -234,7 +234,7 @@ void HadesEventReader::ReadParticleCandidates(){
     }
     analysis_track_manager->SetMomentum(momentum);
     analysis_track_manager->SetMass(mass);
-    analysis_track_manager->SetPdgCode( TDatabasePDG::Instance()->ConvertGeant3ToPdg(pid_code) );
+    analysis_track_manager->SetPdgCode( pdg_code );
     analysis_track_manager->SetField(
         (int)hades_candidate->getCharge(), Analysis::MdcTracksManager::CHARGE);
     analysis_track_manager->SetField(
