@@ -63,6 +63,7 @@ public:
         std::abort();
       }
     }
+    HPhysicsConstants::loadGeantIons();
     loop_.printCategories();
     loop_.printChain();
     dE_dx_corr_.setDefaultPar("apr12");

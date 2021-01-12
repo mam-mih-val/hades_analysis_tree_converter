@@ -31,4 +31,4 @@ echo lists_dir=$lists_dir
 echo n_runs=$n_runs
 echo job_range=$job_range
 
-sbatch -J DT_Reader -p $partition -t $time -a $job_range -e ${log_dir}/%A_%a.e -o ${log_dir}/%A_%a.o --export=output_dir=$output_dir,file_list=$file_list,hadesroot=$hadesroot,lists_dir=$lists_dir,build_dir=$build_dir,config_file=$config_file -- /cvmfs/vae.gsi.de/debian8/containers/debian8-user_container_20210105T0849.sif /lustre/nyx/hades/user/mmamaev/hades_analysis_tree_converter/batch/batch_run.sh
+sbatch -J HT2AT -p $partition -t $time -a $job_range -e ${log_dir}/%A_%a.e -o ${log_dir}/%A_%a.o --export=output_dir=$output_dir,file_list=$file_list,hadesroot=$hadesroot,lists_dir=$lists_dir,build_dir=$build_dir,config_file=$config_file -- /cvmfs/vae.gsi.de/debian8/containers/debian8-user_container_20210105T0849.sif /lustre/nyx/hades/user/mmamaev/hades_analysis_tree_converter/batch/batch_run.sh
