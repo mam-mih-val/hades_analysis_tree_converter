@@ -554,7 +554,6 @@ void HadesEventReader::SetSzymonFile(const std::string &szymon_file) {
 int HadesEventReader::GetPdgOfNuclei( int geant_code ){
   int mass = HPhysicsConstants::mass(pid_code) / HPhysicsConstants::mass(14);
   int charge = HPhysicsConstants::charge(pid_code);
-  1'000'010'020
   int code = 1.0e+9+charge*1.0e+4+mass*10;
   return code;
 }
