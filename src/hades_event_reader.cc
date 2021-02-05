@@ -232,6 +232,11 @@ void HadesEventReader::ReadParticleCandidates(){
         break;
       }
     }
+    if( pdg_code == 0 ){
+      try {
+        pdg_code = GetPdgOfNuclei(pid_code);
+      } catch (std::exception&) {}
+    }
     analysis_track_manager->SetMomentum(momentum);
     analysis_track_manager->SetMass(mass);
     analysis_track_manager->SetPdgCode( pdg_code );
@@ -368,17 +373,41 @@ void HadesEventReader::ReadSimData(){
     float theta = hades_geant_track->getThetaDeg()*TMath::DegToRad();
     float phi = hades_geant_track->getPhiDeg()*TMath::DegToRad();
     float mass = hades_geant_track->getM()/1000.; // MeV->GeV
-    int pid = hades_geant_track->getID();
+    int pid_code = hades_geant_track->getID();
     bool is_primary = hades_geant_track->isPrimary();
     TVector3 p; p.SetPtThetaPhi(pt, theta, phi);
+    auto pdg_code = TDatabasePDG::Instance()->ConvertGeant3ToPdg(pid_code);
+    if( pdg_code == 0 ){
+      switch (pid_code) {
+      case 45:
+        pdg_code = 1000010020;
+        break;
+      case 46:
+        pdg_code = 1000010030;
+        break;
+      case 49:
+        pdg_code = 1000020030;
+        break;
+      case 47:
+        pdg_code = 1000020040;
+        break;
+      default:
+        break;
+      }
+    }
+    if( pdg_code == 0 ){
+      try {
+        pdg_code = GetPdgOfNuclei(pid_code);
+      } catch (std::exception&) {}
+    }
     Analysis::TreeManager::Instance()->NewSimTrack();
     analysis_sim_tracks->SetMomentum(p);
     analysis_sim_tracks->SetMass(mass);
-    analysis_sim_tracks->SetPdgCode( TDatabasePDG::Instance()->ConvertGeant3ToPdg(pid) );
+    analysis_sim_tracks->SetPdgCode( pdg_code );
     analysis_sim_tracks->SetField(
         is_primary,Analysis::SimTracksManager::IS_PRIMARY);
     analysis_sim_tracks->SetField(
-        pid,Analysis::SimTracksManager::GEANT_PID);
+        pid_code,Analysis::SimTracksManager::GEANT_PID);
     analysis_sim_tracks->SetField(
         hades_geant_track->getTrack(),Analysis::SimTracksManager::GEANT_TRACK_ID);
     analysis_sim_tracks->SetField(
@@ -520,4 +549,12 @@ void HadesEventReader::ReadStartCals(){
 }
 void HadesEventReader::SetSzymonFile(const std::string &szymon_file) {
   szymon_file_ = TFile::Open(szymon_file.c_str());
+}
+
+int HadesEventReader::GetPdgOfNuclei( int geant_code ){
+  int mass = HPhysicsConstants::mass(pid_code) / HPhysicsConstants::mass(14);
+  int charge = HPhysicsConstants::charge(pid_code);
+  1'000'010'020
+  int code = 1.0e+9+charge*1.0e+4+mass*10;
+  return code;
 }

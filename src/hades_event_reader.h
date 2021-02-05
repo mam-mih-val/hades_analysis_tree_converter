@@ -101,6 +101,7 @@ public:
   void ReadWallHits();
   void ReadStartCals();
   void ReadSimData();
+  int GetPdgOfNuclei( int geant_code );
 private:
   HLoop loop_;
   int read_bytes{1};
