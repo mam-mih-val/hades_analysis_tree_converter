@@ -27,7 +27,7 @@ int main(int argv, char **argc) {
        "Name of output file")
       ("config,c", po::value<std::string>(&config_file),
        "Path to config file")
-      ("geant-file", po::value<std::string>(&config_file),
+      ("geant-file", po::value<std::string>(&geant_file),
        "Geant files for realistic FW respond simulation")
       ("events,N", po::value<long long>(&n_events),
        "Number of analysing events");
