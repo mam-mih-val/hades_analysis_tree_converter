@@ -104,6 +104,8 @@ public:
   void SwitchNextEvent(){
     if( !Eof() )
       read_bytes = loop_.nextEvent( position_ );
+    if( geant_chain_ )
+      geant_chain_->GetEntry( position+1 );
     position_++;
   }
   void SetSzymonFile(const std::string &szymon_file);
