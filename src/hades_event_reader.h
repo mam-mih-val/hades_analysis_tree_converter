@@ -93,7 +93,7 @@ public:
       std::cout << file << " has been added to sequence" << std::endl;
     }
 //    geant_chain_->SetBranchAddress("HGeantWall.", geant_wall_);
-    loop_.getChain()->AddFriend(geant_chain_, "TG");
+    loop_.getChain()->AddFriend(geant_chain_, "T");
     loop_.printCategories();
     loop_.printChain();
   }
