@@ -88,7 +88,7 @@ public:
     while(std::getline(list,file,',')){
       if( file=="" )
         continue;
-      geant_chain_->Add(file);
+      geant_chain_->Add(file.c_str());
       std::cout << file << " has been added to sequence" << std::endl;
     }
     loop_.getChain()->AddFriend(geant_chain_, "TG");
