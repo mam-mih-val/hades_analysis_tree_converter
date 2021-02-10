@@ -90,10 +90,11 @@ public:
       if( file=="" )
         continue;
       geant_chain_->Add(file.c_str());
+      loop_.addFiles(file.c_str());
       std::cout << file << " has been added to sequence" << std::endl;
     }
 //    geant_chain_->SetBranchAddress("HGeantWall.", geant_wall_);
-    loop_.getChain()->AddFriend(geant_chain_, "T");
+//    loop_.getChain()->AddFriend(geant_chain_, "T");
     loop_.printCategories();
     loop_.printChain();
   }
@@ -104,8 +105,8 @@ public:
   void SwitchNextEvent(){
     if( !Eof() )
       read_bytes = loop_.nextEvent( position_ );
-    if( geant_chain_ )
-      geant_chain_->GetEntry( position+1 );
+//    if( geant_chain_ )
+//      geant_chain_->GetEntry( position+1 );
     position_++;
   }
   void SetSzymonFile(const std::string &szymon_file);
