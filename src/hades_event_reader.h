@@ -26,6 +26,7 @@
 #include "hstart2cal.h"
 #include "walldef.h"
 #include "hparticleevtchara.h"
+#include "hgeantwall.h"
 
 #include "event_manager.h"
 #include "tree_manager.h"
@@ -91,9 +92,10 @@ public:
       geant_chain_->Add(file.c_str());
       std::cout << file << " has been added to sequence" << std::endl;
     }
-    loop_.getChain()->AddFriend(geant_chain_, "TG");
-    loop_.printCategories();
-    loop_.printChain();
+    geant_chain_->SetBranchAddress("HGeantWall.", geant_wall_);
+//    loop_.getChain()->AddFriend(geant_chain_, "TG");
+//    loop_.printCategories();
+//    loop_.printChain();
   }
   void InitEvtChara( const std::string& parameter_file ){
     evt_chara_bk_.setParameterFile(parameter_file.data());
@@ -129,6 +131,7 @@ private:
   TFile* szymon_file_;
   std::string system_;
   float energy_;
+  HGeantWall* geant_wall_{nullptr};
   HParticleEvtChara evt_chara_bk_;
   HEnergyLossCorrPar dE_dx_corr_;
   HCategory* particle_category_{nullptr};
