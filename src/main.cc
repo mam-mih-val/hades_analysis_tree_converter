@@ -15,6 +15,7 @@ int main(int argv, char **argc) {
   std::string input_list;
   std::string output_file{"output.root"};
   std::string config_file;
+  std::string geant_file;
   long long n_events{0};
   po::options_description options("Options");
   options.add_options()
@@ -26,6 +27,8 @@ int main(int argv, char **argc) {
        "Name of output file")
       ("config,c", po::value<std::string>(&config_file),
        "Path to config file")
+      ("geant-file", po::value<std::string>(&config_file),
+       "Geant files for realistic FW respond simulation")
       ("events,N", po::value<long long>(&n_events),
        "Number of analysing events");
   po::variables_map vm;
@@ -50,6 +53,7 @@ int main(int argv, char **argc) {
 
   HadesEventReader reader(is_mc);
   reader.Init( input_list );
+  reader.AddGeantFiles(geant_file);
   reader.InitEvtChara( event_chara_param_file );
   Analysis::TreeManager::Instance()->CreateTree(output_file, system, energy, is_mc);
   reader.SetSzymonFile(szymon_start_histograms_file);

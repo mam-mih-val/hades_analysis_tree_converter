@@ -32,6 +32,7 @@
 #include "start_hits_manager.h"
 
 #include "TDatabasePDG.h"
+#include <TChain.h>
 
 #include <iostream>
 
@@ -78,6 +79,22 @@ public:
       geant_kine_ = (HCategory*)HCategoryManager::getCategory(catGeantKine);
     n_events_=loop_.getEntries();
   }
+  void AddGeantFiles( std::string geant_files ){
+    if( geant_files.empty() )
+      return;
+    geant_chain_ = new TChain( "T" );
+    std::stringstream list{geant_files};
+    std::string file{};
+    while(std::getline(list,file,',')){
+      if( file=="" )
+        continue;
+      geant_chain_->Add(file);
+      std::cout << file << " has been added to sequence" << std::endl;
+    }
+    loop_.getChain()->AddFriend(geant_chain_, "TG");
+    loop_.printCategories();
+    loop_.printChain();
+  }
   void InitEvtChara( const std::string& parameter_file ){
     evt_chara_bk_.setParameterFile(parameter_file.data());
     evt_chara_bk_.init();
@@ -104,6 +121,7 @@ public:
   int GetPdgOfNuclei( int geant_code );
 private:
   HLoop loop_;
+  TChain* geant_chain_{nullptr};
   int read_bytes{1};
   long long n_events_{0};
   long long position_{0};
