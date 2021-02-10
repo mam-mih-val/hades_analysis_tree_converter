@@ -43,8 +43,8 @@ int main(int argv, char **argc) {
   boost::property_tree::ptree config;
   try {
     boost::property_tree::read_json(config_file, config);
-  } catch( const std::exception&  ){
-    throw std::runtime_error("JSON Config is not specified or specified incorrectly");
+  } catch( const std::exception& e ){
+    throw e.what();
   }
   auto system = config.get<std::string>("system", "");
   auto energy = config.get<float>("energy", 0.0f);
