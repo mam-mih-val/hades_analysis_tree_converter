@@ -92,10 +92,10 @@ public:
       geant_chain_->Add(file.c_str());
       std::cout << file << " has been added to sequence" << std::endl;
     }
-    geant_chain_->SetBranchAddress("HGeantWall.", geant_wall_);
-//    loop_.getChain()->AddFriend(geant_chain_, "TG");
-//    loop_.printCategories();
-//    loop_.printChain();
+//    geant_chain_->SetBranchAddress("HGeantWall.", geant_wall_);
+    loop_.getChain()->AddFriend(geant_chain_, "TG");
+    loop_.printCategories();
+    loop_.printChain();
   }
   void InitEvtChara( const std::string& parameter_file ){
     evt_chara_bk_.setParameterFile(parameter_file.data());
