@@ -3,10 +3,13 @@
 //
 
 #include <iostream>
+#include <chrono>
 
 #include <boost/program_options.hpp>
-#include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
+#include <boost/property_tree/ptree.hpp>
+
+#include "converting_manager.h"
 
 int main(int argv, char **argc) {
   namespace po = boost::program_options;
@@ -43,14 +46,19 @@ int main(int argv, char **argc) {
   try {
     boost::property_tree::read_json(config_file, config);
   } catch( const std::exception& e ){
-    throw e.what();
+    throw std::runtime_error( "JSON config is not specified or specified incorrectly" );
   }
   auto system = config.get<std::string>("system", "");
   auto energy = config.get<float>("energy", 0.0f);
   auto event_chara_param_file = config.get<std::string>("param file", "");
   auto szymon_start_histograms_file = config.get<std::string>("start strips file", "");
 
-  int i=0;
+  ConvertingManager converting_manager;
+
+  converting_manager.InitInput(input_list);
+  converting_manager.InitOutput(output_file, "reconstructed_wall");
+  converting_manager.Process(n_events);
+  converting_manager.Finalize();
 
   auto end = std::chrono::system_clock::now();
   std::chrono::duration<double> elapsed_seconds = end - start;
