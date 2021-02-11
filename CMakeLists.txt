@@ -98,3 +98,11 @@ set (SOURCES
 
 add_executable(HT2AT ${HEADERS} ${SOURCES})
 target_link_libraries(HT2AT ${Boost_LIBRARIES} ${ROOT_LIBRARIES} ROOT::EG ${HADES_LIBS}  AnalysisTreeBase)
+
+add_executable(convert_wall
+		src/geant_wall_converter/convert.cc
+		src/geant_wall_converter/analysis_tree_manager.cc
+		src/geant_wall_converter/hades_tree_manager.cc
+		src/geant_wall_converter/wall_hits_filler.cc
+		)
+target_link_libraries(convert_wall ${Boost_LIBRARIES} ${ROOT_LIBRARIES} ROOT::EG ${HADES_LIBS}  AnalysisTreeBase)

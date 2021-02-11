@@ -53,18 +53,18 @@ public:
         std::cout << file << " has been added to sequence" << std::endl;
       }
     }
-//    if( !is_mc_ ) {
-//      if (!loop_.setInput("-*,+HParticleCand,+HParticleEvtInfo,+HWallHit,+HStart2Hit,+HStart2Cal")) {
-//        cerr << "READBACK: ERROR : cannot read input !" << endl;
-//        std::abort();
-//      }
-//    }
-//    if( is_mc_ ){
-//      if (!loop_.setInput("-*,+HParticleCand,+HParticleEvtInfo,+HWallHit,+HGeantKine")) {
-//        cerr << "READBACK: ERROR : cannot read input !" << endl;
-//        std::abort();
-//      }
-//    }
+    if( !is_mc_ ) {
+      if (!loop_.setInput("-*,+HParticleCand,+HParticleEvtInfo,+HWallHit,+HStart2Hit,+HStart2Cal")) {
+        cerr << "READBACK: ERROR : cannot read input !" << endl;
+        std::abort();
+      }
+    }
+    if( is_mc_ ){
+      if (!loop_.setInput("+*")) {
+        cerr << "READBACK: ERROR : cannot read input !" << endl;
+        std::abort();
+      }
+    }
     HPhysicsConstants::loadGeantIons();
     loop_.printCategories();
     loop_.printChain();
