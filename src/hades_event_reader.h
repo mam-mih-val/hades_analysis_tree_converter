@@ -123,6 +123,20 @@ public:
   void ReadWallHits();
   void ReadStartCals();
   void ReadSimData();
+  void PrintWallCellsPositions(){
+    std::cout << " x = { " ;
+    for( auto x : x_wall_modules_positions_ )
+      std::cout << " " << x << ", ";
+    std::cout << "}" << std::endl;
+    std::cout << " y = { " ;
+    for( auto x : y_wall_modules_positions_ )
+      std::cout << " " << x << ", ";
+    std::cout << "}" << std::endl;
+    std::cout << " z = { " ;
+    for( auto x : z_wall_modules_positions_ )
+      std::cout << " " << x << ", ";
+    std::cout << "}" << std::endl;
+  }
   int GetPdgOfNuclei( int geant_code );
 private:
   HLoop loop_;
@@ -134,6 +148,9 @@ private:
   TFile* szymon_file_;
   std::string system_;
   float energy_;
+  std::array<float, 304> x_wall_modules_positions_{};
+  std::array<float, 304> y_wall_modules_positions_{};
+  std::array<float, 304> z_wall_modules_positions_{};
   HGeantWall* geant_wall_{nullptr};
   HParticleEvtChara evt_chara_bk_;
   HEnergyLossCorrPar dE_dx_corr_;

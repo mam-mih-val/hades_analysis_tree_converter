@@ -69,6 +69,7 @@ int main(int argv, char **argc) {
   }
   std::cout << i << " events were converted from hades tree to analysis tree." << std::endl;
   Analysis::TreeManager::Instance()->Finalize();
+  reader.PrintWallCellsPositions();
 
   auto end = std::chrono::system_clock::now();
   std::chrono::duration<double> elapsed_seconds = end - start;

@@ -123,6 +123,9 @@ void HadesEventReader::ReadWallHits(){
     int module_id = hades_wall_hit->getCell();
     float hit_x, hit_y, hit_z;
     hades_wall_hit->getXYZLab(hit_x, hit_y, hit_z);
+    x_wall_modules_positions_.at(module_id)=hit_x;
+    y_wall_modules_positions_.at(module_id)=hit_y;
+    z_wall_modules_positions_.at(module_id)=hit_z;
     float hit_time = hades_wall_hit->getTime();
     float hit_distance = hades_wall_hit->getDistance();
     float hit_beta = hit_distance / hit_time / 299.792458;
