@@ -25,7 +25,7 @@ directory=`dirname $input_files`
 file=$directory/../geant_out1.root
 
 echo "executing $build_dir/HT2AT -i $file -o wall_output.root -c $config_file"
-$build_dir/convert_wall -i $file -o wall_output.root -c $config_file
+$build_dir/convert_wall -i $file -o wall_output.root -c $config_file -N -1
 
 echo JOB FINISHED!
 date $format
