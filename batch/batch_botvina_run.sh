@@ -20,11 +20,11 @@ source $hadesroot
 echo "executing $build_dir/HT2AT -i $input_files -o output.root -c $config_file -m"
 $build_dir/HT2AT -i $input_files -o output.root -c $config_file -m
 
-directory=`dirname $filelist`
+directory=`dirname $input_files`
 
 file=$directory/../geant_out1.root
 
-echo "executing $build_dir/HT2AT -i $input_files -o output.root -c $config_file -m"
+echo "executing $build_dir/HT2AT -i $file -o wall_output.root -c $config_file"
 $build_dir/convert_wall -i $file -o wall_output.root -c $config_file
 
 echo JOB FINISHED!
