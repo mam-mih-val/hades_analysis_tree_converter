@@ -4,7 +4,7 @@ file_list=$1
 output_dir=$2
 config_file=$3
 
-hadesroot=/cvmfs/hades.gsi.de/install/6.12.06/hydra2-5.3/defall.sh
+hadesroot=/cvmfs/hades.gsi.de/install/6.12.06/hydra2-5.5a/defall.sh
 
 current_dir=$(pwd)
 partition=main
