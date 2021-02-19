@@ -1,5 +1,6 @@
 {
   "system": "Ag+Ag",
   "energy": 1.23,
-  "param file": "/lustre/nyx/hades/user/mmamaev/hades_analysis_tree_converter/src/param/AgAg_1_23AGeV.root"
+  "param file": "/lustre/nyx/hades/user/mmamaev/hades_analysis_tree_converter/src/param/AgAg_1_23AGeV.root",
+  "start strips file": "/lustre/nyx/hades/user/mmamaev/hades_analysis_tree_converter/src/param/mult_mean_stripes_1230.root"
 }
