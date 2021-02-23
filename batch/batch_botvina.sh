@@ -9,7 +9,7 @@ hadesroot=/cvmfs/hades.gsi.de/install/6.12.06/hydra2-5.3/defall.sh
 current_dir=$(pwd)
 partition=main
 time=8:00:00
-build_dir=$current_dir/../build
+build_dir=$current_dir/../build_hydra-2.5.3
 
 lists_dir=${output_dir}/lists/
 log_dir=${output_dir}/log
