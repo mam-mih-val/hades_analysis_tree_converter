@@ -22,6 +22,7 @@ int main(int argv, char **argc) {
   std::string config_file;
   std::string geant_file;
   long long n_events{0};
+  long long first_event{0};
   po::options_description options("Options");
   options.add_options()
       ("help,h", "Help screen")
@@ -32,6 +33,8 @@ int main(int argv, char **argc) {
       ("config,c", po::value<std::string>(&config_file),
        "Path to config file")
       ("events,N", po::value<long long>(&n_events),
+       "Number of analysing events")
+      ("first-event", po::value<long long>(&first_event),
        "Number of analysing events");
   po::variables_map vm;
   po::parsed_options parsed = po::command_line_parser(argv, argc).options(options).run();
@@ -57,7 +60,7 @@ int main(int argv, char **argc) {
 
   converting_manager.InitInput(input_list);
   converting_manager.InitOutput(output_file, "reconstructed_wall");
-  converting_manager.Process(n_events);
+  converting_manager.Process(first_event, n_events);
   converting_manager.Finalize();
 
   auto end = std::chrono::system_clock::now();

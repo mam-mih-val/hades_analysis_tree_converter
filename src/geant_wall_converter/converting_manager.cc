@@ -41,11 +41,11 @@ void ConvertingManager::InitOutput(const std::string& file_name, const std::stri
   WriteDataHeader();
   config_.Write("Configuration");
 }
-void ConvertingManager::Process(long long N) {
+void ConvertingManager::Process(long long first_evenet, long long N) {
   auto n_events = std::min(loop_.getEntries(),N);
   if( n_events < 0 )
     n_events=loop_.getEntries();
-  for( long long int i=0; i<n_events; ++i ){
+  for( long long int i=first_evenet; i<n_events; ++i ){
     loop_.nextEvent(i);
     geant_wall_hits_converter_->Convert();
     tree_->Fill();

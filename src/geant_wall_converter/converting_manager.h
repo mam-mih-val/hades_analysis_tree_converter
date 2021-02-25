@@ -46,7 +46,7 @@ public:
   void SetLabEnergy(float lab_energy) { lab_energy_ = lab_energy; }
   void InitInput(std::string files);
   void InitOutput(const std::string& file_name, const std::string& tree_name);
-  void Process(long long N);
+  void Process(long long first_evenet, long long N);
   void Finalize();
 private:
   void WriteDataHeader();
