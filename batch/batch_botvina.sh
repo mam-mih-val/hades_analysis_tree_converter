@@ -4,12 +4,12 @@ file_list=$1
 output_dir=$2
 config_file=$3
 
-hadesroot=/cvmfs/hades.gsi.de/install/6.12.06/hydra2-5.3/defall.sh
+hadesroot=/cvmfs/hades.gsi.de/install/6.12.06/hydra2-5.5a/defall.sh
 
 current_dir=$(pwd)
 partition=main
 time=8:00:00
-build_dir=$current_dir/../build_hydra-2.5.3
+build_dir=$current_dir/../build_hydra-2.5.5a
 
 lists_dir=${output_dir}/lists/
 log_dir=${output_dir}/log
