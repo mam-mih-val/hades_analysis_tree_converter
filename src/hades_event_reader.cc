@@ -286,7 +286,9 @@ void HadesEventReader::ReadParticleCandidates(){
     }
     float chi2_in = hades_candidate->getInnerSegmentChi2();
     float chi2_out = hades_candidate->getOuterSegmentChi2();
-    float phi_out = hades_candidate->getPhi2()*TMath::DegToRad()-TMath::Pi();
+    float phi_out = hades_candidate->getPhi2()*TMath::DegToRad();
+    if( phi_out > TMath::Pi() )
+      phi_out-=2.0f*TMath::Pi();
     float theta_out = hades_candidate->getTheta2()*TMath::DegToRad();
     analysis_track_manager->SetField(chi2_in, Analysis::MdcTracksManager::CHI2_IN);
     analysis_track_manager->SetField(chi2_out, Analysis::MdcTracksManager::CHI2_OUT);
