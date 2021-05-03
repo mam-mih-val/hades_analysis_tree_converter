@@ -284,6 +284,14 @@ void HadesEventReader::ReadParticleCandidates(){
       analysis_meta_hit_manager->SetField(
           true, Analysis::MetaHitsManager::IS_TOF_HIT);
     }
+    float chi2_in = hades_candidate->getInnerSegmentChi2();
+    float chi2_out = hades_candidate->getOuterSegmentChi2();
+    float phi_out = hades_candidate->getPhi2()*TMath::DegToRad();
+    float theta_out = hades_candidate->getTheta2()*TMath::DegToRad();
+    analysis_track_manager->SetField(chi2_in, Analysis::MdcTracksManager::CHI2_IN);
+    analysis_track_manager->SetField(chi2_out, Analysis::MdcTracksManager::CHI2_OUT);
+    analysis_track_manager->SetField(phi_out, Analysis::MdcTracksManager::PHI_OUT);
+    analysis_track_manager->SetField(theta_out, Analysis::MdcTracksManager::THETA_OUT);
     analysis_meta_hit_manager->SetField(
         (float)hades_candidate->getDistanceToMetaHit(), Analysis::MetaHitsManager::PATH_LENGTH);
     analysis_meta_hit_manager->SetField(

@@ -17,6 +17,10 @@ public:
     DE_DX,
     DCA_XY,
     DCA_Z,
+    PHI_OUT,
+    THETA_OUT,
+    CHI2_IN,
+    CHI2_OUT,
     NUMBER_FIELDS_FLOAT
   };
   enum track_fields_int{

@@ -14,6 +14,10 @@ vtx_tracks_branch.AddField<float>("vtx_chi2");
 vtx_tracks_branch.AddField<float>("dEdx");
 vtx_tracks_branch.AddField<float>("dca_xy");
 vtx_tracks_branch.AddField<float>("dca_z");
+vtx_tracks_branch.AddField<float>("phi_out");
+vtx_tracks_branch.AddField<float>("theta_out");
+vtx_tracks_branch.AddField<float>("chi2_in");
+vtx_tracks_branch.AddField<float>("chi2_out");
 vtx_tracks_branch.AddField<int>("charge");
 vtx_tracks_branch.AddField<int>("nhits_0");
 vtx_tracks_branch.AddField<int>("nhits_1");
@@ -31,6 +35,10 @@ fields_float_.insert( std::make_pair(VTX_CHI2, vtx_tracks_branch.GetFieldId("vtx
 fields_float_.insert( std::make_pair(DE_DX, vtx_tracks_branch.GetFieldId("dEdx")) );
 fields_float_.insert( std::make_pair(DCA_XY, vtx_tracks_branch.GetFieldId("dca_xy")) );
 fields_float_.insert( std::make_pair(DCA_Z, vtx_tracks_branch.GetFieldId("dca_z")) );
+fields_float_.insert( std::make_pair(PHI_OUT, vtx_tracks_branch.GetFieldId("phi_out")) );
+fields_float_.insert( std::make_pair(THETA_OUT, vtx_tracks_branch.GetFieldId("theta_out")) );
+fields_float_.insert( std::make_pair(CHI2_IN, vtx_tracks_branch.GetFieldId("chi2_in")) );
+fields_float_.insert( std::make_pair(CHI2_OUT, vtx_tracks_branch.GetFieldId("chi2_out")) );
 
 fields_int_.insert( std::make_pair(CHI2, vtx_tracks_branch.GetFieldId("chi2")) );
 fields_int_.insert( std::make_pair(N_HITS_0, vtx_tracks_branch.GetFieldId("nhits_0")) );
