@@ -3,12 +3,22 @@ cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
 project(HT2AT)
 
 list(APPEND CMAKE_PREFIX_PATH $ENV{ROOTSYS})
-list(APPEND CMAKE_PREFIX_PATH $ENV{AnalysisTree_HOME})
-list(APPEND CMAKE_PREFIX_PATH ${AnalysisTree_HOME})
 
 find_package(Boost REQUIRED COMPONENTS program_options regex)
 find_package(ROOT REQUIRED COMPONENTS RIO Tree)
-find_package( AnalysisTree REQUIRED)
+
+include(FetchContent)
+
+FetchContent_Declare(
+		AnalysisTree
+		GIT_REPOSITORY https://github.com/HeavyIonAnalysis/AnalysisTree
+		GIT_TAG        v1.0.10
+		CMAKE_ARGS
+		"-DBOOST_ROOT=${BOOST_ROOT}"
+		"-CMAKE_CXX_STANDARD=11"
+)
+
+FetchContent_MakeAvailable(AnalysisTree)
 
 set(CMAKE_CXX_FLAGS "-Wall")
 
@@ -19,14 +29,12 @@ include_directories(
 		${CMAKE_SOURCE_DIR}
 		${CMAKE_SOURCE_DIR}/src
 		${ROOT_INCLUDE_DIRS}
-		${AnalysisTree_INCLUDE_DIR}
 		${Boost_INCLUDE_DIRS}
 )
 
 link_directories(
 		$ENV{HADDIR}/lib
 		${CMAKE_SOURCE_DIR}
-		${AnalysisTreeBase_LIBRARY_DIR}
 )
 set (HADES_LIBS
 		libAlignment.so
