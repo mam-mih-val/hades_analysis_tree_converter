@@ -4,12 +4,12 @@ file_list=$1
 output_dir=$2
 config_file=$3
 
-hadesroot=/cvmfs/hades.gsi.de/install/6.12.06/hydra2-5.5a/defall.sh
+hadesroot=/cvmfs/hadessoft.gsi.de/install/debian8/install/6.12.06/hydra2-5.3/defall.sh
 
 current_dir=$(pwd)
 partition=main
 time=8:00:00
-build_dir=$current_dir/../build
+build_dir=/lustre/hades/user/mmamaev/hades_analysis_tree_converter/build_hydra-2.5.3
 
 lists_dir=${output_dir}/lists/
 log_dir=${output_dir}/log
@@ -31,4 +31,4 @@ echo lists_dir=$lists_dir
 echo n_runs=$n_runs
 echo job_range=$job_range
 
-sbatch -J HT2AT -p $partition -t $time -a $job_range -e ${log_dir}/%A_%a.e -o ${log_dir}/%A_%a.o --export=output_dir=$output_dir,file_list=$file_list,hadesroot=$hadesroot,lists_dir=$lists_dir,build_dir=$build_dir,config_file=$config_file -- /cvmfs/vae.gsi.de/debian8/containers/debian8-user_container_20210211T1503.sif /lustre/nyx/hades/user/mmamaev/hades_analysis_tree_converter/batch/batch_run.sh
+sbatch -J HT2AT -p $partition -t $time -a $job_range -e ${log_dir}/%A_%a.e -o ${log_dir}/%A_%a.o --export=output_dir=$output_dir,file_list=$file_list,hadesroot=$hadesroot,lists_dir=$lists_dir,build_dir=$build_dir,config_file=$config_file -- /lustre/nyx/hades/user/mmamaev/hades_analysis_tree_converter/batch/batch_run.sh
