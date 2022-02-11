@@ -7,8 +7,8 @@ config_file=$3
 hadesroot=/cvmfs/hadessoft.gsi.de/install/debian8/install/6.12.06/hydra2-5.3/defall.sh
 
 current_dir=$(pwd)
-partition=main
-time=8:00:00
+partition=debug
+time=0:20:00
 build_dir=/lustre/hades/user/mmamaev/hades_analysis_tree_converter/build_hydra-2.5.3
 
 lists_dir=${output_dir}/lists/
