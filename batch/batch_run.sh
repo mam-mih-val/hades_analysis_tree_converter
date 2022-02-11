@@ -20,12 +20,14 @@ echo "loading " $hadesroot
 source $hadesroot
 
 echo "executing $build_dir/HT2AT -i $input_files -o output.root -c $config_file -m"
-singularity exec \
-          -B /cvmfs/hadessoft.gsi.de/install/debian8/install:/cvmfs/hades.gsi.de/install \
-          -B /cvmfs/hadessoft.gsi.de/install/debian8/oracle:/cvmfs/it.gsi.de/oracle \
-          -B /lustre \
-          /cvmfs/vae.gsi.de/debian8/containers/user_container-production.sif \
-          $build_dir/HT2AT -i $input_files -o output.root -c $config_file -m
+#singularity exec \
+#          -B /cvmfs/hadessoft.gsi.de/install/debian8/install:/cvmfs/hades.gsi.de/install \
+#          -B /cvmfs/hadessoft.gsi.de/install/debian8/oracle:/cvmfs/it.gsi.de/oracle \
+#          -B /lustre \
+#          /cvmfs/vae.gsi.de/debian8/containers/user_container-production.sif \
+#          $build_dir/HT2AT -i $input_files -o output.root -c $config_file -m
+
+$build_dir/HT2AT -i $input_files -o output.root -c $config_file -m
 
 echo JOB FINISHED!
 date $format
