@@ -22,20 +22,14 @@ FetchContent_MakeAvailable(AnalysisTree)
 
 set(CMAKE_CXX_FLAGS "-Wall")
 
-include(${ROOT_USE_FILE})
-
 include_directories(
 		$ENV{HADDIR}/include
-		${CMAKE_SOURCE_DIR}
-		${CMAKE_SOURCE_DIR}/src
-		${ROOT_INCLUDE_DIRS}
-		${Boost_INCLUDE_DIRS}
 )
 
 link_directories(
 		$ENV{HADDIR}/lib
-		${CMAKE_SOURCE_DIR}
 )
+
 set (HADES_LIBS
 		libAlignment.so
 		libHydra.so
@@ -66,7 +60,6 @@ set (HADES_LIBS
 		libSimulation.so
 		libWall.so
 		)
-add_definitions(${ROOT_CXX_FLAGS})
 
 set (HEADERS
 		src/HADES_constants.h
@@ -112,4 +105,4 @@ add_executable(convert_wall
 		src/geant_wall_converter/converting_manager.cc
         src/geant_wall_converter/geant_wall_hits_converter.cc
 		)
-target_link_libraries(convert_wall ${Boost_LIBRARIES} ${ROOT_LIBRARIES} ROOT::EG ${HADES_LIBS}  AnalysisTreeBase)
+target_link_libraries(convert_wall Boost::program_options ROOT::RIO ROOT::Core ROOT::Physics ROOT::EG ${HADES_LIBS} AnalysisTreeBase)
