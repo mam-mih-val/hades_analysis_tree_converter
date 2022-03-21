@@ -35,7 +35,7 @@ fields_bool_.insert( std::make_pair( IS_TOF_HIT, hit_branch.GetFieldId("is_tof_h
 fields_bool_.insert( std::make_pair( IS_RPC_HIT, hit_branch.GetFieldId("is_rpc_hit") ) );
 
 config.AddBranchConfig(hit_branch);
-hit_detector_ = new AnalysisTree::HitDetector( config.GetLastId() );
+hit_detector_ = new AnalysisTree::HitDetector( config.GetNumberOfBranches() );
 tree->Branch("meta_hits", "AnalysisTree::HitDetector", &hit_detector_);
 }
 }

@@ -34,7 +34,7 @@ fields_float_.insert( std::make_pair(VTX_Y, sim_tracks_branch.GetFieldId("vtx_y"
 fields_float_.insert( std::make_pair(VTX_Z, sim_tracks_branch.GetFieldId("vtx_z")) );
 
 config.AddBranchConfig(sim_tracks_branch);
-sim_tracks_ = new AnalysisTree::Particles(config.GetLastId());
+sim_tracks_ = new AnalysisTree::Particles(config.GetNumberOfBranches());
 tree->Branch("sim_tracks", "AnalysisTree::Particles", &sim_tracks_);
 }
 }

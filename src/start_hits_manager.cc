@@ -26,7 +26,7 @@ void StartHitsManager::MakeBranch( AnalysisTree::Configuration &config, TTree* t
   fields_int_.insert( std::make_pair( STRIP, hit_branch.GetFieldId("strip") ) );
 
   config.AddBranchConfig(hit_branch);
-  hit_detector_ = new AnalysisTree::HitDetector( config.GetLastId() );
+  hit_detector_ = new AnalysisTree::HitDetector( config.GetNumberOfBranches() );
   tree->Branch("start_hits", "AnalysisTree::HitDetector", &hit_detector_);
 }
 }

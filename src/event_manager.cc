@@ -104,7 +104,7 @@ void EventManager::MakeBranch(AnalysisTree::Configuration &config,
       std::make_pair(START_MULT, event_header_branch.GetFieldId("start_multiplicity")));
 
   config.AddBranchConfig(event_header_branch);
-  event_header_ = new AnalysisTree::EventHeader(config.GetLastId());
+  event_header_ = new AnalysisTree::EventHeader(config.GetNumberOfBranches());
   event_header_->Init(event_header_branch);
   tree->Branch("event_header", "AnalysisTree::EventHeader", &event_header_);
 }

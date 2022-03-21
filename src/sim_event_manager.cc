@@ -24,7 +24,7 @@ fields_int_.insert( std::make_pair( GEANT_EVENT_ID, sim_header_branch.GetFieldId
 fields_int_.insert( std::make_pair( REJECTED_ELECTRONS, sim_header_branch.GetFieldId( "rejected_electrons" )  ) );
 
 config.AddBranchConfig(sim_header_branch);
-event_header_ = new AnalysisTree::EventHeader(config.GetLastId());
+event_header_ = new AnalysisTree::EventHeader(config.GetNumberOfBranches());
 event_header_->Init(sim_header_branch);
 tree->Branch("sim_header", "AnalysisTree::EventHeader", &event_header_);
 }
