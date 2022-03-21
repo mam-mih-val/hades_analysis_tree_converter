@@ -54,7 +54,7 @@ fields_int_.insert( std::make_pair(LAYERS_TOTAL, vtx_tracks_branch.GetFieldId("l
 fields_int_.insert( std::make_pair(LAYERS_BITS, vtx_tracks_branch.GetFieldId("layers_bits")) );
 
 config.AddBranchConfig(vtx_tracks_branch);
-vtx_tracks_ = new AnalysisTree::Particles(config.GetNumberOfBranches());
+vtx_tracks_ = new AnalysisTree::Particles(config.GetNumberOfBranches() - 1);
 tree->Branch("mdc_vtx_tracks", "AnalysisTree::Particles", &vtx_tracks_);
 }
 }

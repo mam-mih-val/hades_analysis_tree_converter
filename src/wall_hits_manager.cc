@@ -38,7 +38,7 @@ void WallHitsManager::MakeBranch(AnalysisTree::Configuration &config,
       PASSED_CUTS, modules_branch.GetFieldId("has_passed_cuts")));
 
   config.AddBranchConfig(modules_branch);
-  wall_hits_ = new AnalysisTree::HitDetector(config.GetNumberOfBranches());
+  wall_hits_ = new AnalysisTree::HitDetector(config.GetNumberOfBranches()-1);
   tree->Branch("forward_wall_hits", "AnalysisTree::HitDetector", &wall_hits_);
 }
 } // namespace Analysis
