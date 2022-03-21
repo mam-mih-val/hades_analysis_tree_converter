@@ -24,7 +24,9 @@ void GeantWallHitsConverter::InitOutput(AnalysisTree::Configuration &config,
   branch_config_.AddField<bool>("has_passed_cuts");
 
   config.AddBranchConfig(branch_config_);
-  wall_hits_ = new AnalysisTree::HitDetector(100+config.GetLastId());
+  branch_config_ = config.GetBranchConfig("reconstructed_forward_wall_hits");
+  branch_config_.SetId(100+config.GetNumberOfBranches());
+  wall_hits_ = new AnalysisTree::HitDetector(100+config.GetNumberOfBranches());
   tree->Branch("reconstructed_forward_wall_hits", "AnalysisTree::HitDetector",
                &wall_hits_);
   this->InitWallCellsPositions();
