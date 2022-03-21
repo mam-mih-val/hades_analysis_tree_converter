@@ -38,6 +38,7 @@ void ConvertingManager::InitOutput(const std::string& file_name, const std::stri
   geant_wall_hits_converter_->InitInput();
   geant_wall_hits_converter_->InitOutput(config_, tree_);
 
+  config_.Print();
   WriteDataHeader();
   config_.Write("Configuration");
 }
