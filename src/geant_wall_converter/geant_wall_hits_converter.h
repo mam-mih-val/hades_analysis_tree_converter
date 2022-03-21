@@ -11,6 +11,8 @@
 
 #include <AnalysisTree/Configuration.hpp>
 #include <AnalysisTree/Detector.hpp>
+#include <AnalysisTree/Particle.hpp>
+#include <AnalysisTree/Matching.hpp>
 
 class GeantWallHitsConverter {
 public:
@@ -26,7 +28,7 @@ protected:
   void InitWallCellsPositions();
   HCategory* geant_wall_hits_category_;
   AnalysisTree::BranchConfig branch_config_;
-  AnalysisTree::HitDetector *wall_hits_;
+  AnalysisTree::HitDetector*wall_hits_;
   float relative_amplitude_resolution{0.14};
   std::array<float, 304> x_wall_modules_positions_{};
   std::array<float, 304> y_wall_modules_positions_{};
